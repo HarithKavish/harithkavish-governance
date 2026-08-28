@@ -1,0 +1,175 @@
+# HarithKavish Ecosystem Registry
+#
+# The machine-readable answer to "is this repository part of the ecosystem, and what is
+# it?". Agents consult this during bootstrap discovery (see AGENT_BOOTSTRAP.md, step 3).
+#
+# This file records membership, role, surface, and adoption state. It records nothing
+# else. Rules live in the doctrine, the standards, and the protocols; a repository's own
+# rules live in its AGENTS.md. Do not add rules here.
+#
+# Adding or changing an entry is a governance change (MAINTENANCE.md).
+
+schema_version: 1
+updated: 2026-08-28
+
+ecosystem:
+  name: HarithKavish
+  owner: HarithKavish
+  primary_domain: harithkavish.com
+  governance:
+    repository: HarithKavish/harithkavish-governance
+    url: https://github.com/HarithKavish/harithkavish-governance
+    doctrine: MASTER_DOCTRINE.md
+    bootstrap: AGENT_BOOTSTRAP.md
+
+# ---------------------------------------------------------------------------
+# Vocabulary
+# ---------------------------------------------------------------------------
+
+roles:
+  governance:      Defines how the ecosystem operates. Contains no product code.
+  shared-library:  Consumed by other repositories. Authoritative for its concern.
+  website:         A public surface with its own address.
+  application:     An interactive product, may require authentication.
+  service:         A backend or engine with no public UI of its own.
+  infrastructure:  Hosting, tooling, or operational support.
+
+adoption:
+  registered:  Recognized as a member. No governance files yet.
+  integrated:  AGENTS.md and GOVERNANCE.md present and pointing at governance.
+  aligned:     Integrated, and no known outstanding compliance gaps.
+  retired:     No longer active. Retained for history or as a pointer.
+  excluded:    Not an ecosystem surface. Governance does not apply.
+
+# The membership test is defined in AGENT_BOOTSTRAP.md, step 3. This file is one of its
+# inputs, not a second copy of it.
+#
+# Learning exercises, college coursework, and one-off scratch repositories under this
+# account are 'excluded' by policy and are not enumerated here.
+
+# ---------------------------------------------------------------------------
+# Repositories
+# ---------------------------------------------------------------------------
+
+repositories:
+
+  - name: harithkavish-governance
+    role: governance
+    adoption: integrated
+    notes: >-
+      This repository. Authoritative for all governance. Its agent entry point is
+      AGENT_BOOTSTRAP.md rather than AGENTS.md, since it is the governance source and
+      does not point at itself. Outstanding: social preview image not yet created or
+      uploaded (standards/REPOSITORY.md).
+
+  - name: design-system
+    role: shared-library
+    adoption: registered
+    surface: https://harithkavish.com/design-system/
+    authoritative_for: design
+    notes: >-
+      The shared design system: tokens, component primitives, UI kits, brand guidelines.
+      Also publishes the v1.0.0 CSS/JS distribution for surfaces with no build step.
+
+  - name: harith-design-system
+    role: shared-library
+    adoption: retired
+    superseded_by: design-system
+    notes: Holds a pointer README only. Do not consume.
+
+  - name: harithkavish.github.io
+    role: website
+    adoption: registered
+    surface: https://harithkavish.com
+    notes: Flagship public site — catalogue, ecosystem index, updates, status, legal.
+
+  - name: blog
+    role: website
+    adoption: registered
+    surface: https://blog.harithkavish.com
+
+  - name: nexus
+    role: website
+    adoption: registered
+    surface: https://nexus.harithkavish.com
+
+  - name: store
+    role: website
+    adoption: registered
+    surface: https://store.harithkavish.com
+
+  - name: search
+    role: website
+    adoption: registered
+    surface: https://search.harithkavish.com
+
+  - name: sites
+    role: website
+    adoption: registered
+    surface: https://sites.harithkavish.com
+
+  - name: api
+    role: website
+    adoption: registered
+    surface: https://api.harithkavish.com
+
+  - name: vr
+    role: website
+    adoption: registered
+    surface: https://vr.harithkavish.com
+
+  - name: converse
+    role: application
+    adoption: registered
+    notes: Chat surface. Consumes the design system's v1.0.0 distribution.
+
+  - name: ai-lab
+    role: application
+    adoption: registered
+    notes: Consumes the design system's v1.0.0 distribution.
+
+  - name: account
+    role: application
+    adoption: registered
+    surface: https://harithkavish-account.vercel.app
+    notes: Account layer. AGENTS.md exists but is toolchain-generated, not governance.
+
+  - name: auth
+    role: application
+    adoption: registered
+    notes: Shared authentication surface.
+
+  - name: forge
+    role: application
+    adoption: registered
+
+  - name: vm
+    role: application
+    adoption: registered
+    notes: Declared, not yet built.
+
+  - name: vr-engine
+    role: service
+    adoption: registered
+
+  - name: my_chatgpt
+    role: application
+    adoption: registered
+    visibility: private
+
+# ---------------------------------------------------------------------------
+# Pending review
+# ---------------------------------------------------------------------------
+# Repositories whose membership has not been decided. An agent must NOT assume
+# membership for these, and must NOT onboard them without being asked.
+# Resolving each one is a governance change: move it into `repositories`, or record it
+# as excluded by policy.
+
+pending_review:
+  - about
+  - harith-lab
+  - jarvis-github-control
+  - mcp-registry-mcp-server
+  - megha_malar_dance_academy
+  - ReWeb
+  - Timeline
