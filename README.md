@@ -53,6 +53,7 @@ extend higher tiers; they never silently contradict them.
 | [MASTER_DOCTRINE.md](MASTER_DOCTRINE.md) | The principles. Deliberately short. |
 | [GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md) | Which document wins, and what to do when none does. |
 | [AGENT_BOOTSTRAP.md](AGENT_BOOTSTRAP.md) | How an agent begins work. The entry point. |
+| [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md) | Where a new requirement belongs. The routing layer. |
 | [MAINTENANCE.md](MAINTENANCE.md) | How governance itself changes, without bloating. |
 
 ### Standards — what "correct" means
@@ -99,9 +100,14 @@ visible.
 
 ## Changing governance
 
-Read [MAINTENANCE.md](MAINTENANCE.md) first. Classify the change before writing it — the
-correct outcome is often "this already exists" or "this belongs in your repository, not
-here."
+Two documents, used together:
+
+- [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md) — **where** the content belongs. Classify before
+  writing; a document is not the right home merely because it is about the same topic.
+- [MAINTENANCE.md](MAINTENANCE.md) — **how** the change is made, verified, and propagated.
+
+The correct outcome is often "this already exists" or "this belongs in your repository,
+not here."
 
 The Master Doctrine is expected to stay approximately its current size. Detail belongs in
 the tiers below it.

@@ -21,17 +21,13 @@ contains the rules about rules.
 
 Authority decreases down the table. Specificity increases down the table.
 
-### Standards vs. Protocols
+This table defines **authority**. It does not decide where new content belongs — misfiling
+is the main way governance rots, and the test for each destination lives in
+[GOVERNANCE_MAP.md](GOVERNANCE_MAP.md).
 
-The distinction matters, because misfiling is the main way governance rots.
-
-- A **standard** describes a required *state*. "Every repository has a description."
-- A **protocol** describes a required *procedure*. "This is how a repository is onboarded."
-
-If it can be checked at rest, it is a standard. If it only makes sense as a sequence of
-steps someone performs, it is a protocol. When a rule has both a state and a procedure,
-the state goes in the standard and the procedure goes in the protocol, and each links to
-the other rather than restating it.
+Schemas (`schemas/`) carry no independent authority. A schema represents a rule stated
+elsewhere, or holds data those rules operate on, and it inherits the authority of the
+document it serves.
 
 ---
 

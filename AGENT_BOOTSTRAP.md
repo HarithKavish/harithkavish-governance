@@ -70,11 +70,14 @@ Route from the task, not from the directory listing:
 | Secrets, auth, tokens, user data, third-party services, CI credentials | [standards/SECURITY.md](standards/SECURITY.md) |
 | Creating a new repository in the ecosystem | [protocols/REPOSITORY_ONBOARDING.md](protocols/REPOSITORY_ONBOARDING.md) |
 | Adopting governance in an existing repository | [protocols/REPOSITORY_ALIGNMENT.md](protocols/REPOSITORY_ALIGNMENT.md) |
-| Changing governance itself | [MAINTENANCE.md](MAINTENANCE.md) |
+| Adding or changing a governance rule — deciding where it belongs | [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md), then [MAINTENANCE.md](MAINTENANCE.md) |
 | Two rules appear to conflict | [GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md) |
 
 `standards/BRANCHING.md` is effectively always in scope, because every task ends in a
 commit somewhere.
+
+The last two rows are for work **on governance itself**. Ordinary application work does
+not need them — do not read `GOVERNANCE_MAP.md` to implement a feature.
 
 ### 6. Read repository-specific rules and architecture
 
