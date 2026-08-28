@@ -8,6 +8,13 @@ rules accumulate in the wrong places until nobody can tell what is authoritative
 
 This document exists to prevent that.
 
+**Scope.** This document governs **how** a governance change is made: searching for
+existing coverage, applying it, verifying it, and letting it propagate.
+
+**Where** content belongs is not decided here. That is the routing layer,
+[GOVERNANCE_MAP.md](GOVERNANCE_MAP.md). The two are used together — classify with the
+map, change with this document.
+
 ---
 
 ## The Default Answer Is Not "Add a File"
@@ -42,67 +49,33 @@ would degrade. It is never the correct action.
 
 ## Step 2 — Classify the Change
 
-Answer in order. The **first** tier that fits is the answer.
+**Classify before writing. Do not choose a document because it is related to the topic.**
 
-### 1 · Doctrine — `MASTER_DOCTRINE.md`
+Run the classification sequence in [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md). It decides
+between the seven destinations — doctrine, standard, protocol, schema, maintenance,
+repository-specific, and implementation — and it holds the test for each.
 
-Only if **all** of the following are true:
+Two outcomes are frequently correct and frequently missed:
 
-- **Global** — applies to every repository, not most of them.
-- **Fundamental** — other rules derive from it; it does not derive from another rule.
-- **Long-term** — it would still be true after a full technology change.
-- **Principle-based** — it states an outcome, not a method.
-- **Not framework-, tool-, platform-, or vendor-specific.**
-- **Not expressible as detail under an existing article.** Prefer sharpening an article
-  over adding one.
+- The requirement belongs in **a repository**, not in central governance.
+- The requirement is **layered**, and its parts belong in different documents. Decompose
+  it rather than filing it whole.
 
-If any answer is "no," it is not doctrine.
-
-**Doctrine test:** could you switch every framework, host, and language in the ecosystem
-and the rule still holds, unchanged? If not, it belongs lower.
-
-### 2 · Standard — `standards/`
-
-It defines what "correct" looks like for a concern, and it is checkable at rest.
-Global in intent, but may be specific about names, values, structure, and thresholds.
-
-Standards are where most real rules belong.
-
-### 3 · Protocol — `protocols/`
-
-It defines a **procedure** — an ordered process someone carries out, with a beginning, a
-decision path, and an end. If it only makes sense as steps, it is a protocol.
-
-If the rule has both a required state and a procedure, split it: state to the standard,
-procedure to the protocol, each linking to the other.
-
-### 4 · Repository-Specific Rule — the repository's own `AGENTS.md` / `GOVERNANCE.md`
-
-It applies to one repository, or to how one repository satisfies a global rule. It does
-not belong in this repository at all. This is not a lesser outcome — it is the correct
-home for most rules people try to add globally.
-
-### 5 · Implementation Detail — the repository's `README.md` or `docs/`
-
-It describes how something works rather than what is required. Commands, setup steps,
-architecture notes, and environment specifics are documentation, not governance.
-
-Governance says what must be true. Documentation says how it currently is.
+State the classification and the destination before you write anything.
 
 ---
 
-## Step 3 — Place It
+## Step 3 — Apply the Change
 
-| Classification | Destination |
-|---|---|
-| Doctrine | `MASTER_DOCTRINE.md` — as a sharpened existing article where possible |
-| Standard | the matching file in `standards/` |
-| Protocol | the matching file in `protocols/` |
-| Repository rule | that repository's `AGENTS.md` or `GOVERNANCE.md` |
-| Implementation detail | that repository's `README.md` or `docs/` |
-| Ecosystem membership or role | `schemas/ecosystem.yaml` |
+Write it into the destination the map identified. Write it **once**, in one place;
+everywhere else links to it.
 
-Write it **once**, in one place. Everywhere else links to it.
+Apply the smallest change that satisfies the requirement. Prefer sharpening existing
+wording over appending new wording — a document that grows only by addition eventually
+says the same thing three ways.
+
+If applying it reveals that the classification was wrong, stop and reclassify. Do not
+force it into the destination you already started editing.
 
 ---
 
@@ -111,11 +84,8 @@ Write it **once**, in one place. Everywhere else links to it.
 The Master Doctrine must stay concise. It is the one document every agent reads on every
 task; every line added to it is paid for on every future task in the ecosystem.
 
-**Reject from the doctrine**, absent an exceptional architectural reason:
-
-framework-specific instructions · commands · code conventions · file paths ·
-branch names · detailed workflows · tool-specific procedures · repository-specific
-rules · temporary rules · task-specific instructions · anything with a version number
+What may and may not enter the doctrine is defined in
+[GOVERNANCE_MAP.md](GOVERNANCE_MAP.md). This section is the ongoing watch on it.
 
 If detail must be referenced from an article, reference the standard that holds it. Do
 not inline it.
@@ -158,11 +128,14 @@ change is too large. Prefer changes the ecosystem can absorb gradually.
 ### Before committing a governance change
 
 - [ ] The requirement is not already covered elsewhere.
-- [ ] It is filed at the correct tier, by the Step 2 test.
+- [ ] It is filed at the correct destination, by the classification sequence in
+      [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md).
 - [ ] It is stated exactly once; other documents link rather than restate.
 - [ ] It does not contradict a higher tier.
 - [ ] The doctrine did not grow procedural content.
 - [ ] Every document it affects still has one clear responsibility.
+- [ ] If a new category was introduced, it satisfies every condition in
+      [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md) under "Introducing a New Category".
 - [ ] Links resolve, and nothing points at something that was removed.
 - [ ] If it is not yet enforced, it does not claim to be
       ([GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md)).
@@ -173,6 +146,17 @@ change is too large. Prefer changes the ecosystem can absorb gradually.
 
 When asked to "add a rule," do not begin by writing one.
 
-Classify first. Report the classification and the destination, then write. If the correct
-answer is "this already exists" or "this belongs in your repository, not in governance,"
-say so — that is a successful outcome, not a failure to complete the task.
+Given a governance modification task, work in this order:
+
+1. Read [AGENT_BOOTSTRAP.md](AGENT_BOOTSTRAP.md) — establish where you are.
+2. Read this document — the change process.
+3. Read [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md) — the routing logic.
+4. **Classify** the requested change.
+5. **Check whether equivalent content already exists** (Step 1).
+6. **Identify the destination** the classification points to.
+7. **Apply the minimal change** there.
+8. **Check for duplication and contradiction** against the checklist above.
+
+Report the classification and the destination *before* writing. If the correct answer is
+"this already exists" or "this belongs in your repository, not in governance," say so —
+that is a successful outcome, not a failure to complete the task.
