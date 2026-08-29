@@ -75,6 +75,28 @@ regression would be silent. This is a judgement, not a coverage number.
   values. Real values never appear in it.
 - Environment-specific behaviour is explicit, not inferred from hostnames or branch names.
 
+## Ecosystem State
+
+`localStorage` and `sessionStorage` are scoped to one origin, and this ecosystem
+is many. State kept there stops at the subdomain that wrote it.
+
+**State the reader would expect to follow them between surfaces belongs in the
+shared store**, not in per-origin storage. The theme, who is signed in, a
+dismissed notice — anything where finding a different answer on the next
+subdomain would read as a bug. The shared store is provided by the design
+system; a surface loads it before anything that reads from it.
+
+Per-origin storage remains correct for state that is genuinely local to one
+surface: a draft in progress, a scroll position, a panel left open.
+
+**Test:** would a reader be surprised to find this reset after following a link
+to another surface in the family? Then it is ecosystem state.
+
+Two rules follow from the shared store being a cookie on the parent domain:
+
+- **Keep values small.** They travel with every request to the domain.
+- **Never put a credential in it** ([SECURITY.md](SECURITY.md)).
+
 ## Accessibility and Correctness of Surfaces
 
 Public surfaces are expected to be usable, not merely rendered:
