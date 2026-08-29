@@ -43,8 +43,8 @@ Treat it as public within the ecosystem, because it is.
 
 - Authorize on the server. Client-side checks are interface, not security.
 - Sessions and tokens are short-lived, scoped to what they need, and revocable.
-- Shared auth surfaces are a shared concern (Article 3) — a repository does not implement
-  its own parallel identity layer without a declared exception.
+- A repository does not implement its own identity layer. Who owns identity, and
+  what an application may hold, is [IDENTITY.md](IDENTITY.md).
 - Redirect targets and callback URLs are validated against an allowlist.
 
 ## Data

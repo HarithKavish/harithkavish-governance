@@ -63,6 +63,7 @@ extend higher tiers; they never silently contradict them.
 | [BRANCHING](standards/BRANCHING.md) | Branch model, flow, naming, the hotfix exception |
 | [DESIGN_SYSTEM](standards/DESIGN_SYSTEM.md) | Shared vs. local components, and promotion back |
 | [DEVELOPMENT](standards/DEVELOPMENT.md) | Changes, commits, dependencies, testing |
+| [IDENTITY](standards/IDENTITY.md) | Who owns identity, and what an application may hold |
 | [REPOSITORY](standards/REPOSITORY.md) | Description, social preview, README, structure |
 | [SECURITY](standards/SECURITY.md) | Secrets, auth, data, and agent-specific risk |
 
