@@ -26,6 +26,19 @@ keys, connection strings, webhook URLs, and session secrets.
 undo that; it remains in history and in every clone. The response is: rotate the
 credential first, then clean the history. Rotation is not optional and not deferred.
 
+## Shared Ecosystem State
+
+The shared store the ecosystem uses for cross-surface state is a cookie on the
+parent domain. **Every subdomain, and every script running on any of them, can
+read it**, and it is sent with every request to that domain.
+
+It may say *who* a reader is. It may never say what they are *allowed* to do.
+Credentials, tokens, session secrets and anything granting access are out of
+bounds — a value there is a claim, not proof, and a surface that trusts it for
+authorisation has no security at all.
+
+Treat it as public within the ecosystem, because it is.
+
 ## Authentication and Authorization
 
 - Authorize on the server. Client-side checks are interface, not security.
