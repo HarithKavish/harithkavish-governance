@@ -146,7 +146,13 @@ repositories:
   - name: vm
     role: application
     adoption: registered
-    notes: Declared, not yet built.
+    surface: https://vm.harithkavish.com
+    notes: >-
+      Desktop-environment client for headless Linux servers — web app, browser
+      extension and native companion. Served from main since the web UI was
+      merged; its deploy workflow previously matched every branch, so an
+      unmerged feature branch was production. Its interface is deliberately
+      unlike the content sites and is not on the shared shell.
 
   - name: vr-engine
     role: service
@@ -157,6 +163,36 @@ repositories:
     adoption: registered
     visibility: private
 
+  - name: about
+    role: website
+    adoption: registered
+    surface: https://harithkavish.com/about/
+
+  - name: Timeline
+    role: application
+    adoption: registered
+    surface: https://timeline.harithkavish.com
+    notes: >-
+      Takes colour, type and elevation from the design system but keeps its own
+      radius and duration scales and its own application chrome. Its theme is
+      three-state (system, light, dark) — a superset of the shared toggle.
+
+  - name: ReWeb
+    role: application
+    adoption: registered
+    notes: Android client. No web surface, so the design system does not apply.
+
+  - name: mcp-registry-mcp-server
+    role: service
+    adoption: registered
+    notes: MCP server and editor extension. No web surface.
+
+  - name: harith-lab
+    role: application
+    adoption: registered
+    visibility: private
+    notes: Dormant experiment. Last touched July 2025; node_modules is committed.
+
 # ---------------------------------------------------------------------------
 # Pending review
 # ---------------------------------------------------------------------------
@@ -165,11 +201,12 @@ repositories:
 # Resolving each one is a governance change: move it into `repositories`, or record it
 # as excluded by policy.
 
-pending_review:
-  - about
-  - harith-lab
-  - jarvis-github-control
-  - mcp-registry-mcp-server
-  - megha_malar_dance_academy
-  - ReWeb
-  - Timeline
+pending_review: []
+
+# Decided not to participate. Recorded so the question is not reopened at every
+# bootstrap; neither repository is to be modified.
+excluded:
+  - name: megha_malar_dance_academy
+    reason: Owner asked that it be left alone.
+  - name: jarvis-github-control
+    reason: Demonstration page. Owner set it aside.
