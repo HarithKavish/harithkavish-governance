@@ -131,13 +131,22 @@ repositories:
   - name: account
     role: application
     adoption: registered
-    surface: https://harithkavish-account.vercel.app
-    notes: Account layer. AGENTS.md exists but is toolchain-generated, not governance.
+    surface: https://account.harithkavish.com
+    authoritative_for: identity
+    notes: >-
+      Owns the person: the account, profile, credentials, and which external
+      identities are linked to it. A HarithKavish account is the identity; a
+      provider is only a way to prove it. See standards/IDENTITY.md.
 
   - name: auth
-    role: application
+    role: service
     adoption: registered
-    notes: Shared authentication surface.
+    surface: https://auth.harithkavish.com
+    authoritative_for: authentication
+    notes: >-
+      The ecosystem's only authenticator. Owns nothing about a person. Performs
+      no authentication yet — every attempt is deliberately refused rather than
+      mocked. See standards/IDENTITY.md.
 
   - name: forge
     role: application

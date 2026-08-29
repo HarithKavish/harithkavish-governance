@@ -68,6 +68,7 @@ Route from the task, not from the directory listing:
 | Writing or restructuring code, dependencies, tests | [standards/DEVELOPMENT.md](standards/DEVELOPMENT.md) |
 | Repository metadata, description, social preview, README, structure, new files at root | [standards/REPOSITORY.md](standards/REPOSITORY.md) |
 | Secrets, auth, tokens, user data, third-party services, CI credentials | [standards/SECURITY.md](standards/SECURITY.md) |
+| Sign-in, accounts, user tables, provider linkage, sessions | [standards/IDENTITY.md](standards/IDENTITY.md) |
 | Creating a new repository in the ecosystem | [protocols/REPOSITORY_ONBOARDING.md](protocols/REPOSITORY_ONBOARDING.md) |
 | Adopting governance in an existing repository | [protocols/REPOSITORY_ALIGNMENT.md](protocols/REPOSITORY_ALIGNMENT.md) |
 | Adding or changing a governance rule — deciding where it belongs | [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md), then [MAINTENANCE.md](MAINTENANCE.md) |
