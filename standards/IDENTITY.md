@@ -15,12 +15,20 @@ infrastructure yet, and most of it is not built — see *Current state* below.
 
 | | Owns | Answers |
 |---|---|---|
-| **Account** (`account.harithkavish.com`) | The person: their account, profile, credentials, and which external identities are linked to them | *Who is this, and what is their account?* |
-| **Auth** (`auth.harithkavish.com`) | Nothing about the person | *Has this person authenticated, for this application?* |
+| **The account half** | The person: their account, profile, credentials, and which external identities are linked to them | *Who is this, and what is their account?* |
+| **The authentication half** | Nothing about the person | *Has this person authenticated, for this application?* |
 | **Every other surface** | Its own domain data, keyed by a subject it did not invent | *What does this application hold for that subject?* |
 
-These are not layers of one system that may be collapsed when convenient. They
-are three owners, and the boundaries between them are the point.
+These are owners, not layers, and the boundaries between them are the point.
+
+**The first two run in one deployable, at `account.harithkavish.com`.** That is a
+deployment decision, not an ownership one: the boundary is kept in code, and
+nothing about who owns what changed when the network between them went away
+(canonical contract §0.5, §15). `auth.harithkavish.com` remains an alias.
+
+A boundary held in code is as binding as one held across a network — but only
+while nothing reads across it. The first query that does is the point at which
+separating them again stops being a refactor.
 
 ## A HarithKavish Account Is the Identity
 
@@ -107,11 +115,14 @@ Forge is currently its own identity provider. It holds credentials and provider
 linkages for people who have a HarithKavish account elsewhere, which is the
 duplication this standard exists to end.
 
-The Account ↔ Auth contract is settled and detailed, but **it does not mention
-federated sign-in at all** — it is specified around a chosen `user_id`, a
-password and passkeys. Google sign-in has no place in it yet. Adding one is a
-change to that contract, not an implementation detail, and it belongs there
-rather than being decided by whichever surface builds first.
+**The contract now covers federated sign-in** (v1.3–v1.5): the authentication
+half runs the provider flow and verifies the assertion, the account half owns
+the resulting link, and a first sign-in creates a HarithKavish account. Schema
+changes are authorized; nothing else is.
+
+**Recovery lands before federation.** A federated-only account has exactly one
+way in, and it is one the ecosystem does not control — a disabled provider
+account is permanent lockout. An ordering constraint, not a preference.
 
 ## Getting There
 
@@ -121,7 +132,8 @@ hard.
 1. **Account learns to hold a linked provider identity** — the table, and
    "first sign-in with a provider creates the account".
 2. **The Account ↔ Auth contract covers federation**, since today it does not.
-3. **Auth authenticates for real**, Google included, and issues subjects.
+3. **The identity service authenticates for real**, Google included, and issues
+   subjects — recovery first, then federation.
 4. **Forge consumes Auth** and drops `users`, `accounts`, `sessions` and
    `verification_tokens`, re-keying its tenancy to the Auth subject.
 5. **Static surfaces move from Google to Auth**, at which point one client
