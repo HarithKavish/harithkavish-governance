@@ -73,6 +73,10 @@ repositories:
     notes: >-
       The shared design system: tokens, component primitives, UI kits, brand guidelines.
       Also publishes the v1.0.0 CSS/JS distribution for surfaces with no build step.
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: harith-design-system
     role: shared-library
@@ -98,11 +102,21 @@ repositories:
     role: website
     adoption: registered
     surface: https://blog.harithkavish.com
+    notes: >-
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: nexus
     role: website
     adoption: registered
     surface: https://nexus.harithkavish.com
+    notes: >-
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: store
     role: website
@@ -117,11 +131,21 @@ repositories:
     role: website
     adoption: registered
     surface: https://search.harithkavish.com
+    notes: >-
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: sites
     role: website
     adoption: registered
     surface: https://sites.harithkavish.com
+    notes: >-
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: api
     role: website
@@ -136,16 +160,31 @@ repositories:
     role: website
     adoption: registered
     surface: https://vr.harithkavish.com
+    notes: >-
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: converse
     role: application
     adoption: registered
-    notes: Chat surface. Consumes the design system's v1.0.0 distribution.
+    notes: >-
+      Chat surface. Consumes the design system's v1.0.0 distribution. 2026-09-03: the
+      original claude-review.yml (pre-id-token:write-fix) was committed directly to
+      main by the initial automated rollout, bypassing branch+PR — a BRANCHING.md
+      deviation, missed in the first Article 10 pass and recorded here on follow-up.
+      Content-only; accepted as a one-off, not a precedent.
 
   - name: ai-lab
     role: application
     adoption: registered
-    notes: Consumes the design system's v1.0.0 distribution.
+    notes: >-
+      Consumes the design system's v1.0.0 distribution. 2026-09-03: the original
+      claude-review.yml (pre-id-token:write-fix) was committed directly to main by the
+      initial automated rollout, bypassing branch+PR — a BRANCHING.md deviation, missed
+      in the first Article 10 pass and recorded here on follow-up. Content-only;
+      accepted as a one-off, not a precedent.
 
   - name: account
     role: application
@@ -155,7 +194,11 @@ repositories:
     notes: >-
       Owns the person: the account, profile, credentials, and which external
       identities are linked to it. A HarithKavish account is the identity; a
-      provider is only a way to prove it. See standards/IDENTITY.md.
+      provider is only a way to prove it. See standards/IDENTITY.md. 2026-09-03: the
+      original claude-review.yml (pre-id-token:write-fix) was committed directly to
+      main by the initial automated rollout, bypassing branch+PR — a BRANCHING.md
+      deviation, missed in the first Article 10 pass and recorded here on follow-up.
+      Content-only; accepted as a one-off, not a precedent.
 
   - name: auth
     role: service
@@ -173,6 +216,11 @@ repositories:
   - name: forge
     role: application
     adoption: registered
+    notes: >-
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: vm
     role: application
@@ -210,6 +258,11 @@ repositories:
     role: website
     adoption: registered
     surface: https://harithkavish.com/about/
+    notes: >-
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: Timeline
     role: application
