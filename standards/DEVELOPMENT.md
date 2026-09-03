@@ -46,6 +46,24 @@ A pull request states what changed, why, and anything a reviewer would otherwise
 discover — the deviation you took, the thing you deliberately left out, the follow-up you
 are not doing.
 
+## Automated Review
+
+Every ecosystem-member repository ([schemas/ecosystem.yaml](../schemas/ecosystem.yaml))
+carries `.github/workflows/claude-review.yml`, triggered on `pull_request: opened,
+reopened`. It reviews the diff, posts findings as a comment, and runs
+`gh pr merge --auto --squash` only when the change meets the low-risk criteria in its own
+prompt — otherwise it leaves the PR open and says why.
+
+Authenticates via the `CLAUDE_CODE_OAUTH_TOKEN` secret (from `claude setup-token`), not
+`ANTHROPIC_API_KEY` ([SECURITY.md](SECURITY.md)). The workflow also requires
+`permissions: id-token: write` — without it, the action fails silently after three
+retries and never reviews the PR at all.
+
+**Known gap.** No repository has branch protection or a required status check yet, so
+`--auto` has nothing to queue behind: the review's verdict merges the PR immediately, not
+once behind a gate. Until that exists, treat a merge here as the review having decided,
+not GitHub having decided.
+
 ## Dependencies
 
 **Adding a dependency is a decision, not a step.** Before adding one, check whether the

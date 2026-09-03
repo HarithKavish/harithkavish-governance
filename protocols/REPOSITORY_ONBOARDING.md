@@ -142,20 +142,30 @@ Per [standards/REPOSITORY.md](../standards/REPOSITORY.md):
   and upload it in repository settings. The upload has no API and must be done by a
   human; say so explicitly rather than reporting the item as complete.
 
-### 7. Register the repository
+### 7. Add automated PR review
+
+Add `.github/workflows/claude-review.yml` per
+[standards/DEVELOPMENT.md § Automated Review](../standards/DEVELOPMENT.md#automated-review),
+and set the `CLAUDE_CODE_OAUTH_TOKEN` secret on the repository. Use the workflow content
+from an existing ecosystem-member repository rather than writing it from scratch — it
+carries a permissions requirement (`id-token: write`) that fails silently, with no review
+posted and no visible error, when it is missing.
+
+### 8. Register the repository
 
 Add an entry to [schemas/ecosystem.yaml](../schemas/ecosystem.yaml) in the governance
 repository. A repository that is not registered is not discoverable as a member.
 
 This is a change to the governance repository and follows its own branching rules.
 
-### 8. Verify
+### 9. Verify
 
 - [ ] `main` and `development` exist
 - [ ] `AGENTS.md`, `GOVERNANCE.md`, `README.md` present at the root
 - [ ] About description set
 - [ ] Social preview committed, and the manual upload either done or explicitly flagged
 - [ ] Homepage URL set, if applicable
+- [ ] `claude-review.yml` present and `CLAUDE_CODE_OAUTH_TOKEN` set
 - [ ] Registered in `schemas/ecosystem.yaml`
 - [ ] Nothing from governance or the design system was copied in
 
