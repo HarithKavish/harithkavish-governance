@@ -60,7 +60,10 @@ repositories:
       This repository. Authoritative for all governance. Its agent entry point is
       AGENT_BOOTSTRAP.md rather than AGENTS.md, since it is the governance source and
       does not point at itself. Outstanding: social preview image not yet created or
-      uploaded (standards/REPOSITORY.md).
+      uploaded (standards/REPOSITORY.md). 2026-09-03: an automated rollout committed a
+      workflow permissions fix (claude-review.yml, id-token:write) directly to main,
+      bypassing branch+PR — a BRANCHING.md deviation, on this repository specifically.
+      Content-only; accepted as a one-off, not a precedent.
 
   - name: design-system
     role: shared-library
@@ -70,63 +73,118 @@ repositories:
     notes: >-
       The shared design system: tokens, component primitives, UI kits, brand guidelines.
       Also publishes the v1.0.0 CSS/JS distribution for surfaces with no build step.
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: harith-design-system
     role: shared-library
     adoption: retired
     superseded_by: design-system
-    notes: Holds a pointer README only. Do not consume.
+    notes: >-
+      Holds a pointer README only. Do not consume. 2026-09-03: an automated rollout
+      committed a workflow permissions fix (claude-review.yml, id-token:write) directly
+      to main, bypassing branch+PR — a BRANCHING.md deviation. Content-only; accepted
+      as a one-off, not a precedent.
 
   - name: harithkavish.github.io
     role: website
     adoption: registered
     surface: https://harithkavish.com
-    notes: Flagship public site — catalogue, ecosystem index, updates, status, legal.
+    notes: >-
+      Flagship public site — catalogue, ecosystem index, updates, status, legal.
+      2026-09-03: an automated rollout committed a workflow permissions fix
+      (claude-review.yml, id-token:write) directly to main, bypassing branch+PR — a
+      BRANCHING.md deviation. Content-only; accepted as a one-off, not a precedent.
 
   - name: blog
     role: website
     adoption: registered
     surface: https://blog.harithkavish.com
+    notes: >-
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: nexus
     role: website
     adoption: registered
     surface: https://nexus.harithkavish.com
+    notes: >-
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: store
     role: website
     adoption: registered
     surface: https://store.harithkavish.com
+    notes: >-
+      2026-09-03: an automated rollout committed a workflow permissions fix
+      (claude-review.yml, id-token:write) directly to main, bypassing branch+PR — a
+      BRANCHING.md deviation. Content-only; accepted as a one-off, not a precedent.
 
   - name: search
     role: website
     adoption: registered
     surface: https://search.harithkavish.com
+    notes: >-
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: sites
     role: website
     adoption: registered
     surface: https://sites.harithkavish.com
+    notes: >-
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: api
     role: website
     adoption: registered
     surface: https://api.harithkavish.com
+    notes: >-
+      2026-09-03: an automated rollout committed a workflow permissions fix
+      (claude-review.yml, id-token:write) directly to main, bypassing branch+PR — a
+      BRANCHING.md deviation. Content-only; accepted as a one-off, not a precedent.
 
   - name: vr
     role: website
     adoption: registered
     surface: https://vr.harithkavish.com
+    notes: >-
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: converse
     role: application
     adoption: registered
-    notes: Chat surface. Consumes the design system's v1.0.0 distribution.
+    notes: >-
+      Chat surface. Consumes the design system's v1.0.0 distribution. 2026-09-03: the
+      original claude-review.yml (pre-id-token:write-fix) was committed directly to
+      main by the initial automated rollout, bypassing branch+PR — a BRANCHING.md
+      deviation, missed in the first Article 10 pass and recorded here on follow-up.
+      Content-only; accepted as a one-off, not a precedent.
 
   - name: ai-lab
     role: application
     adoption: registered
-    notes: Consumes the design system's v1.0.0 distribution.
+    notes: >-
+      Consumes the design system's v1.0.0 distribution. 2026-09-03: the original
+      claude-review.yml (pre-id-token:write-fix) was committed directly to main by the
+      initial automated rollout, bypassing branch+PR — a BRANCHING.md deviation, missed
+      in the first Article 10 pass and recorded here on follow-up. Content-only;
+      accepted as a one-off, not a precedent.
 
   - name: account
     role: application
@@ -136,7 +194,11 @@ repositories:
     notes: >-
       Owns the person: the account, profile, credentials, and which external
       identities are linked to it. A HarithKavish account is the identity; a
-      provider is only a way to prove it. See standards/IDENTITY.md.
+      provider is only a way to prove it. See standards/IDENTITY.md. 2026-09-03: the
+      original claude-review.yml (pre-id-token:write-fix) was committed directly to
+      main by the initial automated rollout, bypassing branch+PR — a BRANCHING.md
+      deviation, missed in the first Article 10 pass and recorded here on follow-up.
+      Content-only; accepted as a one-off, not a precedent.
 
   - name: auth
     role: service
@@ -146,11 +208,19 @@ repositories:
     notes: >-
       The ecosystem's only authenticator. Owns nothing about a person. Performs
       no authentication yet — every attempt is deliberately refused rather than
-      mocked. See standards/IDENTITY.md.
+      mocked. See standards/IDENTITY.md. 2026-09-03: an automated rollout committed a
+      workflow permissions fix (claude-review.yml, id-token:write) directly to main,
+      bypassing branch+PR — a BRANCHING.md deviation. Content-only; accepted as a
+      one-off, not a precedent.
 
   - name: forge
     role: application
     adoption: registered
+    notes: >-
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: vm
     role: application
@@ -161,21 +231,38 @@ repositories:
       extension and native companion. Served from main since the web UI was
       merged; its deploy workflow previously matched every branch, so an
       unmerged feature branch was production. Its interface is deliberately
-      unlike the content sites and is not on the shared shell.
+      unlike the content sites and is not on the shared shell. 2026-09-03: an
+      automated rollout committed a workflow permissions fix (claude-review.yml,
+      id-token:write) directly to main, bypassing branch+PR — a BRANCHING.md
+      deviation, a second such incident on this repository. Content-only; accepted
+      as a one-off, not a precedent.
 
   - name: vr-engine
     role: service
     adoption: registered
+    notes: >-
+      2026-09-03: an automated rollout committed a workflow permissions fix
+      (claude-review.yml, id-token:write) directly to main, bypassing branch+PR — a
+      BRANCHING.md deviation. Content-only; accepted as a one-off, not a precedent.
 
   - name: my_chatgpt
     role: application
     adoption: registered
     visibility: private
+    notes: >-
+      2026-09-03: an automated rollout committed a workflow permissions fix
+      (claude-review.yml, id-token:write) directly to main, bypassing branch+PR — a
+      BRANCHING.md deviation. Content-only; accepted as a one-off, not a precedent.
 
   - name: about
     role: website
     adoption: registered
     surface: https://harithkavish.com/about/
+    notes: >-
+      2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
+      directly to main by the initial automated rollout, bypassing branch+PR — a
+      BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
+      follow-up. Content-only; accepted as a one-off, not a precedent.
 
   - name: Timeline
     role: application
@@ -185,22 +272,37 @@ repositories:
       Takes colour, type and elevation from the design system but keeps its own
       radius and duration scales and its own application chrome. Its theme is
       three-state (system, light, dark) — a superset of the shared toggle.
+      2026-09-03: an automated rollout committed a workflow permissions fix
+      (claude-review.yml, id-token:write) directly to main, bypassing branch+PR — a
+      BRANCHING.md deviation. Content-only; accepted as a one-off, not a precedent.
 
   - name: ReWeb
     role: application
     adoption: registered
-    notes: Android client. No web surface, so the design system does not apply.
+    notes: >-
+      Android client. No web surface, so the design system does not apply.
+      2026-09-03: an automated rollout committed a workflow permissions fix
+      (claude-review.yml, id-token:write) directly to main, bypassing branch+PR — a
+      BRANCHING.md deviation. Content-only; accepted as a one-off, not a precedent.
 
   - name: mcp-registry-mcp-server
     role: service
     adoption: registered
-    notes: MCP server and editor extension. No web surface.
+    notes: >-
+      MCP server and editor extension. No web surface. 2026-09-03: an automated
+      rollout committed a workflow permissions fix (claude-review.yml, id-token:write)
+      directly to main, bypassing branch+PR — a BRANCHING.md deviation. Content-only;
+      accepted as a one-off, not a precedent.
 
   - name: harith-lab
     role: application
     adoption: registered
     visibility: private
-    notes: Dormant experiment. Last touched July 2025; node_modules is committed.
+    notes: >-
+      Dormant experiment. Last touched July 2025; node_modules is committed.
+      2026-09-03: an automated rollout committed a workflow permissions fix
+      (claude-review.yml, id-token:write) directly to main, bypassing branch+PR — a
+      BRANCHING.md deviation. Content-only; accepted as a one-off, not a precedent.
 
 # ---------------------------------------------------------------------------
 # Pending review
