@@ -73,8 +73,11 @@ Raise it as a pull request; do not commit the registry change directly.
 - **Covered** → continue to Phase 1. Registration is not onboarding: the repository still
   has no `AGENTS.md` or `GOVERNANCE.md` until that work is done, and that work is
   scoped separately (Article 9).
-- **Not covered** → stop. Governance does not apply. Do not add governance files to a
-  repository that was just recorded as outside the ecosystem.
+- **Not covered** → add the non-member `GOVERNANCE.md` from
+  [REPOSITORY_ONBOARDING.md](REPOSITORY_ONBOARDING.md), then stop. Governance does not
+  bind the repository; that file states exactly that, points at governance, and dates the
+  check ([standards/REPOSITORY.md](../standards/REPOSITORY.md)). Add nothing else — no
+  `AGENTS.md`, and no other requirement from that standard.
 
 ### Running it across the account
 

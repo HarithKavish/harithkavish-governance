@@ -79,6 +79,10 @@ extend higher tiers; they never silently contradict them.
 [schemas/ecosystem.yaml](schemas/ecosystem.yaml) — which repositories are members, what
 each one is, and how far each has adopted governance.
 
+[schemas/governance.yaml](schemas/governance.yaml) — when governance itself last changed.
+A repository compares its own last-verified timestamp against it to tell whether it has
+fallen behind (Article 2).
+
 ## How repositories participate
 
 A participating repository carries two small files — `AGENTS.md` and `GOVERNANCE.md` —
