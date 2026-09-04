@@ -127,11 +127,32 @@ breaks URLs, clones, and deploy hooks. It applies to new repositories.
 
 ## Ecosystem Registry
 
-Every participating repository is listed in
-[schemas/ecosystem.yaml](../schemas/ecosystem.yaml), which records its role, its surface,
-and its adoption state. A repository that is not listed is not discoverable as a member.
+[schemas/ecosystem.yaml](../schemas/ecosystem.yaml) records each repository's role, its
+surface, its adoption state, and the date its membership was last verified. A repository
+that is not listed is not discoverable as a member.
 
 Adding the entry is part of onboarding, not an afterthought.
+
+**The registry is complete against the account.** Every repository under the ecosystem's
+account appears in it exactly once — either as a participant, or explicitly as one
+governance does not apply to. Absent is not the same as excluded: an absent repository is
+one whose membership nobody has decided yet, and it is resolved under
+[protocols/REPOSITORY_ALIGNMENT.md](../protocols/REPOSITORY_ALIGNMENT.md) rather than
+assumed either way.
+
+**Every decision carries a date.** Each entry records when its membership was last
+verified, so a decision made once and never revisited is visibly distinct from one
+confirmed recently. A repository's purpose can change; the date is what makes a stale
+decision detectable instead of invisible.
+
+**Completeness is verified, not assumed.** The registry is reconciled against the
+account's actual repository list, and the date of that reconciliation is recorded.
+Repositories created since the last one are the expected finding — that is what the
+check is for.
+
+> **Enforcement rung: 2 (guidance).** Nothing currently prevents a repository from being
+> created without a registry entry, and no automation performs the reconciliation. Both
+> are rung-4 mechanisms if they are built. Until then this holds because it is followed.
 
 ## Compliance Check
 

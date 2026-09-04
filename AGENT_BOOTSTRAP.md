@@ -46,6 +46,12 @@ The repository belongs to the HarithKavish ecosystem if **any** of these hold:
 If membership is genuinely unclear, ask. Do not apply ecosystem governance to a
 repository that is not in the ecosystem.
 
+**If the repository is under the account but appears nowhere in the registry** — neither
+as a participant nor as an excluded one — then its membership has never been decided.
+Absence is an open question, not a silent "no" (Article 5). Resolve it under
+[protocols/REPOSITORY_ALIGNMENT.md](protocols/REPOSITORY_ALIGNMENT.md), Phase 0, before
+either applying or withholding governance.
+
 **If the repository is a member but has no governance entry point,** it has not been
 onboarded. This does not block your task. Continue this sequence and apply governance
 directly, and report that the repository is not onboarded. Onboarding it is separate,
@@ -71,6 +77,7 @@ Route from the task, not from the directory listing:
 | Sign-in, accounts, user tables, provider linkage, sessions | [standards/IDENTITY.md](standards/IDENTITY.md) |
 | Creating a new repository in the ecosystem | [protocols/REPOSITORY_ONBOARDING.md](protocols/REPOSITORY_ONBOARDING.md) |
 | Adopting governance in an existing repository | [protocols/REPOSITORY_ALIGNMENT.md](protocols/REPOSITORY_ALIGNMENT.md) |
+| A repository under the account that is in no registry list at all | [protocols/REPOSITORY_ALIGNMENT.md](protocols/REPOSITORY_ALIGNMENT.md) § Phase 0 |
 | Adding or changing a governance rule — deciding where it belongs | [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md), then [MAINTENANCE.md](MAINTENANCE.md) |
 | Two rules appear to conflict | [GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md) |
 
