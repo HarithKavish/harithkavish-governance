@@ -304,6 +304,24 @@ repositories:
       (claude-review.yml, id-token:write) directly to main, bypassing branch+PR — a
       BRANCHING.md deviation. Content-only; accepted as a one-off, not a precedent.
 
+  - name: realmora
+    role: application
+    adoption: registered
+    notes: >-
+      Chat-shell app consuming the design system's shared tokens directly. Not yet
+      deployed (no GitHub Pages site configured as of onboarding); no surface URL to
+      record until it is live. Added 2026-09-04 at explicit user request after being
+      found missing from this file during an ecosystem audit.
+
+  - name: admin
+    role: application
+    adoption: registered
+    surface: https://admin.harithkavish.com
+    notes: >-
+      Owner-only admin console. Live and deployed (GitHub Pages, custom domain
+      verified) but had no AGENTS.md and no entry here — added 2026-09-04 at explicit
+      user request after being found missing from this file during an ecosystem audit.
+
 # ---------------------------------------------------------------------------
 # Pending review
 # ---------------------------------------------------------------------------
