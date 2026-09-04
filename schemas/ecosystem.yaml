@@ -3,14 +3,16 @@
 # The machine-readable answer to "is this repository part of the ecosystem, and what is
 # it?". Agents consult this during bootstrap discovery (see AGENT_BOOTSTRAP.md, step 3).
 #
-# This file records membership, role, surface, and adoption state. It records nothing
-# else. Rules live in the doctrine, the standards, and the protocols; a repository's own
-# rules live in its AGENTS.md. Do not add rules here.
+# This file records membership, role, surface, adoption state, and when each membership
+# decision was last verified. It records nothing else. Rules live in the doctrine, the
+# standards, and the protocols; a repository's own rules live in its AGENTS.md. Do not
+# add rules here.
 #
 # Adding or changing an entry is a governance change (MAINTENANCE.md).
 
-schema_version: 1
-updated: 2026-08-28
+schema_version: 2
+updated: 2026-09-05
+last_account_reconciliation: 2026-09-05
 
 ecosystem:
   name: HarithKavish
@@ -44,8 +46,18 @@ adoption:
 # The membership test is defined in AGENT_BOOTSTRAP.md, step 3. This file is one of its
 # inputs, not a second copy of it.
 #
-# Learning exercises, college coursework, and one-off scratch repositories under this
-# account are 'excluded' by policy and are not enumerated here.
+# COMPLETENESS. Every repository under the HarithKavish account appears here exactly
+# once: under 'repositories' if governance covers it, under 'excluded' if it does not.
+# A repository in neither list is UNDECIDED, not excluded -- its membership has never
+# been established, and it is resolved under protocols/REPOSITORY_ALIGNMENT.md, Phase 0.
+#
+# This reverses the earlier policy of not enumerating coursework and scratch
+# repositories. Leaving them out made an undecided repository indistinguishable from an
+# unnoticed one, which is the gap that policy created.
+#
+# last_checked on an entry is the date that decision was last verified.
+# last_account_reconciliation above is the date the whole account was last swept for
+# repositories missing from this file.
 
 # ---------------------------------------------------------------------------
 # Repositories
@@ -56,6 +68,7 @@ repositories:
   - name: harithkavish-governance
     role: governance
     adoption: integrated
+    last_checked: 2026-09-05
     notes: >-
       This repository. Authoritative for all governance. Its agent entry point is
       AGENT_BOOTSTRAP.md rather than AGENTS.md, since it is the governance source and
@@ -68,6 +81,7 @@ repositories:
   - name: design-system
     role: shared-library
     adoption: registered
+    last_checked: 2026-09-05
     surface: https://harithkavish.com/design-system/
     authoritative_for: design
     notes: >-
@@ -81,6 +95,7 @@ repositories:
   - name: harith-design-system
     role: shared-library
     adoption: retired
+    last_checked: 2026-09-05
     superseded_by: design-system
     notes: >-
       Holds a pointer README only. Do not consume. 2026-09-03: an automated rollout
@@ -91,6 +106,7 @@ repositories:
   - name: harithkavish.github.io
     role: website
     adoption: registered
+    last_checked: 2026-09-05
     surface: https://harithkavish.com
     notes: >-
       Flagship public site — catalogue, ecosystem index, updates, status, legal.
@@ -101,6 +117,7 @@ repositories:
   - name: blog
     role: website
     adoption: registered
+    last_checked: 2026-09-05
     surface: https://blog.harithkavish.com
     notes: >-
       2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
@@ -111,6 +128,7 @@ repositories:
   - name: nexus
     role: website
     adoption: registered
+    last_checked: 2026-09-05
     surface: https://nexus.harithkavish.com
     notes: >-
       2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
@@ -121,6 +139,7 @@ repositories:
   - name: store
     role: website
     adoption: registered
+    last_checked: 2026-09-05
     surface: https://store.harithkavish.com
     notes: >-
       2026-09-03: an automated rollout committed a workflow permissions fix
@@ -130,6 +149,7 @@ repositories:
   - name: search
     role: website
     adoption: registered
+    last_checked: 2026-09-05
     surface: https://search.harithkavish.com
     notes: >-
       2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
@@ -140,6 +160,7 @@ repositories:
   - name: sites
     role: website
     adoption: registered
+    last_checked: 2026-09-05
     surface: https://sites.harithkavish.com
     notes: >-
       2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
@@ -150,6 +171,7 @@ repositories:
   - name: api
     role: website
     adoption: registered
+    last_checked: 2026-09-05
     surface: https://api.harithkavish.com
     notes: >-
       2026-09-03: an automated rollout committed a workflow permissions fix
@@ -159,6 +181,7 @@ repositories:
   - name: vr
     role: website
     adoption: registered
+    last_checked: 2026-09-05
     surface: https://vr.harithkavish.com
     notes: >-
       2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
@@ -169,6 +192,7 @@ repositories:
   - name: converse
     role: application
     adoption: registered
+    last_checked: 2026-09-05
     notes: >-
       Chat surface. Consumes the design system's v1.0.0 distribution. 2026-09-03: the
       original claude-review.yml (pre-id-token:write-fix) was committed directly to
@@ -179,6 +203,7 @@ repositories:
   - name: ai-lab
     role: application
     adoption: registered
+    last_checked: 2026-09-05
     notes: >-
       Consumes the design system's v1.0.0 distribution. 2026-09-03: the original
       claude-review.yml (pre-id-token:write-fix) was committed directly to main by the
@@ -189,6 +214,7 @@ repositories:
   - name: account
     role: application
     adoption: registered
+    last_checked: 2026-09-05
     surface: https://account.harithkavish.com
     authoritative_for: identity
     notes: >-
@@ -203,6 +229,7 @@ repositories:
   - name: auth
     role: service
     adoption: registered
+    last_checked: 2026-09-05
     surface: https://auth.harithkavish.com
     authoritative_for: authentication
     notes: >-
@@ -216,6 +243,7 @@ repositories:
   - name: forge
     role: application
     adoption: registered
+    last_checked: 2026-09-05
     notes: >-
       2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
       directly to main by the initial automated rollout, bypassing branch+PR — a
@@ -225,6 +253,7 @@ repositories:
   - name: vm
     role: application
     adoption: registered
+    last_checked: 2026-09-05
     surface: https://vm.harithkavish.com
     notes: >-
       Desktop-environment client for headless Linux servers — web app, browser
@@ -240,6 +269,7 @@ repositories:
   - name: vr-engine
     role: service
     adoption: registered
+    last_checked: 2026-09-05
     notes: >-
       2026-09-03: an automated rollout committed a workflow permissions fix
       (claude-review.yml, id-token:write) directly to main, bypassing branch+PR — a
@@ -248,6 +278,7 @@ repositories:
   - name: my_chatgpt
     role: application
     adoption: registered
+    last_checked: 2026-09-05
     visibility: private
     notes: >-
       2026-09-03: an automated rollout committed a workflow permissions fix
@@ -257,6 +288,7 @@ repositories:
   - name: about
     role: website
     adoption: registered
+    last_checked: 2026-09-05
     surface: https://harithkavish.com/about/
     notes: >-
       2026-09-03: the original claude-review.yml (pre-id-token:write-fix) was committed
@@ -267,6 +299,7 @@ repositories:
   - name: Timeline
     role: application
     adoption: registered
+    last_checked: 2026-09-05
     surface: https://timeline.harithkavish.com
     notes: >-
       Takes colour, type and elevation from the design system but keeps its own
@@ -279,6 +312,7 @@ repositories:
   - name: ReWeb
     role: application
     adoption: registered
+    last_checked: 2026-09-05
     notes: >-
       Android client. No web surface, so the design system does not apply.
       2026-09-03: an automated rollout committed a workflow permissions fix
@@ -288,6 +322,7 @@ repositories:
   - name: mcp-registry-mcp-server
     role: service
     adoption: registered
+    last_checked: 2026-09-05
     notes: >-
       MCP server and editor extension. No web surface. 2026-09-03: an automated
       rollout committed a workflow permissions fix (claude-review.yml, id-token:write)
@@ -297,6 +332,7 @@ repositories:
   - name: harith-lab
     role: application
     adoption: registered
+    last_checked: 2026-09-05
     visibility: private
     notes: >-
       Dormant experiment. Last touched July 2025; node_modules is committed.
@@ -307,6 +343,7 @@ repositories:
   - name: realmora
     role: application
     adoption: registered
+    last_checked: 2026-09-05
     notes: >-
       Chat-shell app consuming the design system's shared tokens directly. Not yet
       deployed (no GitHub Pages site configured as of onboarding); no surface URL to
@@ -316,11 +353,24 @@ repositories:
   - name: admin
     role: application
     adoption: registered
+    last_checked: 2026-09-05
     surface: https://admin.harithkavish.com
     notes: >-
       Owner-only admin console. Live and deployed (GitHub Pages, custom domain
       verified) but had no AGENTS.md and no entry here — added 2026-09-04 at explicit
       user request after being found missing from this file during an ecosystem audit.
+
+  - name: HarithKavish
+    role: website
+    adoption: registered
+    surface: https://github.com/HarithKavish
+    last_checked: 2026-09-05
+    notes: >-
+      The account profile README, which renders publicly on the GitHub profile page.
+      Decided in scope 2026-09-05 during the first full account reconciliation: it
+      is a public surface under the account, so governance applies. Not yet onboarded --
+      no AGENTS.md, no GOVERNANCE.md, no social preview. Registration is not onboarding;
+      that work is scoped separately under protocols/REPOSITORY_ALIGNMENT.md.
 
 # ---------------------------------------------------------------------------
 # Pending review
@@ -329,13 +379,95 @@ repositories:
 # membership for these, and must NOT onboard them without being asked.
 # Resolving each one is a governance change: move it into `repositories`, or record it
 # as excluded by policy.
+#
+# This list is for repositories already found and awaiting a decision. A repository
+# absent from this file entirely has not been found yet -- see COMPLETENESS above.
 
 pending_review: []
 
-# Decided not to participate. Recorded so the question is not reopened at every
-# bootstrap; neither repository is to be modified.
+# Repositories governance does not cover. Recorded so the question is not reopened at
+# every bootstrap, and so that a repository missing from this file is recognisable as
+# undecided rather than assumed excluded. None of these is modified as an ecosystem
+# repository.
 excluded:
-  - name: megha_malar_dance_academy
-    reason: Owner asked that it be left alone.
+  - name: AgroCloud-Finance-Pro
+    reason: Reviewed 2026-09-05; not an ecosystem surface.
+    last_checked: 2026-09-05
+  - name: Algorithms
+    reason: Learning exercise.
+    last_checked: 2026-09-05
+  - name: copilot_test_for_auto-create_auto-push_and_auto-deploy_in_github_pages
+    reason: Scratch repository from a tooling test.
+    last_checked: 2026-09-05
+  - name: d1_p1-Welcome
+    reason: Coursework exercise.
+    last_checked: 2026-09-05
+  - name: d1_p2-Name
+    reason: Coursework exercise.
+    last_checked: 2026-09-05
+  - name: d1_p3-Color_Game
+    reason: Coursework exercise.
+    last_checked: 2026-09-05
+  - name: d2_p1-Value_Annotation
+    reason: Coursework exercise.
+    last_checked: 2026-09-05
+  - name: d3_p1-Get_Post
+    reason: Coursework exercise.
+    last_checked: 2026-09-05
+  - name: d4_p1-Put_Delete
+    reason: Coursework exercise.
+    last_checked: 2026-09-05
+  - name: d5_p1-CRUD_Operations
+    reason: Coursework exercise.
+    last_checked: 2026-09-05
+  - name: d6_p1-Pagination_And_Sorting-
+    reason: Coursework exercise.
+    last_checked: 2026-09-05
+  - name: eg1-hello
+    reason: Coursework exercise.
+    last_checked: 2026-09-05
+  - name: eg2-message_controller
+    reason: Coursework exercise.
+    last_checked: 2026-09-05
+  - name: eg3-student_getter_setter
+    reason: Coursework exercise.
+    last_checked: 2026-09-05
+  - name: eg4-Get_Post_Put_Delete
+    reason: Coursework exercise.
+    last_checked: 2026-09-05
+  - name: Hands-on_-_Cloud_Computing_using_AWS
+    reason: Training exercise.
+    last_checked: 2026-09-05
+  - name: Hands-on_-_Software_Testing_using_Selenium
+    reason: Training exercise.
+    last_checked: 2026-09-05
   - name: jarvis-github-control
     reason: Demonstration page. Owner set it aside.
+    last_checked: 2026-09-05
+  - name: Land-Sale-Website
+    reason: Reviewed 2026-09-05; private test repository, not an ecosystem surface.
+    last_checked: 2026-09-05
+  - name: megha_malar_dance_academy
+    reason: Owner asked that it be left alone.
+    last_checked: 2026-09-05
+  - name: Multi-Object-Detection-using-YOLO
+    reason: College mini project.
+    last_checked: 2026-09-05
+  - name: name-to-horizontal-and-vertical-names-using-numbers
+    reason: Learning exercise.
+    last_checked: 2026-09-05
+  - name: Online-Tutoring-Platform
+    reason: College project.
+    last_checked: 2026-09-05
+  - name: Road-Contract-App
+    reason: Reviewed 2026-09-05; not an ecosystem surface.
+    last_checked: 2026-09-05
+  - name: Script_-_First_Terminal_App
+    reason: Learning exercise.
+    last_checked: 2026-09-05
+  - name: Script_-_Project_Akio
+    reason: Learning exercise.
+    last_checked: 2026-09-05
+  - name: SkinNet-Analyzer
+    reason: College final year project.
+    last_checked: 2026-09-05

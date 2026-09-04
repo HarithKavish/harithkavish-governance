@@ -61,6 +61,12 @@ it fits in the ecosystem, which governance applies to it, and how to begin work 
 A repository that cannot be understood from its own surface is non-compliant regardless
 of the quality of the code inside it.
 
+Where a repository fits is a decision, not a default. Every repository under the
+ecosystem's account is either a participant or explicitly not one, and that answer is
+recorded and kept current. A repository whose membership has never been decided is an
+open question, not a silent exclusion; it is resolved by asking the owner, never by an
+agent assuming either answer.
+
 Integrity also bounds what a repository may hold: it never contains a credential, a
 secret, or personal data. What enters a repository is effectively permanent, so this is
 a property of the repository, not of any single commit. Concrete requirements live in

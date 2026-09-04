@@ -1,0 +1,27 @@
+# HarithKavish Governance — State
+#
+# The governance repository's own metadata. It holds one fact: when governance last
+# changed. Rules are not recorded here; this is the data a rule operates on.
+#
+# WHY IT EXISTS. Article 2 says a repository that has fallen behind the doctrine reports
+# the gap and closes it as scoped work — but it assumes the repository can tell. Nothing
+# previously let it. A repository compares its own last-verified timestamp against
+# last_updated below; if its own is older, governance has moved since it last looked.
+#
+# UPDATING IT IS PART OF EVERY GOVERNANCE CHANGE, in the same commit as the change
+# itself, never deferred because further changes are expected. See MAINTENANCE.md.
+# A timestamp that lags its own repository tells every repository in the ecosystem that
+# it is current when it is not, which is worse than no timestamp because it is believed.
+#
+# THREE DATES EXIST IN THIS ECOSYSTEM. They are not the same thing:
+#   last_updated (here)             when governance last changed
+#   last_checked (ecosystem.yaml)   when a repository's MEMBERSHIP decision was verified
+#   Last verified (a repo's         when that repository last checked ITSELF against
+#     GOVERNANCE.md)                governance
+#
+# Timestamps here are ISO 8601, UTC, to the second. UTC because they are compared across
+# repositories and machines, not read off a wall clock.
+
+schema_version: 1
+
+last_updated: 2026-09-04T20:45:14Z
