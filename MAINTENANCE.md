@@ -125,6 +125,22 @@ Therefore, when governance changes:
 A change that would require every repository to change at once is a signal that the
 change is too large. Prefer changes the ecosystem can absorb gradually.
 
+### The Timestamp Is Updated In The Change, Not After It
+
+[schemas/governance.yaml](schemas/governance.yaml) records when governance last changed.
+Every governance change updates it, in the same commit as the change itself.
+
+**Do not defer it because further changes are expected.** Pending work is the most common
+reason a timestamp is left for later, and it is exactly why it goes stale: the
+repositories reading it cannot see an intention to update it soon, only the value sitting
+there now. Every repository uses that value to decide whether it has fallen behind
+(Article 2), so a lagging timestamp does not merely fail to inform them — it tells them
+they are current when they are not.
+
+No category of governance change is exempt. A typo fix in a standard updates it too,
+because a repository cannot know the edit was cosmetic without reading the diff, and
+sparing it that reading is the entire purpose of the timestamp.
+
 ### Before committing a governance change
 
 - [ ] The requirement is not already covered elsewhere.
@@ -136,6 +152,8 @@ change is too large. Prefer changes the ecosystem can absorb gradually.
 - [ ] Every document it affects still has one clear responsibility.
 - [ ] If a new category was introduced, it satisfies every condition in
       [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md) under "Introducing a New Category".
+- [ ] [schemas/governance.yaml](schemas/governance.yaml) carries this change's
+      timestamp, set in this change and not deferred.
 - [ ] Links resolve, and nothing points at something that was removed.
 - [ ] If it is not yet enforced, it does not claim to be
       ([GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md)).

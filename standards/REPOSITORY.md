@@ -26,6 +26,10 @@ future rung-4 mechanism.
 and the procedure for adding them are defined in
 [protocols/REPOSITORY_ONBOARDING.md](../protocols/REPOSITORY_ONBOARDING.md).
 
+`GOVERNANCE.md` is required in **every** repository under the account, participating or
+not — see [Governance Verification](#governance-verification) below. Every other row in
+the table above applies to participating repositories only.
+
 ---
 
 ## About Description
@@ -127,11 +131,77 @@ breaks URLs, clones, and deploy hooks. It applies to new repositories.
 
 ## Ecosystem Registry
 
-Every participating repository is listed in
-[schemas/ecosystem.yaml](../schemas/ecosystem.yaml), which records its role, its surface,
-and its adoption state. A repository that is not listed is not discoverable as a member.
+[schemas/ecosystem.yaml](../schemas/ecosystem.yaml) records each repository's role, its
+surface, its adoption state, and the date its membership was last verified. A repository
+that is not listed is not discoverable as a member.
 
 Adding the entry is part of onboarding, not an afterthought.
+
+**The registry is complete against the account.** Every repository under the ecosystem's
+account appears in it exactly once — either as a participant, or explicitly as one
+governance does not apply to. Absent is not the same as excluded: an absent repository is
+one whose membership nobody has decided yet, and it is resolved under
+[protocols/REPOSITORY_ALIGNMENT.md](../protocols/REPOSITORY_ALIGNMENT.md) rather than
+assumed either way.
+
+**Every decision carries a date.** Each entry records when its membership was last
+verified, so a decision made once and never revisited is visibly distinct from one
+confirmed recently. A repository's purpose can change; the date is what makes a stale
+decision detectable instead of invisible.
+
+**Completeness is verified, not assumed.** The registry is reconciled against the
+account's actual repository list, and the date of that reconciliation is recorded.
+Repositories created since the last one are the expected finding — that is what the
+check is for.
+
+> **Enforcement rung: 2 (guidance).** Nothing currently prevents a repository from being
+> created without a registry entry, and no automation performs the reconciliation. Both
+> are rung-4 mechanisms if they are built. Until then this holds because it is followed.
+
+## Governance Verification
+
+Every repository under the account carries `GOVERNANCE.md`, and every `GOVERNANCE.md`
+records when that repository was last verified against governance, as an ISO 8601 UTC
+timestamp.
+
+**This includes repositories governance does not cover.** Such a repository still carries
+the file — stating plainly that governance does not bind it, pointing at where governance
+lives, and recording when that was last confirmed. The structure defined here stays worth
+following even where it is not required, and a reader landing in one of these cold should
+not have to guess whether it was excluded deliberately or simply never considered.
+Templates for both forms are in
+[protocols/REPOSITORY_ONBOARDING.md](../protocols/REPOSITORY_ONBOARDING.md).
+
+**Staleness is computable, which is the point.**
+[schemas/governance.yaml](../schemas/governance.yaml) records when governance last
+changed. A repository whose own timestamp is older than that one may have fallen behind.
+Article 2 already requires a repository that has fallen behind to report the gap and close
+it as scoped work — it assumed the repository could tell, and nothing previously let it.
+Being behind is not itself non-compliance; being unable to tell is.
+
+Re-verifying updates the timestamp whether or not anything needed to change. A check that
+found nothing is still a result, and an undated one is indistinguishable from a check
+never run.
+
+> **Declared exception (Article 10).** Requiring this in *every* repository rather than
+> only in participating ones knowingly deviates from two rules.
+> [protocols/REPOSITORY_ALIGNMENT.md](../protocols/REPOSITORY_ALIGNMENT.md) holds that
+> learning exercises and one-off scratch repositories are not ecosystem surfaces and
+> should not be onboarded; [MAINTENANCE.md](../MAINTENANCE.md) prefers changes the
+> ecosystem absorbs gradually over changes that touch every repository at once. Both are
+> overridden at the owner's explicit instruction, 2026-09-05, on the grounds that a
+> repository carrying no statement at all is indistinguishable from one nobody has
+> considered. The deviation is bounded: a non-covered repository receives this one file
+> and nothing else — no `AGENTS.md`, and no other requirement in this document applies to
+> it. It ends if per-repository statements prove to be noise rather than signal.
+>
+> Two repositories carry recorded owner instructions to be left alone
+> (`megha_malar_dance_academy`, `jarvis-github-control`). A general rule does not
+> override a specific instruction: adding the file to those two requires the owner's
+> confirmation at the time of rollout.
+
+> **Enforcement rung: 2 (guidance).** Nothing validates the timestamp or compares it
+> against governance automatically. Both are rung-4 mechanisms if they are built.
 
 ## Compliance Check
 

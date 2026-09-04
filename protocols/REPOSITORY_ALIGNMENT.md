@@ -22,6 +22,75 @@ violated anything.
 
 ---
 
+## Phase 0 — Decide Membership
+
+Alignment presumes the repository is a member. Often that has never actually been
+decided, and deciding is the first step — not something inferred on the way past.
+
+**When this phase applies.** The repository is under the ecosystem account and appears
+nowhere in [schemas/ecosystem.yaml](../schemas/ecosystem.yaml) — neither as a participant
+nor as an excluded one. That absence is an open question, not an answer (Article 5). It
+happens most often with a repository created recently enough that nobody has classified
+it yet.
+
+### 1. Establish that it really is unrecorded
+
+Look the repository up by name in the registry. Absent from both lists means undecided.
+Present in either means the decision already exists — follow it, and if it looks wrong,
+report that rather than re-deciding it yourself.
+
+### 2. Ask the owner
+
+**Do not decide membership on the owner behalf.** Put the question plainly, with what you
+observed and what you would recommend:
+
+- what the repository appears to be — website, application, service, shared library, or
+  none of those
+- whether it has a live surface
+- whether it reads as an ecosystem surface or as a learning exercise, experiment, or
+  one-off
+
+Recommend an answer; do not act on the recommendation until it is confirmed. A repository
+that is a member gains real obligations, and one that is not should never acquire them
+through an agent assumption.
+
+### 3. Record the answer
+
+Both answers are results, and both are recorded — an unrecorded "no" is
+indistinguishable from never having asked, which is the condition this phase exists to
+remove.
+
+- **Covered** → add it to `repositories` with its role, surface, adoption state, and
+  the date of the decision.
+- **Not covered** → add it to `excluded` with the reason and the date.
+
+This is a change to the governance repository and follows its own branching rules
+([MAINTENANCE.md](../MAINTENANCE.md), [standards/BRANCHING.md](../standards/BRANCHING.md)).
+Raise it as a pull request; do not commit the registry change directly.
+
+### 4. Then continue — or stop
+
+- **Covered** → continue to Phase 1. Registration is not onboarding: the repository still
+  has no `AGENTS.md` or `GOVERNANCE.md` until that work is done, and that work is
+  scoped separately (Article 9).
+- **Not covered** → add the non-member `GOVERNANCE.md` from
+  [REPOSITORY_ONBOARDING.md](REPOSITORY_ONBOARDING.md), then stop. Governance does not
+  bind the repository; that file states exactly that, points at governance, and dates the
+  check ([standards/REPOSITORY.md](../standards/REPOSITORY.md)). Add nothing else — no
+  `AGENTS.md`, and no other requirement from that standard.
+
+### Running it across the account
+
+The same decision applies at account scale: list every repository under the account,
+compare against the registry, and treat every name in neither list as undecided, through
+steps 2–4. Record the date of the reconciliation itself, so the next run knows how far
+back it is looking.
+
+The expected finding is repositories created since the last reconciliation. Finding none
+is also a result worth dating.
+
+---
+
 ## Phase 1 — Assess
 
 Change nothing during this phase.

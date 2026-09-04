@@ -70,6 +70,7 @@ Agents: read [AGENTS.md](AGENTS.md) first, then follow
 - **Surface:** <live URL, or "none">
 - **Production branch:** `main`
 - **Development branch:** `development`
+- **Last verified against governance:** <ISO 8601 UTC, e.g. 2026-09-04T19:55:10Z>
 
 ## Especially applicable
 
@@ -168,6 +169,38 @@ This is a change to the governance repository and follows its own branching rule
 - [ ] `claude-review.yml` present and `CLAUDE_CODE_OAUTH_TOKEN` set
 - [ ] Registered in `schemas/ecosystem.yaml`
 - [ ] Nothing from governance or the design system was copied in
+
+---
+
+## Template — Repositories Governance Does Not Cover
+
+A repository decided **out** of the ecosystem still carries `GOVERNANCE.md`
+([standards/REPOSITORY.md](../standards/REPOSITORY.md)). It carries only this file — no
+`AGENTS.md`, and no other requirement from that standard. Used from
+[REPOSITORY_ALIGNMENT.md](REPOSITORY_ALIGNMENT.md), Phase 0, step 4.
+
+```markdown
+# Governance
+
+This repository is **not** covered by
+[HarithKavish Governance](https://github.com/HarithKavish/harithkavish-governance).
+
+That is a recorded decision rather than an oversight — this repository is listed under
+`excluded` in
+[schemas/ecosystem.yaml](https://github.com/HarithKavish/harithkavish-governance/blob/main/schemas/ecosystem.yaml).
+
+Nothing here is bound by the ecosystem standards. The general structure they describe —
+a README that explains the repository, a description that says what it is, no committed
+secrets — is still worth following, and anyone extending this repository is better off
+reading them than inventing an alternative.
+
+- **Reason it is not covered:** <one line: coursework, experiment, scratch, superseded>
+- **Last checked against governance:** <ISO 8601 UTC>
+
+Re-checking means confirming the reason still holds and updating the date. If it no
+longer holds, the membership decision is reopened under
+[REPOSITORY_ALIGNMENT.md](https://github.com/HarithKavish/harithkavish-governance/blob/main/protocols/REPOSITORY_ALIGNMENT.md), Phase 0.
+```
 
 ---
 
