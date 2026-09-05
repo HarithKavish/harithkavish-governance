@@ -32,6 +32,22 @@ Format, newest first:
 
 ---
 
+## 2026-09-05T23:04:22Z — Signed commits, agent learning, and helping the actor you work for
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** standards/SECURITY.md requires commits to be signed;
+  standards/AGENT_ENVIRONMENT.md gains What The Agent Has Learned and Helping The Actor
+  You Work For.
+- **Why:** the owner observed that agent commits carry no verified badge. Measured: the
+  machine has no GPG or SSH keys and no signing config, so every agent commit is
+  verified=false, reason=unsigned. The verified ones are merge commits GitHub signs
+  server-side. Identity claims who acted; only a signature makes the claim checkable,
+  which is what the identity rules added earlier were missing. Separately, the owner
+  observed this agent repeatedly reaching for approaches it had already seen fail in the
+  same session -- so recording and consulting operational lessons is now required rather
+  than left to habit.
+
+
 ## 2026-09-05T22:06:46Z — Enforcement register, concern index, and the first rung-4 check
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)

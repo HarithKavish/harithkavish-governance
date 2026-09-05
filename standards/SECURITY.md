@@ -109,6 +109,23 @@ Two failures this prevents, both of which fragment the record the rule above pro
 If an actor appears to need a second identity, the need is usually for a *permission*
 scope, and that is granted against the one identity rather than around it.
 
+**A commit is signed.** An identity *claims* who acted; a signature is what makes the
+claim checkable. An unsigned commit carries an author field anyone can set to anything,
+which is the exact failure the rules above try to prevent — a borrowed or mistyped
+identity is indistinguishable from a real one until something proves it.
+
+- Humans and agents both sign. An agent is not exempt for being automated; it is the actor
+  most likely to be running on a machine somebody else configured.
+- A signing key belongs to one actor, like the identity it proves.
+- Where an agent cannot register its own key — the common case, since registration is an
+  account operation — it generates the key, signs with it, and reports the public key for
+  the owner to register. Commits signed before registration verify **retroactively** once
+  the key is added, so signing early is never wasted.
+
+*Rung 2.* Nothing requires a signature today; requiring signed commits is a
+branch-protection setting, and therefore rung 4
+([GOVERNANCE_HIERARCHY.md](../GOVERNANCE_HIERARCHY.md)).
+
 **Credentials are used, never moved.** An agent does not print, log, commit, echo, or
 transmit a credential — including into a file it is writing, a commit message, or a
 message to a service. If a task appears to require exposing one, that is the wrong
