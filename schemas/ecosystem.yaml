@@ -11,8 +11,8 @@
 # Adding or changing an entry is a governance change (MAINTENANCE.md).
 
 schema_version: 2
-updated: 2026-09-05
-last_account_reconciliation: 2026-09-05
+updated: 2026-09-06
+last_account_reconciliation: 2026-09-06
 
 ecosystem:
   name: HarithKavish
@@ -92,16 +92,6 @@ repositories:
       BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
       follow-up. Content-only; accepted as a one-off, not a precedent.
 
-  - name: harith-design-system
-    role: shared-library
-    adoption: retired
-    last_checked: 2026-09-05
-    superseded_by: design-system
-    notes: >-
-      Holds a pointer README only. Do not consume. 2026-09-03: an automated rollout
-      committed a workflow permissions fix (claude-review.yml, id-token:write) directly
-      to main, bypassing branch+PR — a BRANCHING.md deviation. Content-only; accepted
-      as a one-off, not a precedent.
 
   - name: harithkavish.github.io
     role: website
