@@ -187,15 +187,27 @@ quietly assumed away. **Measured 2026-09-05 across 26 covered repositories.**
 `claude-review.yml` and that it reviews each pull request. It does not, in 15 of
 26 repositories, and has not for some time. Two causes:
 
-1. **Missing `permissions: id-token: write` — 11 repositories.** The action cannot
-   fetch an OIDC token and fails. This exact trap is *documented in DEVELOPMENT.md itself*,
-   and a rollout on 2026-09-03 was meant to close it. It closed it in some repositories and
-   not others, and nothing detected the difference. One repository, `realmora`,
-   was given the broken version afterwards by an agent copying an existing repository's
-   workflow as the standard tells it to — the copied source was one of the unfixed ones.
-2. **A second cause affecting repositories that do have the permission.** Probable cause is
-   a missing or expired `CLAUDE_CODE_OAUTH_TOKEN` secret. Unconfirmed: repository
-   secrets cannot be read through the API, so this is stated as probable rather than known.
+1. **Missing `permissions: id-token: write` — was 11 repositories, now 1.** The
+   action could not fetch an OIDC token and failed. This exact trap is *documented in
+   DEVELOPMENT.md itself*, and a rollout on 2026-09-03 was meant to close it — it closed it
+   in fifteen repositories, missed eleven, and nothing detected the difference. One of the
+   eleven, `realmora`, was given the broken version *afterwards* by an agent
+   copying an existing repository's workflow exactly as the standard instructs; the
+   repository it copied was one of the unfixed ones.
+
+   **Fixed 2026-09-05 in ten repositories**, verified by the error changing rather than by
+   assuming: the OIDC failure is gone. `account` is deliberately not fixed — its
+   `development` branch carries unmerged feature work, and promoting it to ship a
+   one-line permission fix would ship that too.
+
+2. **A second cause, still open, affecting every repository including the ten just fixed.**
+   With the permission in place the action now authenticates and then fails inside
+   execution (`result is_error:true`). Probable cause is a missing or invalid
+   `CLAUDE_CODE_OAUTH_TOKEN` secret. Stated as probable, not known: repository
+   secrets cannot be read through the API, so only the account owner can confirm it.
+
+   **The automated review is therefore still not working anywhere.** Fixing the first cause
+   moved the failure, not removed it.
 
 Two lessons are worth keeping, because they generalise beyond this failure:
 

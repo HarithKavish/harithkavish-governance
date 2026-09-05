@@ -32,6 +32,18 @@ Format, newest first:
 
 ---
 
+## 2026-09-05T23:13:17Z — Automated review: first cause fixed, second cause isolated
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** GOVERNANCE_HIERARCHY.md enforcement register updated with the measured
+  result. Ten repositories received the missing workflow permission (a repository change,
+  landed through each repository's own branching flow, not as part of a governance change).
+- **Why:** the register must reflect reality or it is worse than absent. The OIDC failure
+  is genuinely gone, verified by the error changing rather than assumed. A second cause
+  remains and the automated review still does not work anywhere, which the register now
+  says plainly rather than implying the problem was solved.
+
+
 ## 2026-09-05T23:04:22Z — Signed commits, agent learning, and helping the actor you work for
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)
