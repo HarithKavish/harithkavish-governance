@@ -46,9 +46,13 @@ is worse than a missing one because nobody thinks to question it.
 - An agent commits under an identity that names that agent, and does not inherit whatever
   identity the machine it runs on happens to be configured with
   ([AGENT_ENVIRONMENT.md](AGENT_ENVIRONMENT.md)).
-- A co-authorship trailer is an addition to correct attribution, never a substitute for
-  it. A trailer in the body does not correct a wrong author field, because tooling and
-  readers use the author field.
+- A co-authorship trailer credits a contributor who is **not** the author — the usual
+  case being a human authoring work an agent did. It is an addition to correct
+  attribution, never a substitute for it: a trailer in the body does not correct a wrong
+  author field, because tooling and readers use the author field.
+- **Where the actor is already the author, the trailer is omitted.** Naming the same actor
+  twice, often under two different addresses, reads as two contributors rather than one
+  and makes the record less clear than no trailer at all.
 
 ## Pull Requests
 

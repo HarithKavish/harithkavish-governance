@@ -32,6 +32,15 @@ Format, newest first:
 
 ---
 
+## 2026-09-05T21:08:11Z — Omit the co-author trailer when the actor is the author
+- **Actor:** Claude Opus 5 (agent), acting for the repository owner
+- **Change:** standards/DEVELOPMENT.md, Commits.
+- **Why:** the owner observed a commit naming Claude as both author and co-author, under
+  two different addresses. The trailer exists to credit a contributor who is not the
+  author; once the agent authors its own commits the trailer credits the same actor twice
+  and reads as two contributors. Disclosure is already served, more strongly, by the
+  author field.
+
 ## 2026-09-05T21:03:01Z — Changelog and actor attribution
 - **Actor:** Claude Opus 5 (agent), acting for the repository owner
 - **Change:** this file; the append-and-record rule in MAINTENANCE.md; commit attribution
