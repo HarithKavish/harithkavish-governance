@@ -122,6 +122,28 @@ identity is indistinguishable from a real one until something proves it.
   the owner to register. Commits signed before registration verify **retroactively** once
   the key is added, so signing early is never wasted.
 
+**A signature alone is not enough — the platform must be able to resolve the commit to
+the account holding the key**, which it does by email address. An agent identity that is
+deliberately not an account on that platform — the usual case, and the correct one under
+the rule above — therefore cannot verify on its own, however valid its signature is. The
+platform reports this as an unknown key, which reads like a key problem and is not one.
+
+The resolution is the split version control already provides:
+
+| Field | Who | Why |
+|---|---|---|
+| **Author** | the agent | it wrote the change |
+| **Committer** | the account whose credentials applied and pushed it | it is what the signature and the platform attest |
+
+Both are true, attribution to the agent survives, and the signature verifies. This is not a
+workaround: author and committer are separate fields precisely because whoever wrote a
+change and whoever applied it are not always the same person, and for agent work they
+routinely are not.
+
+An agent that still cannot produce a verifiable commit says so, rather than leaving the
+impression its commits are attested when they are not
+([AGENT_ENVIRONMENT.md](AGENT_ENVIRONMENT.md)).
+
 *Rung 2.* Nothing requires a signature today; requiring signed commits is a
 branch-protection setting, and therefore rung 4
 ([GOVERNANCE_HIERARCHY.md](../GOVERNANCE_HIERARCHY.md)).

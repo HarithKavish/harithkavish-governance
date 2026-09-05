@@ -32,6 +32,19 @@ Format, newest first:
 
 ---
 
+## 2026-09-05T23:36:04Z — Record why a signature alone does not verify an agent commit
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** standards/SECURITY.md, the signing rule.
+- **Why:** the signing key was registered correctly as a signing key with a matching
+  fingerprint, and commits still reported unknown_key. Cause: the platform resolves a
+  commit to an account by email, and the agent email belongs to no account, so it never
+  looks at the owner keys at all. The misleading part is that it reports a key problem.
+  Recorded with the resolution -- author is the agent, committer is the account whose
+  credentials applied it -- so the next agent does not spend the same round-trips
+  rediscovering it.
+
+
 ## 2026-09-05T23:13:17Z — Automated review: first cause fixed, second cause isolated
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)
