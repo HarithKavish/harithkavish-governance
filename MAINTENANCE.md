@@ -141,6 +141,21 @@ No category of governance change is exempt. A typo fix in a standard updates it 
 because a repository cannot know the edit was cosmetic without reading the diff, and
 sparing it that reading is the entire purpose of the timestamp.
 
+### Every Change Is Recorded, With Its Actor
+
+[CHANGELOG.md](CHANGELOG.md) records what changed, when, and **who** changed it —
+including whether the actor was a human or an agent. Every governance change appends an
+entry, in the same change, alongside the timestamp above.
+
+Git history already records the change. It does not reliably record the *actor*: an
+author field carries whatever identity the committing machine was configured with, which
+is not always who acted. Nor does it record the decision — the diff shows what moved, not
+what it was for. The changelog carries both, stated deliberately rather than inferred.
+
+The file is **append only**. An entry is not edited or removed once written, including a
+wrong one; a correction is a new entry naming what it corrects. Only the repository owner
+may alter history there. Nothing enforces that yet — see the rung note in the file itself.
+
 ### Before committing a governance change
 
 - [ ] The requirement is not already covered elsewhere.
@@ -154,6 +169,8 @@ sparing it that reading is the entire purpose of the timestamp.
       [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md) under "Introducing a New Category".
 - [ ] [schemas/governance.yaml](schemas/governance.yaml) carries this change's
       timestamp, set in this change and not deferred.
+- [ ] [CHANGELOG.md](CHANGELOG.md) has an entry for this change, naming the actor and
+      whether it was a human or an agent.
 - [ ] Links resolve, and nothing points at something that was removed.
 - [ ] If it is not yet enforced, it does not claim to be
       ([GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md)).

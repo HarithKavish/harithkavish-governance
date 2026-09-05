@@ -37,6 +37,19 @@ work is incomplete, it stays on its branch.
 
 Commit messages are the only durable record of *why*. The diff already shows what.
 
+**A commit names who actually made it.** The author identity on a commit is the actor
+that performed the work — not the machine's default, not a shared bot account, and not
+another person or agent. Attribution is how a change is traced later, and a wrong author
+is worse than a missing one because nobody thinks to question it.
+
+- A human commits as themselves.
+- An agent commits under an identity that names that agent, and does not inherit whatever
+  identity the machine it runs on happens to be configured with
+  ([AGENT_ENVIRONMENT.md](AGENT_ENVIRONMENT.md)).
+- A co-authorship trailer is an addition to correct attribution, never a substitute for
+  it. A trailer in the body does not correct a wrong author field, because tooling and
+  readers use the author field.
+
 ## Pull Requests
 
 Every merge into `development` or `main` goes through a pull request

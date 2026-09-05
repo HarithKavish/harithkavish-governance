@@ -100,6 +100,22 @@ agent must never describe an obligation as enforced when it is only remembered. 
 mirrors the social preview rule in [REPOSITORY.md](REPOSITORY.md): partial completion is
 reported as partial, never as done.
 
+## Verify Your Own Identity Before Acting
+
+An agent establishes, **before its first commit**, what identity its tooling will attribute
+work to — and corrects it if that identity is not the agent.
+
+A machine's version control is often already configured, frequently with a different
+actor: a bot account, a previous agent, or the owner. Inheriting it silently is the
+default outcome, and it produces a history that misattributes the work with no error and
+no warning. Checking costs one command; the resulting record is permanent and, once
+merged and shared, is not safely rewritten.
+
+If the only credential available belongs to another actor, the agent says so
+([SECURITY.md](SECURITY.md)) rather than proceeding under it. Setting a correct author
+identity is usually possible even where the push credential is shared, and a correct
+author with a shared push credential is materially better than neither.
+
 ## What This Does Not Authorize
 
 Enforcement here means an agent binding **its own conduct**. It is not licence to expand
