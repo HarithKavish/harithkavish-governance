@@ -94,6 +94,7 @@ Route from the task, not from the directory listing:
 | A repository under the account that is in no registry list at all | [protocols/REPOSITORY_ALIGNMENT.md](protocols/REPOSITORY_ALIGNMENT.md) § Phase 0 |
 | Adding or changing a governance rule — deciding where it belongs | [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md), then [MAINTENANCE.md](MAINTENANCE.md) |
 | The agent's own environment — its governance copy, when it last checked, how it enforces | [standards/AGENT_ENVIRONMENT.md](standards/AGENT_ENVIRONMENT.md) |
+| Answering a question that spans documents, rather than doing a task | [CONCERNS.md](CONCERNS.md) |
 | Two rules appear to conflict | [GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md) |
 
 `standards/BRANCHING.md` is effectively always in scope, because every task ends in a

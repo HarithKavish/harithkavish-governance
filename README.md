@@ -108,6 +108,7 @@ extend higher tiers; they never silently contradict them.
 | [AGENT_BOOTSTRAP.md](AGENT_BOOTSTRAP.md) | How an agent begins work. The entry point. |
 | [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md) | Where a new requirement belongs. The routing layer. |
 | [MAINTENANCE.md](MAINTENANCE.md) | How governance itself changes, without bloating. |
+| [CONCERNS.md](CONCERNS.md) | How the documents join up per topic. For answering questions. |
 | [CHANGELOG.md](CHANGELOG.md) | What changed here, when, and by whom. Append only. |
 
 ### Standards — what "correct" means

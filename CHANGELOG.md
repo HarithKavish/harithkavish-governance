@@ -32,6 +32,21 @@ Format, newest first:
 
 ---
 
+## 2026-09-05T22:06:46Z — Enforcement register, concern index, and the first rung-4 check
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** GOVERNANCE_HIERARCHY.md gains a measured enforcement register; new
+  CONCERNS.md assembles the tiers per topic for answering questions; new
+  .github/pull_request_template.md requires the classification before the diff is read;
+  new .github/workflows/doctrine-size.yml enforces the doctrine budget in CI.
+- **Why:** governance had no honest account of what it actually enforces, and measuring
+  found the answer was close to nothing: 0 of 26 repositories protect main, 0 have
+  CODEOWNERS, 0 carry the required social preview, and the single automated mechanism was
+  failing in 15 of 26 with nobody aware. Classification and doctrine size were both
+  self-attested rules that had already been broken while written down, so both moved onto
+  rungs where forgetting is not enough.
+
+
 ## 2026-09-05T21:37:27Z — Governance reaches actors everywhere, repositories by membership
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)

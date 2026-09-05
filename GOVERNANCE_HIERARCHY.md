@@ -162,5 +162,51 @@ visible rather than assumed. Moving a rule down the ladder is a governance impro
 does not require the rule itself to change — which is why rules are written as outcomes
 rather than as instructions to a particular tool.
 
-Initial enforcement targets, not yet implemented: protected production branches, required
-pull requests, and automated repository-metadata and design-system validation.
+## What Is Actually Enforced
+
+Governance is about doing and enforcing, not about having written something down. This
+section records the gap between the two, measured rather than assumed, so it cannot be
+quietly assumed away. **Measured 2026-09-05 across 26 covered repositories.**
+
+| Rule | Written in | Rung | Reality |
+|---|---|---|---|
+| Production branch protected | BRANCHING | 2 | **0/26 protected.** Work went straight to `main` in 20 repositories; `development` and `runway` had diverged and were unused |
+| Changes reach `main` via pull request | BRANCHING, DEVELOPMENT | 2 | Nothing requires it. The flow holds only where someone follows it |
+| Automated review on every PR | DEVELOPMENT | 3, degraded | **Failing in 15/26.** See below — the one automated mechanism, broken and unnoticed |
+| Repository metadata complete | REPOSITORY | 2 | **0/26 carry `.github/social-preview.png`**, which the standard requires |
+| Changelog append-only, owner-restricted | MAINTENANCE, CHANGELOG | 2 | **0/26 have CODEOWNERS.** Anyone with write access can edit or delete history |
+| Classify before writing governance | MAINTENANCE, GOVERNANCE_MAP | 2 → 3 | Was self-attested; a pull request template now requires the classification to be stated |
+| Doctrine stays approximately its size | MAINTENANCE | 2 → 4 | Grew 860 → 1017 words in one day *with the rule in place*. Now checked in CI |
+| Deployment declared in a workflow | DEPLOYMENT | 2 | 11 of 13 migrated; nothing prevents reverting a repository to a branch source |
+| Design foundations not redefined locally | DESIGN_SYSTEM | 2 | No token or component validation exists |
+| Actor identity and provenance | SECURITY, DEVELOPMENT | 2 | Nothing validates a commit author or an `Initiated-By` trailer |
+
+### The automated review is broken
+
+`DEVELOPMENT.md` states that every member repository carries
+`claude-review.yml` and that it reviews each pull request. It does not, in 15 of
+26 repositories, and has not for some time. Two causes:
+
+1. **Missing `permissions: id-token: write` — 11 repositories.** The action cannot
+   fetch an OIDC token and fails. This exact trap is *documented in DEVELOPMENT.md itself*,
+   and a rollout on 2026-09-03 was meant to close it. It closed it in some repositories and
+   not others, and nothing detected the difference. One repository, `realmora`,
+   was given the broken version afterwards by an agent copying an existing repository's
+   workflow as the standard tells it to — the copied source was one of the unfixed ones.
+2. **A second cause affecting repositories that do have the permission.** Probable cause is
+   a missing or expired `CLAUDE_CODE_OAUTH_TOKEN` secret. Unconfirmed: repository
+   secrets cannot be read through the API, so this is stated as probable rather than known.
+
+Two lessons are worth keeping, because they generalise beyond this failure:
+
+- **A documented trap is not a closed trap.** The failure mode was written down, and the
+  written warning did not prevent eleven repositories from having it.
+- **Copy-an-existing-repository is only as good as the repository copied.** The instruction
+  to reuse a working workflow assumed the existing ones were working. Nothing checked.
+
+### Why the gap is recorded rather than resolved
+
+A rule at rung 1–2 is guidance. Recording the distance to rung 3–4 is what stops the
+ecosystem from believing it has enforcement it does not have — which is more dangerous
+than knowing it has none, because nobody looks. This table is expected to change as rules
+descend the ladder; an entry that has not moved in a long time is itself information.
