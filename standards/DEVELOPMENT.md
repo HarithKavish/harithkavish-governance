@@ -46,6 +46,28 @@ is worse than a missing one because nobody thinks to question it.
 - An agent commits under an identity that names that agent, and does not inherit whatever
   identity the machine it runs on happens to be configured with
   ([AGENT_ENVIRONMENT.md](AGENT_ENVIRONMENT.md)).
+**A commit says where it came from.** Attribution names *who*; provenance names *why it
+happened* — whether someone asked for this, whether it was scheduled, or whether the actor
+decided on its own. Reading a history later, the difference matters more than the diff:
+work nobody requested is held to a different standard of scrutiny than work that was.
+
+Recorded as a trailer, so it stays machine-readable and out of the subject line, which
+still describes the effect:
+
+| Origin | Trailer |
+|---|---|
+| Someone asked for it | `Initiated-By: <their handle>` |
+| Recurring or scheduled work | `Initiated-By: schedule (<which>)` |
+| The actor decided on its own | `Initiated-By: autonomous` |
+
+This applies to humans and agents alike. A person committing work they were asked to do
+records who asked, for the same reason an agent does.
+
+`Initiated-By: autonomous` is the one that must be honest. An agent that roams a
+repository, forms its own view and changes something has done something qualitatively
+different from an agent carrying out an instruction, and labelling it as requested to make
+it look sanctioned is worse than the autonomy itself. If nobody asked, say nobody asked.
+
 **Co-authorship means the commit genuinely contains two actors' work.** The trailer
 names someone whose changes are *in this commit* but who is not its author — the real case
 being that one actor took another's work, changed it, and committed the combined result

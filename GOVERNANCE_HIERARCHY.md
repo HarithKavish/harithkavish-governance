@@ -31,6 +31,44 @@ document it serves.
 
 ---
 
+## Scope — Who A Rule Binds
+
+Authority answers *which rule wins*. Scope answers a different question: *does this rule
+reach here at all*. A repository outside the ecosystem is not outside every rule.
+
+Governance divides in two (Article 1):
+
+| | Binds | Reaches |
+|---|---|---|
+| **Actor rules** | How a person or an agent behaves | Every repository under the account, participating or not |
+| **Repository rules** | What a repository contains, how it is built, how it ships | Participating repositories only |
+
+**The test:** would the rule still make sense if the repository did not exist?
+
+- *An actor uses its own identity* — yes. It is about the actor. **Universal.**
+- *Every repository carries a social preview image* — no. It is about the repository.
+  **Membership only.**
+
+Actor rules are the ones that survive the repository: identity and credentials, how work
+is attributed and where it came from, discovering what applies before modifying, staying
+within the scope given, and not committing a secret. Repository rules are the visible
+requirements — the design system, the branching flow, deployment, metadata, the registry
+entry, the onboarding files.
+
+**Why the split exists.** A learning exercise does not need a social preview image or the
+shared design system, and requiring them would be ceremony nobody benefits from. But an
+agent working in that same repository still needs to identify itself honestly, still needs
+to say who asked for the change, and still must not commit a credential — none of which
+becomes optional because the repository is small. The old model made non-participation
+mean *no rules at all*, which quietly put the least-supervised repositories furthest
+outside every safeguard.
+
+A non-participating repository may therefore **ignore repository rules** and is expected
+to. It may not ignore actor rules, and an actor cannot acquire an exemption by choosing to
+work somewhere unregistered.
+
+---
+
 ## Precedence
 
 **Higher tiers constrain lower tiers.** A lower tier may:

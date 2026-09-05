@@ -49,8 +49,15 @@ The repository belongs to the HarithKavish ecosystem if **any** of these hold:
 - The remote is under the `HarithKavish` GitHub account **and** the repository is a
   website, application, or shared library.
 
-If membership is genuinely unclear, ask. Do not apply ecosystem governance to a
-repository that is not in the ecosystem.
+If membership is genuinely unclear, ask.
+
+**Membership decides which rules reach the repository, not whether any do.** A
+repository outside the ecosystem is exempt from the *repository* rules — the design
+system, the branching flow, deployment, metadata. It is not exempt from the *actor*
+rules, and neither are you: identity, attribution and provenance, discovery before
+modification, staying in scope, and never committing a secret apply wherever you are
+working under this account. See
+[GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md) for the split and the test.
 
 **If the repository is under the account but appears nowhere in the registry** — neither
 as a participant nor as an excluded one — then its membership has never been decided.

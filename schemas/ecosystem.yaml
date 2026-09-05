@@ -41,7 +41,8 @@ adoption:
   integrated:  AGENTS.md and GOVERNANCE.md present and pointing at governance.
   aligned:     Integrated, and no known outstanding compliance gaps.
   retired:     No longer active. Retained for history or as a pointer.
-  excluded:    Not an ecosystem surface. Governance does not apply.
+  excluded:    Not an ecosystem surface. The repository rules do not apply; the actor
+               rules still do, for anyone working here. See GOVERNANCE_HIERARCHY.md.
 
 # The membership test is defined in AGENT_BOOTSTRAP.md, step 3. This file is one of its
 # inputs, not a second copy of it.

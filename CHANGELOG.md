@@ -32,6 +32,21 @@ Format, newest first:
 
 ---
 
+## 2026-09-05T21:37:27Z — Governance reaches actors everywhere, repositories by membership
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** Article 1 gains the scope clause; GOVERNANCE_HIERARCHY.md gains a Scope
+  section defining actor rules vs repository rules and the test between them;
+  standards/DEVELOPMENT.md gains commit provenance (Initiated-By). Four places that said
+  the opposite were repaired in the same change: AGENT_BOOTSTRAP.md step 3, the
+  non-member GOVERNANCE.md template, the excluded vocabulary in schemas/ecosystem.yaml,
+  and standards/REPOSITORY.md.
+- **Why:** non-participation used to mean no rules at all, which put the least supervised
+  repositories furthest outside every safeguard. A learning exercise genuinely does not
+  need a social preview image or the design system; an agent working in it still needs to
+  identify itself honestly, say who asked, and not commit a credential.
+
+
 ## 2026-09-05T21:14:22Z — One identity per actor, and what co-authorship means
 - **Actor:** Claude (agent), acting for the repository owner
 - **Change:** standards/SECURITY.md gains one-identity-per-actor and use-the-official-one;

@@ -19,6 +19,15 @@ humans, and agents operate within this ecosystem. Where a repository's local pra
 conflicts with governance, governance prevails. A document at a lower tier may extend a
 higher tier but may never silently contradict it.
 
+Its reach is not uniform. Rules that bind an **actor** — how a person or an agent
+identifies itself, attributes what it does, and discovers what applies before changing
+anything — hold wherever that actor works under this account, whether or not the
+repository participates. Rules that bind a **repository** — what it must contain, how it
+is built, how it reaches production — hold for participating repositories only.
+
+Non-participation excuses a repository from the ecosystem's requirements. It does not
+excuse anyone working in it from behaving accountably.
+
 Authority tiers and conflict resolution are defined in
 [GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md).
 
