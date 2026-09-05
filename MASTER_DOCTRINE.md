@@ -56,7 +56,8 @@ than re-invented elsewhere. Boundaries and promotion criteria live in
 
 Every participating repository is self-describing. Without opening a single source file,
 a human or an agent must be able to learn what the repository is, what it is for, where
-it fits in the ecosystem, which governance applies to it, and how to begin work in it.
+it fits in the ecosystem, which governance applies to it, how it reaches production,
+and how to begin work in it.
 
 A repository that cannot be understood from its own surface is non-compliant regardless
 of the quality of the code inside it.

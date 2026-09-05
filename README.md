@@ -116,6 +116,7 @@ extend higher tiers; they never silently contradict them.
 | [AGENT_ENVIRONMENT](standards/AGENT_ENVIRONMENT.md) | The agent's own setup: its governance copy, its checks, its enforcement |
 | [BRANCHING](standards/BRANCHING.md) | Branch model, flow, naming, the hotfix exception |
 | [DESIGN_SYSTEM](standards/DESIGN_SYSTEM.md) | Shared vs. local components, and promotion back |
+| [DEPLOYMENT](standards/DEPLOYMENT.md) | How a surface reaches production, and what gets tagged |
 | [DEVELOPMENT](standards/DEVELOPMENT.md) | Changes, commits, dependencies, testing |
 | [IDENTITY](standards/IDENTITY.md) | Who owns identity, and what an application may hold |
 | [REPOSITORY](standards/REPOSITORY.md) | Description, social preview, README, structure |
