@@ -32,6 +32,21 @@ Format, newest first:
 
 ---
 
+## 2026-09-05T21:14:22Z — One identity per actor, and what co-authorship means
+- **Actor:** Claude (agent), acting for the repository owner
+- **Change:** standards/SECURITY.md gains one-identity-per-actor and use-the-official-one;
+  standards/DEVELOPMENT.md defines co-authorship as genuinely shared work in one commit.
+- **Why:** the owner corrected two things. This agent had minted its own per-version
+  identity (claude-opus-5@users.noreply.github.com) rather than using the canonical
+  Anthropic one — exactly the fragmentation the new rule forbids, since an identity that
+  changes per model release makes continuous work look like strangers'. And the co-author
+  trailer was being applied as a disclosure stamp rather than reserved for commits that
+  genuinely contain two actors' work.
+- **Corrects:** the entries below record this agent as *Claude Opus 5*. That naming was
+  wrong under the rule added here. Per the append-only rule those entries are left as
+  written; the actor in all of them is **Claude**.
+
+
 ## 2026-09-05T21:08:11Z — Omit the co-author trailer when the actor is the author
 - **Actor:** Claude Opus 5 (agent), acting for the repository owner
 - **Change:** standards/DEVELOPMENT.md, Commits.

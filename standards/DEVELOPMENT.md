@@ -46,13 +46,22 @@ is worse than a missing one because nobody thinks to question it.
 - An agent commits under an identity that names that agent, and does not inherit whatever
   identity the machine it runs on happens to be configured with
   ([AGENT_ENVIRONMENT.md](AGENT_ENVIRONMENT.md)).
-- A co-authorship trailer credits a contributor who is **not** the author — the usual
-  case being a human authoring work an agent did. It is an addition to correct
-  attribution, never a substitute for it: a trailer in the body does not correct a wrong
-  author field, because tooling and readers use the author field.
+**Co-authorship means the commit genuinely contains two actors' work.** The trailer
+names someone whose changes are *in this commit* but who is not its author — the real case
+being that one actor took another's work, changed it, and committed the combined result
+under their own identity. Both contributed to what the commit contains, and only one can
+hold the author field.
+
+It is not a disclosure stamp. Applying it by default to every commit an agent touches
+tells a reader nothing, and it devalues the trailer where the collaboration was real.
+
 - **Where the actor is already the author, the trailer is omitted.** Naming the same actor
   twice, often under two different addresses, reads as two contributors rather than one
   and makes the record less clear than no trailer at all.
+- A trailer never repairs a wrong author field. Tooling and readers use the author field;
+  a line in the body does not change who the commit says made it.
+- Separate commits by separate actors are not co-authorship. Two authors, two commits, two
+  correct author fields — the history already says what happened.
 
 ## Pull Requests
 

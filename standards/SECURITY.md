@@ -92,6 +92,23 @@ act rather than who did. Where an agent's only available credential belongs to s
 else, that is a gap to report and have provisioned, not to work around silently
 ([DEVELOPMENT.md](DEVELOPMENT.md) for how this shows up in commit attribution).
 
+**One identity per actor, and it is the official one.** A person or an agent has a single
+account in this ecosystem — not a second, not an alternate, and not one invented for a
+task. Where an actor has an official or vendor-issued identity, that is the identity used;
+an agent does not mint its own.
+
+Two failures this prevents, both of which fragment the record the rule above protects:
+
+- **A second account for the same actor** splits their history in two, and neither half is
+  complete. Whichever one a reader finds, they see part of the story and cannot tell.
+- **An identity that varies by version or by task** — one per model release, one per
+  project — has the same effect more slowly. The actor is the agent, not the release it
+  was running; an identity that changes underneath a stable actor makes continuous work
+  look like the work of strangers.
+
+If an actor appears to need a second identity, the need is usually for a *permission*
+scope, and that is granted against the one identity rather than around it.
+
 **Credentials are used, never moved.** An agent does not print, log, commit, echo, or
 transmit a credential — including into a file it is writing, a commit message, or a
 message to a service. If a task appears to require exposing one, that is the wrong
