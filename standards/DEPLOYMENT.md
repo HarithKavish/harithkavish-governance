@@ -79,18 +79,37 @@ than left only in the run's temporary storage — build outputs expire, releases
 
 At the time this standard was written, the ecosystem did not meet it. Of 27 covered
 repositories: **6** deployed by workflow, **13** served GitHub Pages from a branch
-setting, and **8** had no live surface. Two repositories were mid-pattern —
-`store` built in a workflow and published a branch by setting, and
-`sites` carried a Pages workflow while its Pages build type was still the
-branch source, which is either a dead workflow or an unfinished migration.
+setting, and **8** had no live surface. Two were mid-pattern — `store` built in
+a workflow and published a branch by setting, and `sites` carried a Pages
+workflow while its Pages build type was still the branch source, which is either a dead
+workflow or an unfinished migration.
 
-**Declared exception (Article 10).** Migrating all 13 at once deviates from
-[MAINTENANCE.md](../MAINTENANCE.md), which prefers changes the ecosystem absorbs
-gradually over changes that touch every repository at once. The owner chose the immediate
-migration explicitly, on 2026-09-05, having been shown the count and the risk. The
-deviation is bounded to the migration itself: the repositories change how they publish and
-nothing else. It ends when the 13 have migrated, at which point this section records the
-completed state rather than a pending one.
+**A second, distinct case: hosted-service integrations.** Three repositories
+(`account`, `forge`, `my_chatgpt`) deploy through a hosting
+provider connected directly to the repository, which builds and publishes on push without
+any workflow in the repository. This fails the same test for the same reason, and fails it
+harder: the build configuration, the environment, and the credentials all live in a
+third-party dashboard rather than in the repository, so the deployment cannot be reviewed,
+reverted, or reproduced from the repository at all. Bringing these inside the workflow
+means the provider's own git integration is disabled and the deployment is driven from a
+workflow instead.
+
+`account` is additionally deployed twice — as a project Pages site and through a
+hosting provider — with neither path declared. Which of the two is intended to be the
+live surface is itself undetermined, and is resolved before either is migrated.
+
+**Declared exception (Article 10).** Migrating the 13 branch-served repositories at
+once deviates from [MAINTENANCE.md](../MAINTENANCE.md), which prefers changes the
+ecosystem absorbs gradually over changes that touch every repository at once. The owner
+chose the immediate migration explicitly, on 2026-09-05, having been shown the count and
+the risk. The deviation is bounded to the migration itself: those repositories change how
+they publish and nothing else. It ends when they have migrated, at which point this
+section records the completed state rather than a pending one.
+
+The three hosted-service repositories are **not** covered by that decision. Moving a
+deployment off a provider's git integration changes build environment and credentials, not
+merely publication, so it is scoped and decided separately rather than folded into the
+Pages migration.
 
 Migration is **separate scoped work** and is not performed as part of adopting this
 standard ([MAINTENANCE.md](../MAINTENANCE.md): a governance change modifies no repository).
