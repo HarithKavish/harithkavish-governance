@@ -49,8 +49,15 @@ The repository belongs to the HarithKavish ecosystem if **any** of these hold:
 - The remote is under the `HarithKavish` GitHub account **and** the repository is a
   website, application, or shared library.
 
-If membership is genuinely unclear, ask. Do not apply ecosystem governance to a
-repository that is not in the ecosystem.
+If membership is genuinely unclear, ask.
+
+**Membership decides which rules reach the repository, not whether any do.** A
+repository outside the ecosystem is exempt from the *repository* rules — the design
+system, the branching flow, deployment, metadata. It is not exempt from the *actor*
+rules, and neither are you: identity, attribution and provenance, discovery before
+modification, staying in scope, and never committing a secret apply wherever you are
+working under this account. See
+[GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md) for the split and the test.
 
 **If the repository is under the account but appears nowhere in the registry** — neither
 as a participant nor as an excluded one — then its membership has never been decided.
@@ -79,6 +86,7 @@ Route from the task, not from the directory listing:
 | UI, styling, layout, components, colour, type, spacing | [standards/DESIGN_SYSTEM.md](standards/DESIGN_SYSTEM.md) |
 | Writing or restructuring code, dependencies, tests | [standards/DEVELOPMENT.md](standards/DEVELOPMENT.md) |
 | Repository metadata, description, social preview, README, structure, new files at root | [standards/REPOSITORY.md](standards/REPOSITORY.md) |
+| Deploying a surface, publishing, release tagging, build artifacts | [standards/DEPLOYMENT.md](standards/DEPLOYMENT.md) |
 | Secrets, auth, tokens, user data, third-party services, CI credentials | [standards/SECURITY.md](standards/SECURITY.md) |
 | Sign-in, accounts, user tables, provider linkage, sessions | [standards/IDENTITY.md](standards/IDENTITY.md) |
 | Creating a new repository in the ecosystem | [protocols/REPOSITORY_ONBOARDING.md](protocols/REPOSITORY_ONBOARDING.md) |
@@ -86,6 +94,7 @@ Route from the task, not from the directory listing:
 | A repository under the account that is in no registry list at all | [protocols/REPOSITORY_ALIGNMENT.md](protocols/REPOSITORY_ALIGNMENT.md) § Phase 0 |
 | Adding or changing a governance rule — deciding where it belongs | [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md), then [MAINTENANCE.md](MAINTENANCE.md) |
 | The agent's own environment — its governance copy, when it last checked, how it enforces | [standards/AGENT_ENVIRONMENT.md](standards/AGENT_ENVIRONMENT.md) |
+| Answering a question that spans documents, rather than doing a task | [CONCERNS.md](CONCERNS.md) |
 | Two rules appear to conflict | [GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md) |
 
 `standards/BRANCHING.md` is effectively always in scope, because every task ends in a

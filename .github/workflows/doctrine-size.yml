@@ -1,0 +1,57 @@
+name: Doctrine Size
+
+# MASTER_DOCTRINE.md is read on every task in the ecosystem, so every word added is
+# paid for repeatedly. MAINTENANCE.md says it should stay approximately its current
+# size -- and it grew 860 to 1017 words in a single day with that rule already written
+# down. A rule nothing checks is a rule that loses slowly.
+#
+# This is the first rung-4 enforcement in this repository. It does not judge whether
+# content belongs; it only makes growth impossible to do accidentally.
+#
+# If this fails, the fix is to move content DOWN a tier (GOVERNANCE_MAP.md), not to
+# raise the ceiling. Raising it is a governance change and needs its own justification
+# in the pull request.
+
+on:
+  pull_request:
+    paths:
+      - MASTER_DOCTRINE.md
+      - .github/workflows/doctrine-size.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  size:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the doctrine has not grown past its budget
+        run: |
+          CEILING=1100
+          WORDS=$(wc -w < MASTER_DOCTRINE.md)
+          echo "MASTER_DOCTRINE.md: ${WORDS} words (ceiling ${CEILING})"
+
+          if [ "$WORDS" -gt "$CEILING" ]; then
+            echo "::error file=MASTER_DOCTRINE.md::Doctrine is ${WORDS} words, over the ${CEILING} ceiling. Move content down a tier rather than raising the ceiling -- see GOVERNANCE_MAP.md."
+            exit 1
+          fi
+
+          # Warn well before the wall, so growth is visible while it is still cheap to
+          # reverse rather than at the moment something is blocked.
+          if [ "$WORDS" -gt 1050 ]; then
+            echo "::warning file=MASTER_DOCTRINE.md::Doctrine is ${WORDS} words, approaching the ${CEILING} ceiling. Prefer sharpening an existing article over adding one."
+          fi
+
+      - name: Check the doctrine stayed principle-only
+        run: |
+          # Article-level detail belongs in standards. These patterns are the shapes
+          # MAINTENANCE.md names as signals the doctrine is decaying: a bulleted
+          # procedure, or an article naming a tool, a file, or a branch.
+          if grep -nE '^\s*[0-9]+\. |^\s*- \[ \]|```' MASTER_DOCTRINE.md; then
+            echo "::error file=MASTER_DOCTRINE.md::The doctrine contains a procedure, a checklist, or a code block. Those belong in a standard or a protocol."
+            exit 1
+          fi
+          echo "No procedural content found."

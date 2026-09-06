@@ -17,7 +17,7 @@ future rung-4 mechanism.
 |---|---|
 | **Repository** | [HarithKavish/design-system](https://github.com/HarithKavish/design-system) |
 | **Contains** | Design tokens, component primitives, UI kits, brand guidelines |
-| **Retired** | `harith-design-system` — retained only as a pointer. Do not consume it. |
+| **Deleted** | `harith-design-system` — the former v1.0.0 repository. Retired to a pointer, then removed on 2026-09-06 once confirmed nothing consumed it. |
 
 Read the design system repository directly for current tokens and components. Any token
 value quoted outside that repository is a copy, and copies go stale.
@@ -51,6 +51,26 @@ Consume foundations through the system's tokens rather than literal values. A ha
 hex, font stack, or spacing number in a product repository is a defect even when it
 happens to match — it will not follow the next change.
 
+## Before Adding Or Changing A Design Element
+
+The question is not only whether the system already has this. It is whether anyone else
+needs it.
+
+Before a surface adds a new design element, or changes one in a way others might want:
+
+1. **Check the shared system.** If it is there, use it.
+2. **Check the other surfaces.** Would another website or application in the ecosystem
+   plausibly need the same thing? Two surfaces solving one problem separately is the
+   failure this ecosystem exists to prevent, and it is far cheaper to notice before the
+   second implementation than after.
+3. **If it is shareable, raise it in the design system** as a pull request there, and
+   consume the result. Not a local build with a note to promote it later — the note is
+   rarely acted on, and the local copy then becomes the thing that has to be removed.
+4. **If it is genuinely local, build it locally** from shared foundations, and say why.
+
+Step 2 is the one most often skipped, because it costs time before any code is written.
+It is also the only step that *prevents* duplication rather than detecting it afterwards.
+
 ## When Repository-Specific Components Are Acceptable
 
 Local components are legitimate — not a workaround — when the need is genuinely local:
@@ -62,6 +82,39 @@ Local components are legitimate — not a workaround — when the need is genuin
 
 A local component still uses shared foundations. Locality justifies a new component; it
 never justifies a new colour, type scale, or spacing scale.
+
+## Selective Opt-Out
+
+A surface may disable a **specific part** of the shared system where that part genuinely
+contradicts its own design — a console needing a denser table than the shared one, an
+application the shared shell does not fit.
+
+This is narrow, and it is not the same as redefining a foundation:
+
+- **Disable a piece, not the system.** Opting out of the shared header is a decision
+  about the header. Opting out of the token layer is a second visual identity, and needs
+  a declared exception under **Never** below.
+- **Name what is disabled and why**, in that repository's `GOVERNANCE.md` under
+  declared exceptions (Article 10). An opt-out nobody wrote down is indistinguishable
+  from drift.
+- **State what would end it.** Most opt-outs exist because the system lacks a variant.
+  That is a gap in the *system*, and recording it is what eventually closes it.
+- **Foundations survive the opt-out.** Disabling the shared table does not license a
+  local colour or type scale for the replacement.
+
+An opt-out is a declared position, not a silence. A surface that simply stops using the
+shared system without saying so has drifted, whatever the reason was.
+
+### A complete redesign is a different decision
+
+A surface deliberately outside the shared visual identity — a full redesign rather than a
+set of exceptions — is legitimate. It is a declared exception under Article 10, recorded
+in that repository's `GOVERNANCE.md`, stating what it departs from, why, and
+what would end it.
+
+What is not legitimate is arriving there by accumulation: disabling one piece, then
+another, until nothing shared is left and nobody ever decided it. A surface heading that
+way decides it deliberately and writes it down.
 
 ## When to Promote Back into the Shared System
 

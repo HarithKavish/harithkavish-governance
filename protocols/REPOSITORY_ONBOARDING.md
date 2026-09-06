@@ -189,10 +189,15 @@ That is a recorded decision rather than an oversight — this repository is list
 `excluded` in
 [schemas/ecosystem.yaml](https://github.com/HarithKavish/harithkavish-governance/blob/main/schemas/ecosystem.yaml).
 
-Nothing here is bound by the ecosystem standards. The general structure they describe —
-a README that explains the repository, a description that says what it is, no committed
-secrets — is still worth following, and anyone extending this repository is better off
-reading them than inventing an alternative.
+The ecosystem's **repository** standards do not bind this repository — the design
+system, the branching flow, deployment requirements and metadata requirements do not
+apply. The structure they describe is still worth following, and anyone extending this
+repository is better off reading it than inventing an alternative.
+
+The ecosystem's **actor** rules do still apply to anyone working here, human or agent:
+use your own identity, attribute your work and say who asked for it, find out what applies
+before changing anything, stay inside the scope you were given, and never commit a secret.
+Those hold because of who you are, not because of which repository you are in.
 
 - **Reason it is not covered:** <one line: coursework, experiment, scratch, superseded>
 - **Last checked against governance:** <ISO 8601 UTC>
