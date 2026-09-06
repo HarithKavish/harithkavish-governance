@@ -11,8 +11,8 @@
 # Adding or changing an entry is a governance change (MAINTENANCE.md).
 
 schema_version: 2
-updated: 2026-09-05
-last_account_reconciliation: 2026-09-05
+updated: 2026-09-06
+last_account_reconciliation: 2026-09-06
 
 ecosystem:
   name: HarithKavish
@@ -41,7 +41,8 @@ adoption:
   integrated:  AGENTS.md and GOVERNANCE.md present and pointing at governance.
   aligned:     Integrated, and no known outstanding compliance gaps.
   retired:     No longer active. Retained for history or as a pointer.
-  excluded:    Not an ecosystem surface. Governance does not apply.
+  excluded:    Not an ecosystem surface. The repository rules do not apply; the actor
+               rules still do, for anyone working here. See GOVERNANCE_HIERARCHY.md.
 
 # The membership test is defined in AGENT_BOOTSTRAP.md, step 3. This file is one of its
 # inputs, not a second copy of it.
@@ -92,16 +93,6 @@ repositories:
       BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
       follow-up. Content-only; accepted as a one-off, not a precedent.
 
-  - name: harith-design-system
-    role: shared-library
-    adoption: retired
-    last_checked: 2026-09-05
-    superseded_by: design-system
-    notes: >-
-      Holds a pointer README only. Do not consume. 2026-09-03: an automated rollout
-      committed a workflow permissions fix (claude-review.yml, id-token:write) directly
-      to main, bypassing branch+PR — a BRANCHING.md deviation. Content-only; accepted
-      as a one-off, not a precedent.
 
   - name: harithkavish.github.io
     role: website
@@ -321,13 +312,20 @@ repositories:
 
   - name: mcp-registry-mcp-server
     role: service
-    adoption: registered
+    adoption: integrated
     last_checked: 2026-09-05
     notes: >-
-      MCP server and editor extension. No web surface. 2026-09-03: an automated
-      rollout committed a workflow permissions fix (claude-review.yml, id-token:write)
-      directly to main, bypassing branch+PR — a BRANCHING.md deviation. Content-only;
-      accepted as a one-off, not a precedent.
+      A monorepo of real MCP (Model Context Protocol) tool packages under the
+      @harith npm scope, plus the VS Code extension and editor tooling that surfaces
+      them. No web surface. 2026-09-05 (PR #1, feature/claude -> development):
+      AGENTS.md/GOVERNANCE.md added; packages/mcp and packages/context-mcp-starter
+      migrated from a hand-rolled JSON-line stub to the real
+      @modelcontextprotocol/sdk, since neither previously spoke real MCP despite
+      being wired into contributes.mcpServers; added packages/camera-mcp
+      (capture_photo tool). 2026-09-03: an automated rollout committed a workflow
+      permissions fix (claude-review.yml, id-token:write) directly to main,
+      bypassing branch+PR — a BRANCHING.md deviation. Content-only; accepted as a
+      one-off, not a precedent.
 
   - name: harith-lab
     role: application

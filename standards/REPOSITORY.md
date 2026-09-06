@@ -138,8 +138,8 @@ that is not listed is not discoverable as a member.
 Adding the entry is part of onboarding, not an afterthought.
 
 **The registry is complete against the account.** Every repository under the ecosystem's
-account appears in it exactly once — either as a participant, or explicitly as one
-governance does not apply to. Absent is not the same as excluded: an absent repository is
+account appears in it exactly once — either as a participant, or explicitly as one the
+repository rules do not apply to. Absent is not the same as excluded: an absent repository is
 one whose membership nobody has decided yet, and it is resolved under
 [protocols/REPOSITORY_ALIGNMENT.md](../protocols/REPOSITORY_ALIGNMENT.md) rather than
 assumed either way.
@@ -165,8 +165,10 @@ records when that repository was last verified against governance, as an ISO 860
 timestamp.
 
 **This includes repositories governance does not cover.** Such a repository still carries
-the file — stating plainly that governance does not bind it, pointing at where governance
-lives, and recording when that was last confirmed. The structure defined here stays worth
+the file — stating plainly which rules do not bind it, pointing at where governance lives,
+and recording when that was last confirmed. What it is exempt from is the *repository*
+rules; the *actor* rules still bind anyone working there
+([GOVERNANCE_HIERARCHY.md](../GOVERNANCE_HIERARCHY.md)). The structure defined here stays worth
 following even where it is not required, and a reader landing in one of these cold should
 not have to guess whether it was excluded deliberately or simply never considered.
 Templates for both forms are in
