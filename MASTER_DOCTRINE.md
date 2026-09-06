@@ -19,6 +19,15 @@ humans, and agents operate within this ecosystem. Where a repository's local pra
 conflicts with governance, governance prevails. A document at a lower tier may extend a
 higher tier but may never silently contradict it.
 
+Its reach is not uniform. Rules that bind an **actor** — how a person or an agent
+identifies itself, attributes what it does, and discovers what applies before changing
+anything — hold wherever that actor works under this account, whether or not the
+repository participates. Rules that bind a **repository** — what it must contain, how it
+is built, how it reaches production — hold for participating repositories only.
+
+Non-participation excuses a repository from the ecosystem's requirements. It does not
+excuse anyone working in it from behaving accountably.
+
 Authority tiers and conflict resolution are defined in
 [GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md).
 
@@ -56,7 +65,8 @@ than re-invented elsewhere. Boundaries and promotion criteria live in
 
 Every participating repository is self-describing. Without opening a single source file,
 a human or an agent must be able to learn what the repository is, what it is for, where
-it fits in the ecosystem, which governance applies to it, and how to begin work in it.
+it fits in the ecosystem, which governance applies to it, how it reaches production,
+and how to begin work in it.
 
 A repository that cannot be understood from its own surface is non-compliant regardless
 of the quality of the code inside it.

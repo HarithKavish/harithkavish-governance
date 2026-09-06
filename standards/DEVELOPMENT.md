@@ -37,6 +37,55 @@ work is incomplete, it stays on its branch.
 
 Commit messages are the only durable record of *why*. The diff already shows what.
 
+**A commit names who actually made it.** The author identity on a commit is the actor
+that performed the work — not the machine's default, not a shared bot account, and not
+another person or agent. Attribution is how a change is traced later, and a wrong author
+is worse than a missing one because nobody thinks to question it.
+
+- A human commits as themselves.
+- An agent commits under an identity that names that agent, and does not inherit whatever
+  identity the machine it runs on happens to be configured with
+  ([AGENT_ENVIRONMENT.md](AGENT_ENVIRONMENT.md)).
+
+**A commit says where it came from.** Attribution names *who*; provenance names *why it
+happened* — whether someone asked for this, whether it was scheduled, or whether the actor
+decided on its own. Reading a history later, the difference matters more than the diff:
+work nobody requested is held to a different standard of scrutiny than work that was.
+
+Recorded as a trailer, so it stays machine-readable and out of the subject line, which
+still describes the effect:
+
+| Origin | Trailer |
+|---|---|
+| Someone asked for it | `Initiated-By: <their handle>` |
+| Recurring or scheduled work | `Initiated-By: schedule (<which>)` |
+| The actor decided on its own | `Initiated-By: autonomous` |
+
+This applies to humans and agents alike. A person committing work they were asked to do
+records who asked, for the same reason an agent does.
+
+`Initiated-By: autonomous` is the one that must be honest. An agent that roams a
+repository, forms its own view and changes something has done something qualitatively
+different from an agent carrying out an instruction, and labelling it as requested to make
+it look sanctioned is worse than the autonomy itself. If nobody asked, say nobody asked.
+
+**Co-authorship means the commit genuinely contains two actors' work.** The trailer
+names someone whose changes are *in this commit* but who is not its author — the real case
+being that one actor took another's work, changed it, and committed the combined result
+under their own identity. Both contributed to what the commit contains, and only one can
+hold the author field.
+
+It is not a disclosure stamp. Applying it by default to every commit an agent touches
+tells a reader nothing, and it devalues the trailer where the collaboration was real.
+
+- **Where the actor is already the author, the trailer is omitted.** Naming the same actor
+  twice, often under two different addresses, reads as two contributors rather than one
+  and makes the record less clear than no trailer at all.
+- A trailer never repairs a wrong author field. Tooling and readers use the author field;
+  a line in the body does not change who the commit says made it.
+- Separate commits by separate actors are not co-authorship. Two authors, two commits, two
+  correct author fields — the history already says what happened.
+
 ## Pull Requests
 
 Every merge into `development` or `main` goes through a pull request
@@ -49,10 +98,27 @@ are not doing.
 ## Automated Review
 
 Every ecosystem-member repository ([schemas/ecosystem.yaml](../schemas/ecosystem.yaml))
-carries `.github/workflows/claude-review.yml`, triggered on `pull_request: opened,
-reopened`. It reviews the diff, posts findings as a comment, and runs
-`gh pr merge --auto --squash` only when the change meets the low-risk criteria in its own
-prompt — otherwise it leaves the PR open and says why.
+carries `.github/workflows/claude-review.yml`, triggered on
+`pull_request: opened, reopened, synchronize, ready_for_review` — so pushing new
+commits to an open pull request re-reviews it automatically, rather than requiring the
+pull request to be closed and reopened.
+
+A concurrency group cancels an in-flight review when a newer push arrives. A burst of
+commits therefore costs one review of the settled state rather than one review per push,
+which matters because a review is roughly a dollar and several minutes. It reviews the diff, posts findings as a comment, and then decides on merging.
+
+**It merges into `development` when it found no correctness issues** — a reviewed
+code change may be merged on that basis, which is what the review is for. It is not limited
+to documentation.
+
+**It never merges into `runway` or `main`**, and never merges a change
+touching credentials, authentication, or secrets. Promotion to runway is a release-candidate
+gate and promotion to main is a deliberate release act
+([BRANCHING.md](BRANCHING.md)); a passing review is not authorisation to perform either.
+Credentials are excluded because a mistake there is not recoverable by reverting.
+
+Anything else stays open with the reason stated. Reviewing well and declining to merge is a
+complete outcome, not an unfinished one.
 
 Authenticates via the `CLAUDE_CODE_OAUTH_TOKEN` secret (from `claude setup-token`), not
 `ANTHROPIC_API_KEY` ([SECURITY.md](SECURITY.md)). The workflow also requires

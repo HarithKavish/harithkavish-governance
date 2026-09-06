@@ -1,0 +1,215 @@
+# Governance Changelog
+
+The record of what changed in this repository, when, and who changed it.
+
+**Append only.** Entries are added at the top. An existing entry is not edited and not
+removed, including one that turns out to be wrong — a correction is a new entry that says
+what it corrects. Only the repository owner may alter or remove history here.
+
+**Why this exists when git history already does.** Git records the change; this records
+the *decision* — what it was for, and whether a human or an agent made it. Git author
+fields also carry whatever identity the committing machine happened to be configured
+with, which is not always the actor. This file states the actor explicitly, so an
+attribution error is visible rather than silent.
+
+**Every governance change appends here, in the same change**, alongside the
+`schemas/governance.yaml` timestamp. See
+[MAINTENANCE.md](MAINTENANCE.md).
+
+**Enforcement rung: 2 (guidance).** Nothing currently prevents this file being edited or
+an entry being removed. Append-only protection and owner-restricted history are rung 3-4
+mechanisms — branch protection and CODEOWNERS — and are not configured yet. Until they
+are, this holds because it is followed.
+
+Format, newest first:
+
+```
+## YYYY-MM-DDTHH:MM:SSZ — <one-line summary>
+- **Actor:** <name> (<human | agent>)
+- **Change:** <what changed, and where>
+- **Why:** <the decision, not the diff>
+```
+
+---
+
+## 2026-09-06T01:35:33Z — Automated review may merge reviewed code, into development only
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** the review prompt in claude-review.yml, and the Automated Review section of
+  standards/DEVELOPMENT.md.
+- **Why:** the owner asked that a passing review auto-merge. The previous gate only
+  merged documentation and formatting, so a correct code change still sat waiting. Now a
+  clean review merges into development. Two carve-outs were kept deliberately and are not
+  what was asked for: runway and main are never auto-merged, because BRANCHING.md calls
+  promotion to main a deliberate release act and nothing else gates it -- with no branch
+  protection anywhere, an unrestricted rule would let a change reach production with no
+  human ever seeing it. Credentials are excluded because reverting does not undo a leak.
+
+
+## 2026-09-06T01:23:17Z — Automated review re-runs on new commits
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** claude-review.yml gains synchronize and ready_for_review triggers plus a
+  cancelling concurrency group; standards/DEVELOPMENT.md updated to match.
+- **Why:** the workflow only fired when a pull request was opened or reopened, so a
+  re-review needed a manual close/reopen. Concurrency cancellation keeps the cost bounded:
+  a burst of pushes reviews the settled state once rather than once per push.
+
+
+## 2026-09-06T01:18:11Z — Fix a Markdown lazy-continuation defect found by automated review
+- **Actor:** Claude (agent)
+- **Initiated by:** automated review on PR #23
+- **Change:** standards/DEVELOPMENT.md, blank line before the provenance paragraph.
+- **Why:** the paragraph followed a list item with no blank line, so CommonMark treats it
+  as a lazy continuation and renders it glued onto the preceding bullet. Found by the
+  automated review on its first working run after being restored -- the first defect that
+  mechanism has caught in this ecosystem.
+
+
+## 2026-09-05T23:36:04Z — Record why a signature alone does not verify an agent commit
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** standards/SECURITY.md, the signing rule.
+- **Why:** the signing key was registered correctly as a signing key with a matching
+  fingerprint, and commits still reported unknown_key. Cause: the platform resolves a
+  commit to an account by email, and the agent email belongs to no account, so it never
+  looks at the owner keys at all. The misleading part is that it reports a key problem.
+  Recorded with the resolution -- author is the agent, committer is the account whose
+  credentials applied it -- so the next agent does not spend the same round-trips
+  rediscovering it.
+
+
+## 2026-09-05T23:13:17Z — Automated review: first cause fixed, second cause isolated
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** GOVERNANCE_HIERARCHY.md enforcement register updated with the measured
+  result. Ten repositories received the missing workflow permission (a repository change,
+  landed through each repository's own branching flow, not as part of a governance change).
+- **Why:** the register must reflect reality or it is worse than absent. The OIDC failure
+  is genuinely gone, verified by the error changing rather than assumed. A second cause
+  remains and the automated review still does not work anywhere, which the register now
+  says plainly rather than implying the problem was solved.
+
+
+## 2026-09-05T23:04:22Z — Signed commits, agent learning, and helping the actor you work for
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** standards/SECURITY.md requires commits to be signed;
+  standards/AGENT_ENVIRONMENT.md gains What The Agent Has Learned and Helping The Actor
+  You Work For.
+- **Why:** the owner observed that agent commits carry no verified badge. Measured: the
+  machine has no GPG or SSH keys and no signing config, so every agent commit is
+  verified=false, reason=unsigned. The verified ones are merge commits GitHub signs
+  server-side. Identity claims who acted; only a signature makes the claim checkable,
+  which is what the identity rules added earlier were missing. Separately, the owner
+  observed this agent repeatedly reaching for approaches it had already seen fail in the
+  same session -- so recording and consulting operational lessons is now required rather
+  than left to habit.
+
+
+## 2026-09-05T22:06:46Z — Enforcement register, concern index, and the first rung-4 check
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** GOVERNANCE_HIERARCHY.md gains a measured enforcement register; new
+  CONCERNS.md assembles the tiers per topic for answering questions; new
+  .github/pull_request_template.md requires the classification before the diff is read;
+  new .github/workflows/doctrine-size.yml enforces the doctrine budget in CI.
+- **Why:** governance had no honest account of what it actually enforces, and measuring
+  found the answer was close to nothing: 0 of 26 repositories protect main, 0 have
+  CODEOWNERS, 0 carry the required social preview, and the single automated mechanism was
+  failing in 15 of 26 with nobody aware. Classification and doctrine size were both
+  self-attested rules that had already been broken while written down, so both moved onto
+  rungs where forgetting is not enough.
+
+
+## 2026-09-05T21:37:27Z — Governance reaches actors everywhere, repositories by membership
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** Article 1 gains the scope clause; GOVERNANCE_HIERARCHY.md gains a Scope
+  section defining actor rules vs repository rules and the test between them;
+  standards/DEVELOPMENT.md gains commit provenance (Initiated-By). Four places that said
+  the opposite were repaired in the same change: AGENT_BOOTSTRAP.md step 3, the
+  non-member GOVERNANCE.md template, the excluded vocabulary in schemas/ecosystem.yaml,
+  and standards/REPOSITORY.md.
+- **Why:** non-participation used to mean no rules at all, which put the least supervised
+  repositories furthest outside every safeguard. A learning exercise genuinely does not
+  need a social preview image or the design system; an agent working in it still needs to
+  identify itself honestly, say who asked, and not commit a credential.
+
+
+## 2026-09-05T21:14:22Z — One identity per actor, and what co-authorship means
+- **Actor:** Claude (agent), acting for the repository owner
+- **Change:** standards/SECURITY.md gains one-identity-per-actor and use-the-official-one;
+  standards/DEVELOPMENT.md defines co-authorship as genuinely shared work in one commit.
+- **Why:** the owner corrected two things. This agent had minted its own per-version
+  identity (claude-opus-5@users.noreply.github.com) rather than using the canonical
+  Anthropic one — exactly the fragmentation the new rule forbids, since an identity that
+  changes per model release makes continuous work look like strangers'. And the co-author
+  trailer was being applied as a disclosure stamp rather than reserved for commits that
+  genuinely contain two actors' work.
+- **Corrects:** the entries below record this agent as *Claude Opus 5*. That naming was
+  wrong under the rule added here. Per the append-only rule those entries are left as
+  written; the actor in all of them is **Claude**.
+
+
+## 2026-09-05T21:08:11Z — Omit the co-author trailer when the actor is the author
+- **Actor:** Claude Opus 5 (agent), acting for the repository owner
+- **Change:** standards/DEVELOPMENT.md, Commits.
+- **Why:** the owner observed a commit naming Claude as both author and co-author, under
+  two different addresses. The trailer exists to credit a contributor who is not the
+  author; once the agent authors its own commits the trailer credits the same actor twice
+  and reads as two contributors. Disclosure is already served, more strongly, by the
+  author field.
+
+## 2026-09-05T21:03:01Z — Changelog and actor attribution
+- **Actor:** Claude Opus 5 (agent), acting for the repository owner
+- **Change:** this file; the append-and-record rule in MAINTENANCE.md; commit attribution
+  in standards/DEVELOPMENT.md; authenticate-as-yourself in standards/SECURITY.md; verify
+  your configured identity before acting in standards/AGENT_ENVIRONMENT.md.
+- **Why:** raised after the owner noticed governance commits authored as *Jarvis*. They
+  were this agent — the VM git config named a different actor and it was inherited without
+  being checked, so roughly twenty commits across the ecosystem misattribute the work. The
+  history is not being rewritten: those commits are merged and shared, and rewriting shared
+  history is worse than the misattribution. The rules exist so the next agent checks first.
+
+## 2026-09-05T20:50:59Z — Design system: cross-surface check and declared opt-outs
+- **Actor:** Claude Opus 5 (agent), acting for the repository owner
+- **Change:** `standards/DESIGN_SYSTEM.md` gains a before-adding cross-surface
+  check and a bounded selective opt-out; `schemas/ecosystem.yaml` drops the
+  deleted `harith-design-system` entry.
+- **Why:** promotion was purely reactive, triggered only once a duplicate already existed;
+  and a surface previously had no middle ground between using a shared piece and declaring
+  a whole second identity.
+
+## 2026-09-05T19:27:18Z — Mark mcp-registry-mcp-server as integrated
+- **Actor:** HarithKavish (human)
+- **Change:** `schemas/ecosystem.yaml` adoption state and notes for that
+  repository.
+- **Why:** it was onboarded — AGENTS.md and GOVERNANCE.md added — so the registry no
+  longer matched reality.
+
+## 2026-09-05T13:09:47Z — Add the Deployment standard
+- **Actor:** Claude Opus 5 (agent), acting for the repository owner
+- **Change:** new `standards/DEPLOYMENT.md`; Article 5 extended by one item;
+  routing rows in `AGENT_BOOTSTRAP.md` and `README.md`.
+- **Why:** nothing owned what happens between `main` and a live surface, so
+  deployment could sit entirely in platform settings and be invisible to review.
+
+## 2026-09-04T20:45:14Z — Govern the agent environment
+- **Actor:** Claude Opus 5 (agent), acting for the repository owner
+- **Change:** new `standards/AGENT_ENVIRONMENT.md`; new
+  `schemas/governance.yaml`; `MAINTENANCE.md` timestamp rule.
+- **Why:** Article 1 already governed agents but nothing implemented it, and Article 2
+  assumed a repository could detect it had fallen behind when nothing let it.
+
+## 2026-09-04T18:40:00Z — Registry completeness
+- **Actor:** Claude Opus 5 (agent), acting for the repository owner
+- **Change:** Article 5 sharpened; `standards/REPOSITORY.md` registry rules;
+  `protocols/REPOSITORY_ALIGNMENT.md` Phase 0; `schemas/ecosystem.yaml`
+  made complete against the account.
+- **Why:** a repository could exist with no membership decision at all, indistinguishable
+  from a deliberate exclusion — 26 of 54 were in that state.
+
+---
+
+*Entries before 2026-09-04 predate this file and are recorded only in git history.*
