@@ -32,6 +32,16 @@ Format, newest first:
 
 ---
 
+## 2026-09-06T01:18:11Z — Fix a Markdown lazy-continuation defect found by automated review
+- **Actor:** Claude (agent)
+- **Initiated by:** automated review on PR #23
+- **Change:** standards/DEVELOPMENT.md, blank line before the provenance paragraph.
+- **Why:** the paragraph followed a list item with no blank line, so CommonMark treats it
+  as a lazy continuation and renders it glued onto the preceding bullet. Found by the
+  automated review on its first working run after being restored -- the first defect that
+  mechanism has caught in this ecosystem.
+
+
 ## 2026-09-05T23:36:04Z — Record why a signature alone does not verify an agent commit
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)

@@ -46,6 +46,7 @@ is worse than a missing one because nobody thinks to question it.
 - An agent commits under an identity that names that agent, and does not inherit whatever
   identity the machine it runs on happens to be configured with
   ([AGENT_ENVIRONMENT.md](AGENT_ENVIRONMENT.md)).
+
 **A commit says where it came from.** Attribution names *who*; provenance names *why it
 happened* — whether someone asked for this, whether it was scheduled, or whether the actor
 decided on its own. Reading a history later, the difference matters more than the diff:
