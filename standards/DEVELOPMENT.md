@@ -105,9 +105,20 @@ pull request to be closed and reopened.
 
 A concurrency group cancels an in-flight review when a newer push arrives. A burst of
 commits therefore costs one review of the settled state rather than one review per push,
-which matters because a review is roughly a dollar and several minutes. It reviews the diff, posts findings as a comment, and runs
-`gh pr merge --auto --squash` only when the change meets the low-risk criteria in its own
-prompt — otherwise it leaves the PR open and says why.
+which matters because a review is roughly a dollar and several minutes. It reviews the diff, posts findings as a comment, and then decides on merging.
+
+**It merges into `development` when it found no correctness issues** — a reviewed
+code change may be merged on that basis, which is what the review is for. It is not limited
+to documentation.
+
+**It never merges into `runway` or `main`**, and never merges a change
+touching credentials, authentication, or secrets. Promotion to runway is a release-candidate
+gate and promotion to main is a deliberate release act
+([BRANCHING.md](BRANCHING.md)); a passing review is not authorisation to perform either.
+Credentials are excluded because a mistake there is not recoverable by reverting.
+
+Anything else stays open with the reason stated. Reviewing well and declining to merge is a
+complete outcome, not an unfinished one.
 
 Authenticates via the `CLAUDE_CODE_OAUTH_TOKEN` secret (from `claude setup-token`), not
 `ANTHROPIC_API_KEY` ([SECURITY.md](SECURITY.md)). The workflow also requires

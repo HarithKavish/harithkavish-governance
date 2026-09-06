@@ -32,6 +32,20 @@ Format, newest first:
 
 ---
 
+## 2026-09-06T01:35:33Z — Automated review may merge reviewed code, into development only
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** the review prompt in claude-review.yml, and the Automated Review section of
+  standards/DEVELOPMENT.md.
+- **Why:** the owner asked that a passing review auto-merge. The previous gate only
+  merged documentation and formatting, so a correct code change still sat waiting. Now a
+  clean review merges into development. Two carve-outs were kept deliberately and are not
+  what was asked for: runway and main are never auto-merged, because BRANCHING.md calls
+  promotion to main a deliberate release act and nothing else gates it -- with no branch
+  protection anywhere, an unrestricted rule would let a change reach production with no
+  human ever seeing it. Credentials are excluded because reverting does not undo a leak.
+
+
 ## 2026-09-06T01:23:17Z — Automated review re-runs on new commits
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)
