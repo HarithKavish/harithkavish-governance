@@ -183,7 +183,8 @@ repositories:
   - name: converse
     role: application
     adoption: registered
-    last_checked: 2026-09-05
+    surface: https://harithkavish.com/converse/
+    last_checked: 2026-09-06
     notes: >-
       Chat surface. Consumes the design system's v1.0.0 distribution. 2026-09-03: the
       original claude-review.yml (pre-id-token:write-fix) was committed directly to
@@ -194,7 +195,8 @@ repositories:
   - name: ai-lab
     role: application
     adoption: registered
-    last_checked: 2026-09-05
+    surface: https://harithkavish.com/ai-lab/
+    last_checked: 2026-09-06
     notes: >-
       Consumes the design system's v1.0.0 distribution. 2026-09-03: the original
       claude-review.yml (pre-id-token:write-fix) was committed directly to main by the

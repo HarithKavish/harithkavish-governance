@@ -32,6 +32,15 @@ Format, newest first:
 
 ---
 
+## 2026-09-06T01:44:46Z — Record the surfaces for converse and ai-lab
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** schemas/ecosystem.yaml, surface fields for two entries.
+- **Why:** both serve live pages but their entries carried no surface, so the registry
+  understated what is deployed. Noticed during the 2026-09-05 audit and left unfixed until
+  now. Verified live before recording: both return HTTP 200.
+
+
 ## 2026-09-06T01:35:33Z — Automated review may merge reviewed code, into development only
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)
