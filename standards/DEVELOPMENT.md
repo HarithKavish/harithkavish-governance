@@ -98,8 +98,14 @@ are not doing.
 ## Automated Review
 
 Every ecosystem-member repository ([schemas/ecosystem.yaml](../schemas/ecosystem.yaml))
-carries `.github/workflows/claude-review.yml`, triggered on `pull_request: opened,
-reopened`. It reviews the diff, posts findings as a comment, and runs
+carries `.github/workflows/claude-review.yml`, triggered on
+`pull_request: opened, reopened, synchronize, ready_for_review` — so pushing new
+commits to an open pull request re-reviews it automatically, rather than requiring the
+pull request to be closed and reopened.
+
+A concurrency group cancels an in-flight review when a newer push arrives. A burst of
+commits therefore costs one review of the settled state rather than one review per push,
+which matters because a review is roughly a dollar and several minutes. It reviews the diff, posts findings as a comment, and runs
 `gh pr merge --auto --squash` only when the change meets the low-risk criteria in its own
 prompt — otherwise it leaves the PR open and says why.
 

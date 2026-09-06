@@ -32,6 +32,16 @@ Format, newest first:
 
 ---
 
+## 2026-09-06T01:23:17Z — Automated review re-runs on new commits
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** claude-review.yml gains synchronize and ready_for_review triggers plus a
+  cancelling concurrency group; standards/DEVELOPMENT.md updated to match.
+- **Why:** the workflow only fired when a pull request was opened or reopened, so a
+  re-review needed a manual close/reopen. Concurrency cancellation keeps the cost bounded:
+  a burst of pushes reviews the settled state once rather than once per push.
+
+
 ## 2026-09-06T01:18:11Z — Fix a Markdown lazy-continuation defect found by automated review
 - **Actor:** Claude (agent)
 - **Initiated by:** automated review on PR #23

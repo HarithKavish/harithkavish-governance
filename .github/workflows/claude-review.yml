@@ -1,6 +1,11 @@
 name: Claude PR Review
 
-# Fires only when a PR is raised, not on every push to it.
+# Fires when a PR is raised AND when new commits are pushed to it (synchronize),
+# so a re-review happens automatically rather than needing a close/reopen.
+#
+# Concurrency below cancels an in-flight review when another push lands, so a
+# burst of commits costs one review of the settled state rather than one per
+# push. A review is roughly a dollar and several minutes, so this matters.
 #
 # IMPORTANT: this event does NOT fire for PRs created with Actions' built-in
 # GITHUB_TOKEN (GitHub suppresses that to prevent workflow recursion). It DOES
@@ -8,7 +13,12 @@ name: Claude PR Review
 # what Jarvis uses. If Jarvis ever moves inside Actions, this silently stops.
 on:
   pull_request:
-    types: [opened, reopened]
+    types: [opened, reopened, synchronize, ready_for_review]
+
+# One review per pull request at a time; a newer push supersedes an older review.
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
