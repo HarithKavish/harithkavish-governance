@@ -153,6 +153,13 @@ governance, you are not following it, regardless of whether the result looks rig
 non-compliance — repositories predate this system. Report it. Fixing it is a separate,
 scoped task (Article 9).
 
+**But do not discard it either.** If what you found would hold elsewhere — another
+repository, another person, next month — it is a candidate for governance rather than a
+loose end. Finish your task, record the finding, then propose it under
+[MAINTENANCE.md](MAINTENANCE.md) § Where Changes Come From. Proposing a rule is not
+remediating a repository; the first is how this ecosystem improves, the second is scope
+creep.
+
 **Do not resolve a rule conflict by picking.** Stop and surface it
 ([GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md)).
 

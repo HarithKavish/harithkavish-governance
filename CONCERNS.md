@@ -190,6 +190,11 @@ that phase exists to prevent.
   actually enforced
 - **[CHANGELOG.md](CHANGELOG.md)** — the record every change appends to
 
+**If the question is where a change should come from** rather than where it goes, read
+[MAINTENANCE.md](MAINTENANCE.md) § Where Changes Come From — what qualifies as
+generalisable, why finding something is not licence to fix it everywhere, and why a
+proposal names its enforcement rung as well as its destination.
+
 **Sequencing that matters:** MAINTENANCE and the MAP are used *together* and in that
 order — classify with the map, change with MAINTENANCE. Writing before classifying is the
 failure both documents exist to prevent, and the reason a pull request here asks for the

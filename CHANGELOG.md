@@ -32,6 +32,19 @@ Format, newest first:
 
 ---
 
+## 2026-09-07T22:27:24Z — Findings that generalise are proposed, not discarded
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** MAINTENANCE.md gains Where Changes Come From; AGENT_BOOTSTRAP.md and
+  CONCERNS.md point at it.
+- **Why:** governance said how to make a change and, via Article 9, that finding a gap is
+  not licence to fix it. It said nothing about what happens to the finding afterwards, so
+  a generalisable observation made mid-task had nowhere to go and was simply lost. The
+  requirement that a proposal name its enforcement rung is deliberate: this ecosystem
+  measured its own enforcement at almost zero, so a proposal without an enforcement path
+  is a candidate for the pile rather than for changing behaviour.
+
+
 ## 2026-09-07T20:47:07Z — Findings are recorded at the moment, and categorised
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)
