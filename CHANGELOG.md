@@ -32,6 +32,18 @@ Format, newest first:
 
 ---
 
+## 2026-09-07T20:47:07Z — Findings are recorded at the moment, and categorised
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** standards/AGENT_ENVIRONMENT.md, What The Agent Has Learned.
+- **Why:** the rule said what to record but not when, and left the record uncategorised.
+  Deferring loses the detail first and then the record itself -- the sessions that go worst
+  have the most to teach and are least likely to reach a write-up step. Categorising by
+  scope and technology is what makes the record searchable at the moment of acting, which
+  is the only moment it matters. Recurrence is now itself a finding: a pain point recorded
+  three times is one worth removing rather than re-recording.
+
+
 ## 2026-09-06T01:44:46Z — Record the surfaces for converse and ai-lab
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)
