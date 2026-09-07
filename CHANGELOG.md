@@ -44,6 +44,17 @@ Format, newest first:
   measured its own enforcement at almost zero, so a proposal without an enforcement path
   is a candidate for the pile rather than for changing behaviour.
 
+## 2026-09-07T22:15:05Z — Branch protection applied: the first rule to reach rung 4
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** GOVERNANCE_HIERARCHY.md enforcement register. The repository settings
+  themselves are infrastructure, not a governance change.
+- **Why:** BRANCHING.md had been written, published and read, and was not being followed --
+  20 of 26 repositories had development and runway diverged from main, one by sixty
+  commits, because work went straight to main. Protection makes that structurally
+  impossible rather than discouraged. Approvals are set to zero so the automated review can
+  still merge what it reviewed; enforce_admins is off so the hotfix path still works.
+
 
 ## 2026-09-07T20:47:07Z — Findings are recorded at the moment, and categorised
 - **Actor:** Claude (agent)
