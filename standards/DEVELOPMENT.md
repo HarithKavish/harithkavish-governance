@@ -125,6 +125,12 @@ Authenticates via the `CLAUDE_CODE_OAUTH_TOKEN` secret (from `claude setup-token
 `permissions: id-token: write` — without it, the action fails silently after three
 retries and never reviews the PR at all.
 
+The action separately refuses to run when the triggering push came from a bot account,
+which is what an agent pushing through a GitHub App identity looks like to it. The
+workflow lists that identity in `allowed_bots` explicitly, scoped to the one bot
+rather than `'*'` — this is a public repository, and `'*'` would let
+any bot invoke the action with a prompt that bot controls.
+
 **Known gap.** No repository has branch protection or a required status check yet, so
 `--auto` has nothing to queue behind: the review's verdict merges the PR immediately, not
 once behind a gate. Until that exists, treat a merge here as the review having decided,
