@@ -122,9 +122,48 @@ An agent keeps a record of what has actually worked and what has actually failed
 environment it operates in, and **consults it before repeating that class of operation** —
 not after the failure recurs.
 
-Each lesson holds four things: what was attempted, what happened, **where** it applies, and
-**why** it fails. A lesson without the why is a superstition and will be misapplied; a
-lesson without the where gets carried somewhere it does not belong.
+### Record it at the moment, not at the end
+
+**A finding is written down when it is found** — the moment a problem is hit, a cause is
+understood, or a fix is confirmed. Not at the end of the task, and not later.
+
+Two things are lost by deferring. The **detail** goes first: the exact error text, what was
+being attempted, what had already been ruled out. By the end of a task that is reconstructed
+from memory, and reconstruction is where superstitions come from. Then the **record itself**
+goes: a task that is interrupted, abandoned, or simply finishes in a hurry never reaches the
+write-up step, and precisely the sessions that go badly — the ones with most to teach — are
+the ones least likely to produce a lesson.
+
+Fixes are recorded as readily as failures. What worked is the more useful half, and it is
+the half more often assumed to be memorable.
+
+### What a lesson holds
+
+| Field | Why it is there |
+|---|---|
+| **What was attempted** | so the lesson can be recognised before repeating it |
+| **What happened** | the actual behaviour, including the exact error where there was one |
+| **Scope** | **general** — true anywhere — or **specific to one project or repository** |
+| **Technology** | the tool, language, platform, or service it concerns |
+| **Where** | the machine, environment, or repository it was hit in |
+| **When** | the date, so recurrence and staleness are both visible |
+| **Why** | the cause, as far as it is understood |
+
+A lesson without the **why** is a superstition and will be misapplied. One without the
+**where** and **scope** gets carried somewhere it does not belong — a quirk of one machine
+applied as a universal rule is worse than no lesson, because it is followed confidently.
+
+**Scope and technology are what make the record usable.** An uncategorised pile cannot be
+searched by the thing you are about to do, and a record that cannot be searched at the
+moment of acting will not be consulted. The purpose is to recognise *I have hit this
+before* **before** acting, not to have an archive that proves it afterwards.
+
+### Recurrence is itself a finding
+
+When the same lesson is hit repeatedly, that is information about the environment rather
+than about the agent. A pain point recorded three times is a pain point worth removing:
+raise it, fix the underlying cause, or make the correct path the easy one. Continuing to
+record recurrences of something nobody intends to fix turns the record into a diary.
 
 This is not tidiness. An agent that repeats a failure it has already hit has learned
 nothing, and the cost compounds — the same mistake is rediscovered every session, in front

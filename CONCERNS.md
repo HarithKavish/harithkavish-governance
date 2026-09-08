@@ -176,6 +176,25 @@ that phase exists to prevent.
 
 **Related:** identity and attribution · secrets · changing governance
 
+## Working a problem — understanding, diagnosing, changing, verifying
+
+> *How should an agent approach an unfamiliar system? What counts as done?*
+
+- **Articles 8 and 9** — discovery before modification; bounded autonomy
+- **[standards/AGENT_METHOD.md](standards/AGENT_METHOD.md)** — the order: acquire the means
+  to look, understand proportionately, map dependents, use the known diagnostic technique,
+  build minimal *and* complete, verify by observation, parallelise what is independent
+- **[standards/AGENT_ENVIRONMENT.md](standards/AGENT_ENVIRONMENT.md)** — recording what was
+  learned, and reporting what could not be verified
+- **[standards/DEVELOPMENT.md](standards/DEVELOPMENT.md)** — scope discipline and the
+  minimal diff, once the change itself is being written
+
+**Sequencing that matters:** the method runs in order because each step depends on the
+last — verifying before building is meaningless, and building before understanding what
+depends on the thing being changed is how a fix breaks something unrelated.
+
+**Related:** agents · getting a change to production
+
 ## Changing governance itself
 
 > *I want to add a rule. Where does it go?*
@@ -189,6 +208,11 @@ that phase exists to prevent.
 - **[GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md)** — *which wins*, and what is
   actually enforced
 - **[CHANGELOG.md](CHANGELOG.md)** — the record every change appends to
+
+**If the question is where a change should come from** rather than where it goes, read
+[MAINTENANCE.md](MAINTENANCE.md) § Where Changes Come From — what qualifies as
+generalisable, why finding something is not licence to fix it everywhere, and why a
+proposal names its enforcement rung as well as its destination.
 
 **Sequencing that matters:** MAINTENANCE and the MAP are used *together* and in that
 order — classify with the map, change with MAINTENANCE. Writing before classifying is the

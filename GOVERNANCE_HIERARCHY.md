@@ -170,8 +170,8 @@ quietly assumed away. **Measured 2026-09-05 across 26 covered repositories.**
 
 | Rule | Written in | Rung | Reality |
 |---|---|---|---|
-| Production branch protected | BRANCHING | 2 | **0/26 protected.** Work went straight to `main` in 20 repositories; `development` and `runway` had diverged and were unused |
-| Changes reach `main` via pull request | BRANCHING, DEVELOPMENT | 2 | Nothing requires it. The flow holds only where someone follows it |
+| Production branch protected | BRANCHING | **4** | **78/78 protected** as of 2026-09-08 — `main`, `runway` and `development` across all 26 repositories. Pull request required, force-push and deletion blocked |
+| Changes reach `main` via pull request | BRANCHING, DEVELOPMENT | **4** | Enforced by the same protection. Direct pushes to the three branches are refused |
 | Automated review on every PR | DEVELOPMENT | 3, degraded | **Failing in 15/26.** See below — the one automated mechanism, broken and unnoticed |
 | Repository metadata complete | REPOSITORY | 2 | **0/26 carry `.github/social-preview.png`**, which the standard requires |
 | Changelog append-only, owner-restricted | MAINTENANCE, CHANGELOG | 2 | **0/26 have CODEOWNERS.** Anyone with write access can edit or delete history |
@@ -206,8 +206,25 @@ quietly assumed away. **Measured 2026-09-05 across 26 covered repositories.**
    `CLAUDE_CODE_OAUTH_TOKEN` secret. Stated as probable, not known: repository
    secrets cannot be read through the API, so only the account owner can confirm it.
 
-   **The automated review is therefore still not working anywhere.** Fixing the first cause
-   moved the failure, not removed it.
+3. **A third cause, found 2026-09-08: the action refuses bot-triggered pushes by default.**
+   An agent pushing through a GitHub App identity — the `jarvis-harithkavish[bot]`
+   identity used throughout this ecosystem — is indistinguishable to the action from an
+   untrusted bot, and it declines to run rather than review the content. This failed
+   silently: no comment, no error visible on the pull request, only a failed run nobody was
+   watching. **PR #29 was manually merged as a direct result** — the review that should have
+   gated it had failed on this check four minutes earlier, and the merge proceeded on the
+   strength of an older review of an earlier commit, not the one that shipped.
+
+   Fixed by adding `allowed_bots: 'jarvis-harithkavish'`, scoped to the one identity
+   rather than `'*'` (this is a public repository, and the action's own
+   documentation warns that `'*'` lets any bot invoke it with a prompt that bot
+   controls). Takes effect once on `main`, per the default-branch rule above.
+
+   **Lesson generalised beyond this one fix:** every cause found this week — missing
+   permission, missing workflow file, invalid token, now this — failed the same way: no
+   error visible where anyone was looking, until someone checked the run directly. A green
+   pull request and a working review are not the same fact, and this repository proved that
+   to itself twice in five days.
 
 Two lessons are worth keeping, because they generalise beyond this failure:
 
@@ -215,6 +232,28 @@ Two lessons are worth keeping, because they generalise beyond this failure:
   written warning did not prevent eleven repositories from having it.
 - **Copy-an-existing-repository is only as good as the repository copied.** The instruction
   to reuse a working workflow assumed the existing ones were working. Nothing checked.
+
+### The first rule to reach rung 4
+
+Branch protection was applied across all 26 repositories on 2026-09-08: pull request
+required on `main`, `runway` and `development`, with
+force-pushes and branch deletion refused. Approvals are set to **zero**, deliberately — the
+requirement is that a change arrives through a pull request, not that a human clicks
+approve, and requiring an approval would have broken the automated review's ability to
+merge what it has just reviewed.
+
+`enforce_admins` is **off**, so the owner retains an override. That is a
+considered position rather than an oversight: the hotfix path in
+[standards/BRANCHING.md](standards/BRANCHING.md) assumes someone can act quickly during an
+incident, and a protection that cannot be lifted turns a bad hour into a worse one. It can
+be turned on when the hotfix path has been exercised at least once.
+
+**What this fixed is not hypothetical.** Before it, 20 of 26 repositories had
+`development` and `runway` diverged from `main`, some by
+sixty commits, because real work had gone straight to `main` for months. The
+branching standard had been written, published, and read — and not followed. That divergence
+is now structurally impossible rather than merely discouraged, which is the entire argument
+for moving a rule down this ladder rather than restating it more firmly.
 
 ### Why the gap is recorded rather than resolved
 

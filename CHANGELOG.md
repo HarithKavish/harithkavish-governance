@@ -32,6 +32,82 @@ Format, newest first:
 
 ---
 
+## 2026-09-08T19:19:45Z -- Allow the automated review to run against agent-pushed commits
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** claude-review.yml gains allowed_bots; standards/DEVELOPMENT.md and the
+  GOVERNANCE_HIERARCHY.md enforcement register document it.
+- **Why:** the action refuses to run when the triggering push came from a bot account,
+  and Jarvis pushes as jarvis-harithkavish[bot]. Every agent-pushed commit therefore
+  failed this check silently -- no comment, no visible error -- discovered when PR #29
+  was found to have merged on the strength of a review of an EARLIER commit, not the one
+  that actually shipped. The review that should have gated the merge had failed four
+  minutes before the merge happened, and nobody -- including this agent -- checked before
+  merging.
+
+
+## 2026-09-08T18:20:37Z — Add the Agent Method standard
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** new standards/AGENT_METHOD.md; routing rows in AGENT_BOOTSTRAP.md, README.md
+  and CONCERNS.md.
+- **Why:** nothing governed HOW an agent works a problem -- AGENT_ENVIRONMENT.md covers
+  the agent's own configuration, AGENT_BOOTSTRAP.md covers discovering what governance
+  applies, DEVELOPMENT.md covers what a good change looks like once it is being written.
+  The gap was the method in between: acquiring the means to inspect a system before
+  theorising about it, understanding proportionately to blast radius, mapping what depends
+  on what before changing anything shared, using the known diagnostic technique for the
+  class of problem rather than improvising, building minimal AND complete rather than one
+  at the expense of the other, and verifying by observation rather than by absence of
+  error. This is an actor rule and reaches every repository under the account regardless
+  of ecosystem membership.
+
+
+## 2026-09-07T22:27:24Z — Findings that generalise are proposed, not discarded
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** MAINTENANCE.md gains Where Changes Come From; AGENT_BOOTSTRAP.md and
+  CONCERNS.md point at it.
+- **Why:** governance said how to make a change and, via Article 9, that finding a gap is
+  not licence to fix it. It said nothing about what happens to the finding afterwards, so
+  a generalisable observation made mid-task had nowhere to go and was simply lost. The
+  requirement that a proposal name its enforcement rung is deliberate: this ecosystem
+  measured its own enforcement at almost zero, so a proposal without an enforcement path
+  is a candidate for the pile rather than for changing behaviour.
+
+## 2026-09-07T22:15:05Z — Branch protection applied: the first rule to reach rung 4
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** GOVERNANCE_HIERARCHY.md enforcement register. The repository settings
+  themselves are infrastructure, not a governance change.
+- **Why:** BRANCHING.md had been written, published and read, and was not being followed --
+  20 of 26 repositories had development and runway diverged from main, one by sixty
+  commits, because work went straight to main. Protection makes that structurally
+  impossible rather than discouraged. Approvals are set to zero so the automated review can
+  still merge what it reviewed; enforce_admins is off so the hotfix path still works.
+
+
+## 2026-09-07T20:47:07Z — Findings are recorded at the moment, and categorised
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** standards/AGENT_ENVIRONMENT.md, What The Agent Has Learned.
+- **Why:** the rule said what to record but not when, and left the record uncategorised.
+  Deferring loses the detail first and then the record itself -- the sessions that go worst
+  have the most to teach and are least likely to reach a write-up step. Categorising by
+  scope and technology is what makes the record searchable at the moment of acting, which
+  is the only moment it matters. Recurrence is now itself a finding: a pain point recorded
+  three times is one worth removing rather than re-recording.
+
+
+## 2026-09-06T01:44:46Z — Record the surfaces for converse and ai-lab
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** schemas/ecosystem.yaml, surface fields for two entries.
+- **Why:** both serve live pages but their entries carried no surface, so the registry
+  understated what is deployed. Noticed during the 2026-09-05 audit and left unfixed until
+  now. Verified live before recording: both return HTTP 200.
+
+
 ## 2026-09-06T01:35:33Z — Automated review may merge reviewed code, into development only
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)

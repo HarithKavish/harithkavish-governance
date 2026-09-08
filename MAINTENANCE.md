@@ -97,6 +97,71 @@ tier — not to reword it in place.
 
 ---
 
+## Where Changes Come From
+
+Most of this document describes how to make a change once someone has decided one is
+needed. This section is about the other half: noticing that one is.
+
+**A generalisable improvement found while doing something else is proposed — not discarded,
+and not applied everywhere on the spot.**
+
+Whoever is doing the work sees the real problems. One person cannot see them all, and a
+governance system that only changes top-down improves at the rate that person notices
+things. Most of what is worth adding is learned in one repository while fixing something
+unrelated to it.
+
+### The test is generalisability
+
+Not every annoyance is a governance change. It qualifies when it would hold **elsewhere**:
+in another repository, for another person, next month.
+
+- A workaround specific to one repository belongs in that repository.
+- A quirk of one machine belongs in the actor own record
+  ([standards/AGENT_ENVIRONMENT.md](standards/AGENT_ENVIRONMENT.md)).
+- What belongs **here** is the thing that would have prevented the problem anywhere it
+  occurred.
+
+Security and architecture findings qualify most often, because their blast radius is widest
+and the cost of missing them is highest.
+
+### This does not license fixing it
+
+Article 9 stands, and this section does not weaken it. Finding something generalisable is
+not authorization to apply it across the ecosystem mid-task. The order is:
+
+1. **Finish what you were asked to do.**
+2. **Record the finding immediately**, before the detail is lost
+   ([standards/AGENT_ENVIRONMENT.md](standards/AGENT_ENVIRONMENT.md)).
+3. **Propose it separately** — read the governance that applies
+   ([AGENT_BOOTSTRAP.md](AGENT_BOOTSTRAP.md)), classify it
+   ([GOVERNANCE_MAP.md](GOVERNANCE_MAP.md)), check whether it is already covered (Step 1
+   above), and raise a pull request here.
+
+Proposing a rule is not remediating a repository. That distinction is what keeps this from
+becoming scope creep with a citation attached.
+
+### A proposal names its enforcement
+
+State where the rule would live **and how it could be enforced** — which rung it could
+reach, and what would move it there
+([GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md)).
+
+This is not ceremony. This ecosystem measured its own enforcement and found almost none:
+rules accumulated at rung 2 for months while the distance between written and enforced grew.
+A proposal that names an enforcement path is a candidate for changing behaviour. One that
+does not is a candidate for the pile.
+
+A proposal with genuinely no enforcement path is still worth making — say so explicitly, so
+the gap is recorded rather than assumed away.
+
+### Why this matters more than any single rule
+
+An ecosystem strengthens incrementally or not at all. Nobody designs the right architecture,
+the right security posture, or the right conventions up front; they are arrived at, one
+noticed problem at a time, by the people and agents closest to the work. A system that
+discards those observations because they arrived at an inconvenient moment learns nothing
+from its own operation.
+
 ## Retiring Rules
 
 Rules are removed, not left to rot. A rule is retired when it no longer applies, when it
