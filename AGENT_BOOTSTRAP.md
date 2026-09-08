@@ -92,6 +92,7 @@ Route from the task, not from the directory listing:
 | Creating a new repository in the ecosystem | [protocols/REPOSITORY_ONBOARDING.md](protocols/REPOSITORY_ONBOARDING.md) |
 | Adopting governance in an existing repository | [protocols/REPOSITORY_ALIGNMENT.md](protocols/REPOSITORY_ALIGNMENT.md) |
 | A repository under the account that is in no registry list at all | [protocols/REPOSITORY_ALIGNMENT.md](protocols/REPOSITORY_ALIGNMENT.md) § Phase 0 |
+| Understanding an unfamiliar system, diagnosing a fault, or verifying a fix | [standards/AGENT_METHOD.md](standards/AGENT_METHOD.md) |
 | Adding or changing a governance rule — deciding where it belongs | [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md), then [MAINTENANCE.md](MAINTENANCE.md) |
 | The agent's own environment — its governance copy, when it last checked, how it enforces | [standards/AGENT_ENVIRONMENT.md](standards/AGENT_ENVIRONMENT.md) |
 | Answering a question that spans documents, rather than doing a task | [CONCERNS.md](CONCERNS.md) |

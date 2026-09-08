@@ -32,6 +32,23 @@ Format, newest first:
 
 ---
 
+## 2026-09-08T18:20:37Z — Add the Agent Method standard
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** new standards/AGENT_METHOD.md; routing rows in AGENT_BOOTSTRAP.md, README.md
+  and CONCERNS.md.
+- **Why:** nothing governed HOW an agent works a problem -- AGENT_ENVIRONMENT.md covers
+  the agent's own configuration, AGENT_BOOTSTRAP.md covers discovering what governance
+  applies, DEVELOPMENT.md covers what a good change looks like once it is being written.
+  The gap was the method in between: acquiring the means to inspect a system before
+  theorising about it, understanding proportionately to blast radius, mapping what depends
+  on what before changing anything shared, using the known diagnostic technique for the
+  class of problem rather than improvising, building minimal AND complete rather than one
+  at the expense of the other, and verifying by observation rather than by absence of
+  error. This is an actor rule and reaches every repository under the account regardless
+  of ecosystem membership.
+
+
 ## 2026-09-07T22:27:24Z — Findings that generalise are proposed, not discarded
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)
