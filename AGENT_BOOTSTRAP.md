@@ -92,6 +92,7 @@ Route from the task, not from the directory listing:
 | Creating a new repository in the ecosystem | [protocols/REPOSITORY_ONBOARDING.md](protocols/REPOSITORY_ONBOARDING.md) |
 | Adopting governance in an existing repository | [protocols/REPOSITORY_ALIGNMENT.md](protocols/REPOSITORY_ALIGNMENT.md) |
 | A repository under the account that is in no registry list at all | [protocols/REPOSITORY_ALIGNMENT.md](protocols/REPOSITORY_ALIGNMENT.md) § Phase 0 |
+| Understanding an unfamiliar system, diagnosing a fault, or verifying a fix | [standards/AGENT_METHOD.md](standards/AGENT_METHOD.md) |
 | Adding or changing a governance rule — deciding where it belongs | [GOVERNANCE_MAP.md](GOVERNANCE_MAP.md), then [MAINTENANCE.md](MAINTENANCE.md) |
 | The agent's own environment — its governance copy, when it last checked, how it enforces | [standards/AGENT_ENVIRONMENT.md](standards/AGENT_ENVIRONMENT.md) |
 | Answering a question that spans documents, rather than doing a task | [CONCERNS.md](CONCERNS.md) |
@@ -152,6 +153,13 @@ governance, you are not following it, regardless of whether the result looks rig
 **Do not remediate what you were not asked to remediate.** You will find
 non-compliance — repositories predate this system. Report it. Fixing it is a separate,
 scoped task (Article 9).
+
+**But do not discard it either.** If what you found would hold elsewhere — another
+repository, another person, next month — it is a candidate for governance rather than a
+loose end. Finish your task, record the finding, then propose it under
+[MAINTENANCE.md](MAINTENANCE.md) § Where Changes Come From. Proposing a rule is not
+remediating a repository; the first is how this ecosystem improves, the second is scope
+creep.
 
 **Do not resolve a rule conflict by picking.** Stop and surface it
 ([GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md)).

@@ -32,6 +32,47 @@ Format, newest first:
 
 ---
 
+## 2026-09-08T18:20:37Z — Add the Agent Method standard
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** new standards/AGENT_METHOD.md; routing rows in AGENT_BOOTSTRAP.md, README.md
+  and CONCERNS.md.
+- **Why:** nothing governed HOW an agent works a problem -- AGENT_ENVIRONMENT.md covers
+  the agent's own configuration, AGENT_BOOTSTRAP.md covers discovering what governance
+  applies, DEVELOPMENT.md covers what a good change looks like once it is being written.
+  The gap was the method in between: acquiring the means to inspect a system before
+  theorising about it, understanding proportionately to blast radius, mapping what depends
+  on what before changing anything shared, using the known diagnostic technique for the
+  class of problem rather than improvising, building minimal AND complete rather than one
+  at the expense of the other, and verifying by observation rather than by absence of
+  error. This is an actor rule and reaches every repository under the account regardless
+  of ecosystem membership.
+
+
+## 2026-09-07T22:27:24Z — Findings that generalise are proposed, not discarded
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** MAINTENANCE.md gains Where Changes Come From; AGENT_BOOTSTRAP.md and
+  CONCERNS.md point at it.
+- **Why:** governance said how to make a change and, via Article 9, that finding a gap is
+  not licence to fix it. It said nothing about what happens to the finding afterwards, so
+  a generalisable observation made mid-task had nowhere to go and was simply lost. The
+  requirement that a proposal name its enforcement rung is deliberate: this ecosystem
+  measured its own enforcement at almost zero, so a proposal without an enforcement path
+  is a candidate for the pile rather than for changing behaviour.
+
+## 2026-09-07T22:15:05Z — Branch protection applied: the first rule to reach rung 4
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** GOVERNANCE_HIERARCHY.md enforcement register. The repository settings
+  themselves are infrastructure, not a governance change.
+- **Why:** BRANCHING.md had been written, published and read, and was not being followed --
+  20 of 26 repositories had development and runway diverged from main, one by sixty
+  commits, because work went straight to main. Protection makes that structurally
+  impossible rather than discouraged. Approvals are set to zero so the automated review can
+  still merge what it reviewed; enforce_admins is off so the hotfix path still works.
+
+
 ## 2026-09-07T20:47:07Z — Findings are recorded at the moment, and categorised
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)
