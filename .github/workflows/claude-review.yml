@@ -12,6 +12,15 @@ name: Claude PR Review
 # fire for PRs raised with a PAT or a GitHub App installation token, which is
 # what Jarvis uses. If Jarvis ever moves inside Actions, this silently stops.
 #
+# allowed_bots below is required for the SAME reason, one layer later: the
+# action itself refuses to run when the triggering push came from a bot
+# account, and Jarvis pushes as jarvis-harithkavish[bot]. Without this every
+# agent-pushed commit failed with "Workflow initiated by non-human actor" and
+# posted no review at all -- discovered 2026-09-08 on PR #29, which was
+# manually merged without a passing review as a direct result. Scoped to the
+# one bot rather than '*': this is a public repository, and the action's own
+# docs warn that '*' lets any bot invoke it with a prompt that bot controls.
+#
 # NOTE: the action refuses to run when a PR modifies this file, because the
 # workflow must match the version on the default branch. That is deliberate --
 # it stops a PR from rewriting its own reviewer. Changes here therefore review
@@ -45,6 +54,7 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          allowed_bots: 'jarvis-harithkavish'
           track_progress: true
           claude_args: '--allowedTools "Bash(gh pr merge:*)"'
           prompt: |

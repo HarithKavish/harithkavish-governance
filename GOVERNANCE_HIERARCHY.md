@@ -206,8 +206,25 @@ quietly assumed away. **Measured 2026-09-05 across 26 covered repositories.**
    `CLAUDE_CODE_OAUTH_TOKEN` secret. Stated as probable, not known: repository
    secrets cannot be read through the API, so only the account owner can confirm it.
 
-   **The automated review is therefore still not working anywhere.** Fixing the first cause
-   moved the failure, not removed it.
+3. **A third cause, found 2026-09-08: the action refuses bot-triggered pushes by default.**
+   An agent pushing through a GitHub App identity — the `jarvis-harithkavish[bot]`
+   identity used throughout this ecosystem — is indistinguishable to the action from an
+   untrusted bot, and it declines to run rather than review the content. This failed
+   silently: no comment, no error visible on the pull request, only a failed run nobody was
+   watching. **PR #29 was manually merged as a direct result** — the review that should have
+   gated it had failed on this check four minutes earlier, and the merge proceeded on the
+   strength of an older review of an earlier commit, not the one that shipped.
+
+   Fixed by adding `allowed_bots: 'jarvis-harithkavish'`, scoped to the one identity
+   rather than `'*'` (this is a public repository, and the action's own
+   documentation warns that `'*'` lets any bot invoke it with a prompt that bot
+   controls). Takes effect once on `main`, per the default-branch rule above.
+
+   **Lesson generalised beyond this one fix:** every cause found this week — missing
+   permission, missing workflow file, invalid token, now this — failed the same way: no
+   error visible where anyone was looking, until someone checked the run directly. A green
+   pull request and a working review are not the same fact, and this repository proved that
+   to itself twice in five days.
 
 Two lessons are worth keeping, because they generalise beyond this failure:
 

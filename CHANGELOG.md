@@ -32,6 +32,20 @@ Format, newest first:
 
 ---
 
+## 2026-09-08T19:19:45Z -- Allow the automated review to run against agent-pushed commits
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** claude-review.yml gains allowed_bots; standards/DEVELOPMENT.md and the
+  GOVERNANCE_HIERARCHY.md enforcement register document it.
+- **Why:** the action refuses to run when the triggering push came from a bot account,
+  and Jarvis pushes as jarvis-harithkavish[bot]. Every agent-pushed commit therefore
+  failed this check silently -- no comment, no visible error -- discovered when PR #29
+  was found to have merged on the strength of a review of an EARLIER commit, not the one
+  that actually shipped. The review that should have gated the merge had failed four
+  minutes before the merge happened, and nobody -- including this agent -- checked before
+  merging.
+
+
 ## 2026-09-08T18:20:37Z — Add the Agent Method standard
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)
