@@ -32,6 +32,18 @@ Format, newest first:
 
 ---
 
+## 2026-09-09T17:15:25Z -- Correct a stale path in the previous entry
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** CHANGELOG.md, one entry corrected: `~/bin/safe-branch-move.sh` ->
+  `tools/safe-branch-move.sh`.
+- **Why:** the automated review on PR #37 flagged the stale path as a non-blocking note
+  while reviewing the real fix. The script's canonical location is the one committed into
+  this repository; the personal-environment copy at `~/bin` is a local convenience synced
+  from it, not the source. Recorded here rather than silently edited, per this file's own
+  append-only rule -- the earlier entry is not altered, this one corrects it.
+
+
 ## 2026-09-09T16:59:59Z -- Lessons require root cause, not symptom; recurrence is a hard stop
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)
