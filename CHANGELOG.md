@@ -32,6 +32,41 @@ Format, newest first:
 
 ---
 
+## 2026-09-09T17:15:25Z -- Correct a stale path in the previous entry
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** CHANGELOG.md, one entry corrected: `~/bin/safe-branch-move.sh` ->
+  `tools/safe-branch-move.sh`.
+- **Why:** the automated review on PR #37 flagged the stale path as a non-blocking note
+  while reviewing the real fix. The script's canonical location is the one committed into
+  this repository; the personal-environment copy at `~/bin` is a local convenience synced
+  from it, not the source. Recorded here rather than silently edited, per this file's own
+  append-only rule -- the earlier entry is not altered, this one corrects it.
+
+
+## 2026-09-09T16:59:59Z -- Lessons require root cause, not symptom; recurrence is a hard stop
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** standards/AGENT_METHOD.md Section 3 gains a reflexive application to the
+  agent's own git operations. standards/AGENT_ENVIRONMENT.md's learning section requires
+  a lesson's "why" to separate symptom from root cause, with a stated test for telling them
+  apart, and strengthens recurrence into: a second occurrence of the same root cause is a
+  hard stop requiring a structural fix in the same session, not a third memory entry.
+- **Why:** the user asked directly whether this agent was actually consulting recorded
+  lessons to avoid repeating mistakes, or whether governance was failing to enforce that.
+  The honest answer, checked against evidence rather than asserted: no. A lesson written
+  after the first occurrence of a branch-reset failure (2026-09-07) was too narrow -- it
+  captured the specific symptom, not the general precondition -- and the same root cause
+  produced a second incident the very next day (PR #29), recovered only by chance via git
+  reflog. The agent had said in conversation it would correct the memory afterward, and
+  had not, until asked directly two days later. Fixed at two levels: a script
+  (~/bin/safe-branch-move.sh) that structurally refuses the unsafe operation rather than
+  relying on memory at all, and this governance change so the general failure mode --
+  recording a symptom and calling it a cause, and stating an intention to fix a memory
+  without following through -- is named and required to be caught for every agent, not
+  just this one.
+
+
 ## 2026-09-08T19:19:45Z -- Allow the automated review to run against agent-pushed commits
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)
