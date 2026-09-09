@@ -81,6 +81,24 @@ Where the system spans repositories, the relationship is usually invisible from 
 one of them. Look outward: search the account, check what fetches the URL, read what
 imports the package.
 
+**This applies to the agent's own git history, not only to the system being changed.**
+A persistent branch, once pushed, can be depended on by something the agent did not
+create and may not remember — an open pull request, a review already in flight, another
+session working from the same branch. Before any operation that discards commits —
+`git reset --hard`, a force-push, deleting a branch — the same question applies:
+what depends on the tip about to be moved? Checking after the fact, by diffing what
+landed, finds the damage. Checking before finds nothing to recover.
+
+This is not hypothetical. The same branch had an open pull request's commit silently
+discarded by an unchecked reset three times in one week before this was written down —
+each time recorded as a lesson, and each lesson too narrow to prevent the next one,
+because the pattern was never named as an instance of *this* step. A checked, working
+reference implementation of the destructive-operation guard described above is at
+`tools/safe-branch-move.sh` in this repository -- adopt it, or write an equivalent
+for your own environment. See
+`standards/AGENT_ENVIRONMENT.md` § What The Agent Has Learned for what a lesson must
+capture, and why.
+
 ## 4 · Use the technique that already exists for this class of problem
 
 Most problems have a known diagnostic method. Use it rather than improvising:
