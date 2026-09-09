@@ -34,14 +34,17 @@ fi
 REPO_SLUG="$(gh repo view --json nameWithOwner --jq .nameWithOwner 2>/dev/null || echo '')"
 if [ -z "$REPO_SLUG" ]; then
   echo "safe-branch-move: could not determine repo (not a GitHub repo, or gh not authed)." >&2
-  echo "safe-branch-move: refusing to guess. Pass --force to move anyway." >&2
-  [ "$FORCE" = "--force" ] || exit 2
+  echo "safe-branch-move: cannot check for a dependent open PR, so this refuses" >&2
+  echo "safe-branch-move: UNCONDITIONALLY -- --force does not override this case." >&2
+  echo "safe-branch-move: --force overrides a KNOWN conflict; there is nothing to" >&2
+  echo "safe-branch-move: force past an unknown state safely, and claiming otherwise" >&2
+  echo "safe-branch-move: is the exact bug this script exists to prevent (found in" >&2
+  echo "safe-branch-move: review of PR #37, before this line existed)." >&2
+  echo "safe-branch-move: use raw git reset --hard directly if you accept the risk." >&2
+  exit 2
 fi
 
-OPEN_PRS=""
-if [ -n "$REPO_SLUG" ]; then
-  OPEN_PRS="$(gh pr list --repo "$REPO_SLUG" --head "$CURRENT_BRANCH" --state open --json number,baseRefName --jq '.[] | "\(.number)\t\(.baseRefName)"' 2>/dev/null || echo '')"
-fi
+OPEN_PRS="$(gh pr list --repo "$REPO_SLUG" --head "$CURRENT_BRANCH" --state open --json number,baseRefName --jq '.[] | "\(.number)\t\(.baseRefName)"' 2>/dev/null || echo '')"
 
 if [ -z "$OPEN_PRS" ]; then
   echo "safe-branch-move: no open PR has $CURRENT_BRANCH as its head. Safe to move."
