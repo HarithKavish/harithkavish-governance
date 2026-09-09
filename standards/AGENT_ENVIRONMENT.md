@@ -158,12 +158,37 @@ searched by the thing you are about to do, and a record that cannot be searched 
 moment of acting will not be consulted. The purpose is to recognise *I have hit this
 before* **before** acting, not to have an archive that proves it afterwards.
 
-### Recurrence is itself a finding
+**The why separates the symptom from the root cause, explicitly, as two different things.**
+The symptom is the specific situation that revealed the problem — the one instance the
+agent happened to notice. The root cause is the general precondition that produces it — the
+class of situation, stated so it can be recognised in a different shape. A lesson recording
+only the symptom will not fire the next time the same cause recurs wearing a different
+symptom, and a lesson recorded that way is not a completed correction: it has prevented one
+specific recurrence and left the actual cause free to produce the next one.
 
-When the same lesson is hit repeatedly, that is information about the environment rather
-than about the agent. A pain point recorded three times is a pain point worth removing:
-raise it, fix the underlying cause, or make the correct path the easy one. Continuing to
-record recurrences of something nobody intends to fix turns the record into a diary.
+**Test before recording a why:** would this lesson have fired if the exact sequence of
+events were different but the underlying precondition were the same? If the answer is no,
+what was written down is the symptom, not the cause, and the lesson is not finished.
+
+### Recurrence is itself a finding, and the second occurrence is a hard stop
+
+When the same root cause produces a failure a **second** time — not the same symptom, the
+same underlying precondition, however differently it presented — that is not a second data
+point to log. It is proof the first lesson did not capture the actual cause, and it requires
+fixing the structural cause in the same session, before continuing the task that triggered
+it. Recording a third instance of a lesson that already failed to prevent a second one is
+exactly the diary this section exists to prevent.
+
+**"Fix the structural cause" means building or configuring something that makes the mistake
+harder to make**, not merely something that describes it — a check that runs before the
+risky step and refuses it, a default that removes the choice, a script standing between the
+agent and the operation that goes wrong. Where nothing structural is reachable, the fallback
+is a corrected, broadened memory entry written **immediately**, in the same turn the
+recurrence is noticed — not deferred with an intention to fix it later. An intention to
+correct a memory is not a correction until the file is actually edited; stating one and not
+following through is itself a failure this standard covers.
+
+A pain point hit once is recorded. A pain point hit twice is fixed, not filed.
 
 This is not tidiness. An agent that repeats a failure it has already hit has learned
 nothing, and the cost compounds — the same mistake is rediscovered every session, in front
