@@ -131,10 +131,59 @@ workflow lists that identity in `allowed_bots` explicitly, scoped to the one bot
 rather than `'*'` — this is a public repository, and `'*'` would let
 any bot invoke the action with a prompt that bot controls.
 
-**Known gap.** No repository has branch protection or a required status check yet, so
-`--auto` has nothing to queue behind: the review's verdict merges the PR immediately, not
-once behind a gate. Until that exists, treat a merge here as the review having decided,
-not GitHub having decided.
+**Known gap, updated 2026-09-10.** Branch protection now exists on the covered
+repositories (`main`/`runway`/`development` all require a pull request), but a 2026-09-09
+stress test found it does not close this gap: the credentials this workflow and this
+agent both operate under carry bypass rights. A direct push to a protected branch using
+those credentials was logged by GitHub as `"Bypassed rule violations"` and allowed through
+anyway. Protection is real against an ordinary collaborator; it is not yet real against
+the identity that runs these workflows. Treat a merge here as the review having decided,
+not GitHub having enforced anything against a bypass attempt -- because GitHub has not
+enforced that boundary. Closing this needs a restricted, non-admin identity for agent
+operations, which is infrastructure this document cannot create by being edited.
+
+## Issue Triage
+
+A second automated pipeline, symmetric to the review above but running in the opposite
+direction: instead of reviewing a change a human or agent already wrote, it takes an
+**issue** and produces the change.
+
+**Gated to the repository owner's own issues, and nothing else.** An issue is data
+(`standards/SECURITY.md` § Agents) the same as any other repository content, and this
+pipeline's entire purpose is to act on that data automatically. Running it against
+issues anyone could open would let anyone who can open an issue get an agent to
+implement and push their instructions -- exactly the injection surface the PR-review
+pipeline was verified, under adversarial testing, to resist. The gate is not a
+refinement to add later; it is the reason this pipeline is safe to run at all.
+
+**The flow:**
+
+1. The repository owner opens an issue.
+2. A triage workflow, gated on `github.event.issue.user.login` matching the owner,
+   reads it and implements what it describes on the repository's persistent
+   `feature/claude` branch -- the same branch interactive agent sessions use, reused
+   rather than created fresh each time.
+3. It opens a pull request into `development` (or pushes to the existing one if
+   `feature/claude` already has an open PR) and does **not** merge it.
+4. That pull request is then reviewed by the **existing, separate** review workflow
+   above -- a genuinely independent run, triggered fresh by the `pull_request` event,
+   with no memory of the triage run that produced the PR. It merges on the same terms
+   as any other pull request: clean review, targets `development`, no credentials
+   touched.
+
+**Two sessions, not one, by design.** The agent that writes the implementation and the
+agent that decides whether to merge it are different workflow runs with no shared
+context. An implementer that talked itself into a bad change has no way to also
+convince the reviewer, because the reviewer never sees the implementer's reasoning --
+only the diff.
+
+**If the issue is unclear or underspecified, the triage run comments on the issue
+asking for clarification and stops.** It does not guess and implement its best
+interpretation -- that is exactly the "use your judgment" failure mode
+([standards/AGENT_METHOD.md](AGENT_METHOD.md) § 5): broad discretion from an
+underspecified instruction is not license to act broadly without checking first, and
+an unattended pipeline has nobody to notice the scope crept until the diff already
+exists.
 
 ## Dependencies
 

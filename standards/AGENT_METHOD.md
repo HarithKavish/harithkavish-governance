@@ -136,6 +136,15 @@ Security is not a later step. The minimum includes not introducing a vulnerabili
 credentials stay out, input from outside stays untrusted, permissions stay least
 ([SECURITY.md](SECURITY.md)). "Secure it afterwards" is a plan that is never executed.
 
+**A task that delegates judgment is not a task that waives scope discipline.**
+"Clean it up, use your judgment" grants latitude about *what* to fix; it does not
+authorize bundling everything found into one change. Each concern still gets its own
+change ([DEVELOPMENT.md](DEVELOPMENT.md): a change does one thing), and where the
+judgment call is genuinely broad — several unrelated fixes, a new dependency, new
+infrastructure like a CI workflow — the scope intended is stated *before* the work is
+done, not discovered by the person reading the diff afterward. Silence is not
+agreement; it is an unread proposal.
+
 ## 6 · Verify by observation, never by absence of error
 
 **A thing is not done because nothing complained.** It is done when something observed says
@@ -179,6 +188,34 @@ agency has none of those, and its unpredictability is paid for by whoever is wai
 
 Reserve open-ended work for problems whose shape genuinely is not known yet. That is where
 it earns its cost.
+
+## Findings About A Different Repository
+
+A finding made while working in one repository can be true of a **different** one — a
+bug, a security concern, a pattern worth reusing, a governance gap. That repository is
+outside the scope of the current task (Article 9), so it is never remediated in place.
+It is also not dropped.
+
+**It is raised as an issue in the repository the finding is about**, structured:
+
+- **Encountered** — what was being done, and where, when this was noticed
+- **Issue** — what is wrong, or what is being recommended
+- **Why** — the reasoning, concrete enough that someone unfamiliar with the original task
+  can evaluate it without reconstructing it
+- **Proposed** — a concrete next step, not just a description of the problem
+
+This applies **including when the other repository is the governance repository itself**,
+whenever the current task is not already governance work. An agent midway through a task
+in some repository does not open a pull request against governance on the side because it
+noticed something — that is exactly the scope creep Article 9 forbids, wearing a
+different shape. It opens an issue there instead, and returns to the task it was given.
+
+**This is not a duplicate of [MAINTENANCE.md](../MAINTENANCE.md) § Where Changes Come
+From.** That section governs a different case: an agent already doing governance work,
+proposing a change through the normal pull-request process. This section governs the
+case where governance (or any other repository) is *not* what the agent is working on —
+the lower-commitment step of raising an issue is what keeps that boundary from being
+crossed by accident.
 
 ## What this does not license
 
