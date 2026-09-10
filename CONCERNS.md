@@ -91,6 +91,8 @@ exactly as they do in a participating one.
   publication in a workflow, and release tagging
 - **[GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md)** § Task instructions are tier 6 —
   for when the instruction is to skip the flow
+- **[tools/safe-branch-move.sh](tools/safe-branch-move.sh)** — the destructive-git-operation
+  guard [standards/AGENT_METHOD.md](standards/AGENT_METHOD.md) § 3 references directly
 
 **Sequencing that matters:** BRANCHING stops at `main` and DEPLOYMENT begins there. A
 question about how something goes live is usually a DEPLOYMENT question wearing a
