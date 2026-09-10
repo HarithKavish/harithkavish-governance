@@ -68,6 +68,15 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           allowed_bots: 'jarvis-harithkavish'
+          # TEMPORARY, diagnostic only -- remove after the run this is added for.
+          # 2026-09-10: the fourth live test (issue #57) committed and pushed
+          # correctly (Edit/Write/git all worked) but never created a pull request,
+          # with permission_denials_count: 3 and no visible reason why in the
+          # normal log, which redacts tool-call arguments. show_full_output exposes
+          # the actual denied commands. WARNING (from the action's own docs): this
+          # exposes all tool execution results, and this is a PUBLIC repository --
+          # those logs are publicly visible. Left on for exactly one diagnostic run.
+          show_full_output: true
           # --allowedTools REPLACES the default toolset, it does not extend it --
           # found 2026-09-10 on the second live test (issue #48), which cost real
           # tokens (9 turns, 3 permission denials) and produced nothing: the model had
