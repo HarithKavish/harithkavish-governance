@@ -32,6 +32,17 @@ Format, newest first:
 
 ---
 
+## 2026-09-10T05:21:37Z -- Register diary in the ecosystem registry
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** schemas/ecosystem.yaml gains an entry for the new `diary` repository
+  (role: website, adoption: integrated, surface diary.harithkavish.com), registered
+  during its onboarding per protocols/REPOSITORY_ONBOARDING.md.
+- **Why:** diary was just created and onboarded (GOVERNANCE.md/AGENTS.md added,
+  development/runway/feature/claude branches created, workflow-based Pages deploy,
+  custom domain set) — registering it completes onboarding step 8 and keeps the
+  registry's account-wide completeness property intact.
+
 ## 2026-09-10T02:46:56Z -- Cross-repo findings raise an issue; owner-gated issue-to-PR pipeline
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)
