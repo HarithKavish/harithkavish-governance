@@ -68,7 +68,15 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           allowed_bots: 'jarvis-harithkavish'
-          claude_args: '--allowedTools "Bash(git add:*),Bash(git commit:*),Bash(git push:*),Bash(gh pr create:*),Bash(gh pr view:*),Bash(gh pr edit:*),Bash(gh issue comment:*)"'
+          # --allowedTools REPLACES the default toolset, it does not extend it --
+          # found 2026-09-10 on the second live test (issue #48), which cost real
+          # tokens (9 turns, 3 permission denials) and produced nothing: the model had
+          # no Read, Edit, Write, Glob, Grep or LS tool at all, only the seven Bash/gh
+          # patterns below, and could not open or modify a single file. Confirmed by
+          # comparing this workflow's own SDK-options dump in the Actions log against
+          # claude-review.yml's, which explicitly lists Glob/Grep/LS/Read alongside its
+          # Bash entries for the same reason.
+          claude_args: '--allowedTools "Glob,Grep,LS,Read,Edit,Write,Bash(git add:*),Bash(git commit:*),Bash(git push:*),Bash(gh pr create:*),Bash(gh pr view:*),Bash(gh pr edit:*),Bash(gh issue comment:*)"'
           prompt: |
             An issue was opened by the repository owner. Implement it.
 
