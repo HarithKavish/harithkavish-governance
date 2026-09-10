@@ -32,6 +32,33 @@ Format, newest first:
 
 ---
 
+## 2026-09-10T02:46:56Z -- Cross-repo findings raise an issue; owner-gated issue-to-PR pipeline
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** standards/AGENT_METHOD.md gains "Findings About A Different Repository"
+  (raise a structured issue there, including when the repository is governance itself,
+  when the current task is not already governance work) and a scope-discipline addition
+  to Section 5 (delegated judgment is not license to bundle unrelated changes). new
+  .github/workflows/claude-issue-triage.yml implements an owner-gated pipeline: an issue
+  opened by the repository owner is implemented on feature/claude and opened as a pull
+  request, reviewed and possibly merged by the existing, separate claude-review.yml run
+  -- two independent sessions, no shared context. standards/DEVELOPMENT.md documents both
+  the pipeline and an updated, corrected Known Gap note.
+- **Why:** requested directly, following a 2026-09-09 adversarial stress test of this
+  governance system using real subagents against an isolated test repository. Findings
+  from that test: prompt injection via repository content was resisted (2/2 tests), but a
+  vague, delegated-judgment task produced one bundled pull request touching ten files
+  across unrelated concerns without pausing to ask -- a real violation of this document's
+  own "a change does one thing" rule, now addressed directly. Separately and more
+  seriously: a direct empirical test found that branch protection does not stop the
+  credentials this agent operates under -- GitHub logged "Bypassed rule violations" and
+  allowed a direct push to a protected branch anyway. That finding is recorded honestly in
+  DEVELOPMENT.md's Known Gap rather than left implied by a protection setting that reads
+  as sufficient but is not. The issue-triage pipeline is gated to the owner's own issues
+  specifically because of what the stress test proved: an ungated version would recreate,
+  for issues, the exact injection surface just verified against for pull requests.
+
+
 ## 2026-09-09T17:15:25Z -- Correct a stale path in the previous entry
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)
