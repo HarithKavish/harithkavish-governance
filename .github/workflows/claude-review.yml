@@ -17,9 +17,19 @@ name: Claude PR Review
 # account, and Jarvis pushes as jarvis-harithkavish[bot]. Without this every
 # agent-pushed commit failed with "Workflow initiated by non-human actor" and
 # posted no review at all -- discovered 2026-09-08 on PR #29, which was
-# manually merged without a passing review as a direct result. Scoped to the
-# one bot rather than '*': this is a public repository, and the action's own
-# docs warn that '*' lets any bot invoke it with a prompt that bot controls.
+# manually merged without a passing review as a direct result. Scoped to
+# named bots rather than '*': this is a public repository, and the action's
+# own docs warn that '*' lets any bot invoke it with a prompt that bot
+# controls.
+#
+# 'claude' was added 2026-09-10, found the same way: claude-issue-triage.yml
+# pushes through claude-code-action's own self-minted GitHub App token
+# rather than through the Jarvis App, and that token's pushes are reported
+# as bot "claude", not "jarvis-harithkavish" -- a different identity this
+# list did not yet know about. The failure was identical and identically
+# silent: no comment, no visible error, until the run log was opened
+# directly (PR #53). Same bug class as the original, recurring because a
+# second pipeline introduced a second pushing identity nobody had added.
 #
 # NOTE: the action refuses to run when a PR modifies this file, because the
 # workflow must match the version on the default branch. That is deliberate --
@@ -54,7 +64,7 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          allowed_bots: 'jarvis-harithkavish'
+          allowed_bots: 'jarvis-harithkavish,claude'
           track_progress: true
           claude_args: '--allowedTools "Bash(gh pr merge:*)"'
           prompt: |
