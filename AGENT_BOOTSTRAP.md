@@ -87,6 +87,7 @@ Route from the task, not from the directory listing:
 | Writing or restructuring code, dependencies, tests | [standards/DEVELOPMENT.md](standards/DEVELOPMENT.md) |
 | Repository metadata, description, social preview, README, structure, new files at root | [standards/REPOSITORY.md](standards/REPOSITORY.md) |
 | Deploying a surface, publishing, release tagging, build artifacts | [standards/DEPLOYMENT.md](standards/DEPLOYMENT.md) |
+| A finding or recommendation about a repository you are not currently working in | [standards/AGENT_METHOD.md](standards/AGENT_METHOD.md) § Findings About A Different Repository |
 | Secrets, auth, tokens, user data, third-party services, CI credentials | [standards/SECURITY.md](standards/SECURITY.md) |
 | Sign-in, accounts, user tables, provider linkage, sessions | [standards/IDENTITY.md](standards/IDENTITY.md) |
 | Creating a new repository in the ecosystem | [protocols/REPOSITORY_ONBOARDING.md](protocols/REPOSITORY_ONBOARDING.md) |
