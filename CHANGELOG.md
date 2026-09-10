@@ -26,6 +26,7 @@ Format, newest first:
 ```
 ## YYYY-MM-DDTHH:MM:SSZ — <one-line summary>
 - **Actor:** <name> (<human | agent>)
+- **Initiated by:** <who asked, or "autonomous">
 - **Change:** <what changed, and where>
 - **Why:** <the decision, not the diff>
 ```
