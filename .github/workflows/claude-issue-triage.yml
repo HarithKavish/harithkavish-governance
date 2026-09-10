@@ -112,9 +112,16 @@ jobs:
               - Commit with a clear message referencing this issue number.
               - Push to origin feature/claude.
               - Open a pull request into development if none is open for this branch
-                yet, or leave the existing one to pick up the new commit if one already
-                is. Reference the issue in the pull request body ("Closes #N" if the
-                merge should close it).
+                yet, referencing this issue in its body ("Closes #N" if the merge
+                should close it).
+              - If a pull request is already open for this branch, leave it to pick
+                up the new commit -- but check its existing body first (`gh pr view`)
+                and, if it does not already reference this issue, add "Closes #N" to
+                it yourself (`gh pr edit --body`). An issue whose fix rides along on
+                someone else's already-open pull request does not get referenced for
+                free -- found 2026-09-10 (issue #68) when a run correctly left an
+                existing pull request alone but never added its own issue reference,
+                so nothing closed it even after that pull request merged.
               - Do NOT merge the pull request. A separate, independent review decides
                 that.
 
