@@ -1,0 +1,95 @@
+name: Claude Issue Triage
+
+# Takes an issue and produces a pull request implementing it. Symmetric to
+# claude-review.yml, which runs in the opposite direction -- reviewing a change that
+# already exists rather than producing one.
+#
+# GATED TO THE REPOSITORY OWNER'S OWN ISSUES, DELIBERATELY, AND THIS IS NOT A DETAIL TO
+# RELAX LATER. An issue is repository content (standards/SECURITY.md § Agents) the same
+# as any file or comment, and this workflow's entire purpose is to act on that content
+# automatically with write access. Removing the gate would let anyone who can open an
+# issue on this repository get an agent to implement and push their instructions -- the
+# exact injection surface claude-review.yml was verified, under adversarial testing
+# (2026-09-09), to resist. See standards/DEVELOPMENT.md § Issue Triage.
+#
+# This does NOT merge anything. It opens or updates a pull request on feature/claude and
+# stops. The existing claude-review.yml reviews that pull request as a genuinely separate
+# workflow run -- no shared context with this one -- and decides on merging under its own
+# policy. Two independent sessions, not one session trusting itself.
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write
+
+jobs:
+  triage:
+    # The gate. github.event.issue.user.login is the GitHub account that opened the
+    # issue -- not editable by the issue body, not spoofable by issue content.
+    if: github.event.issue.user.login == 'HarithKavish'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepare feature/claude
+        run: |
+          git config user.name 'Claude'
+          git config user.email 'noreply@anthropic.com'
+          if git ls-remote --exit-code --heads origin feature/claude > /dev/null 2>&1; then
+            git checkout -B feature/claude origin/feature/claude
+            git merge --no-edit origin/development || {
+              echo "feature/claude has a conflict with development that needs a human." ;
+              exit 1 ;
+            }
+          else
+            git checkout -B feature/claude origin/development
+          fi
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          allowed_bots: 'jarvis-harithkavish'
+          track_progress: true
+          claude_args: '--allowedTools "Bash(git add:*),Bash(git commit:*),Bash(git push:*),Bash(gh pr create:*),Bash(gh pr view:*),Bash(gh pr edit:*),Bash(gh issue comment:*)"'
+          prompt: |
+            An issue was opened by the repository owner. Implement it.
+
+            Issue #${{ github.event.issue.number }}: ${{ github.event.issue.title }}
+
+            ${{ github.event.issue.body }}
+
+            Work on the feature/claude branch, which is already checked out. Read
+            whatever governance and repository context you need before making any
+            change (AGENT_BOOTSTRAP.md, then only what the issue actually touches --
+            do not read everything).
+
+            If the issue is clear enough to implement:
+              - Make the change. Minimal and complete
+                (standards/AGENT_METHOD.md § 5) -- do this issue, not also whatever
+                else you notice along the way. A separate finding is a separate issue
+                (standards/AGENT_METHOD.md § Findings About A Different Repository),
+                not scope added here.
+              - Commit with a clear message referencing this issue number.
+              - Push to origin feature/claude.
+              - Open a pull request into development if none is open for this branch
+                yet, or leave the existing one to pick up the new commit if one already
+                is. Reference the issue in the pull request body ("Closes #N" if the
+                merge should close it).
+              - Do NOT merge the pull request. A separate, independent review decides
+                that.
+
+            If the issue is unclear, underspecified, or you are genuinely unsure what
+            is being asked:
+              - Do not guess and implement your best interpretation.
+              - Comment on the issue explaining what is unclear and what you would
+                need to know to proceed.
+              - Make no code change, and stop there. Leaving an issue open with a
+                clarifying question is a complete, correct outcome -- not a failure to
+                finish (the same principle claude-review.yml applies to declining to
+                merge).
