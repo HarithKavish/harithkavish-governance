@@ -210,6 +210,9 @@ depends on the thing being changed is how a fix breaks something unrelated.
 - **[GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md)** — *which wins*, and what is
   actually enforced
 - **[CHANGELOG.md](CHANGELOG.md)** — the record every change appends to
+- **[.github/workflows/claude-issue-triage.yml](.github/workflows/claude-issue-triage.yml)** —
+  the pipeline that can produce a governance change itself, which
+  [standards/DEVELOPMENT.md](standards/DEVELOPMENT.md) § Issue Triage documents
 
 **If the question is where a change should come from** rather than where it goes, read
 [MAINTENANCE.md](MAINTENANCE.md) § Where Changes Come From — what qualifies as
