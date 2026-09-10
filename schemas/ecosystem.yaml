@@ -11,7 +11,7 @@
 # Adding or changing an entry is a governance change (MAINTENANCE.md).
 
 schema_version: 2
-updated: 2026-09-06
+updated: 2026-09-10
 last_account_reconciliation: 2026-09-06
 
 ecosystem:
@@ -371,6 +371,22 @@ repositories:
       is a public surface under the account, so governance applies. Not yet onboarded --
       no AGENTS.md, no GOVERNANCE.md, no social preview. Registration is not onboarding;
       that work is scoped separately under protocols/REPOSITORY_ALIGNMENT.md.
+
+  - name: diary
+    role: website
+    adoption: integrated
+    last_checked: 2026-09-10
+    surface: https://diary.harithkavish.com
+    notes: >-
+      Personal journal, static Pages site. Onboarded new via
+      protocols/REPOSITORY_ONBOARDING.md 2026-09-10: development/runway/feature/claude
+      branches created from main, GOVERNANCE.md/AGENTS.md added, deploy-pages.yml
+      (build_type=workflow) and claude-review.yml carried over from an existing
+      ecosystem member, custom domain set via `gh api .../pages`. Outstanding: social
+      preview image (no upload API -- manual step), CLAUDE_CODE_OAUTH_TOKEN secret not
+      yet set on this repo, and the DNS CNAME for diary.harithkavish.com is pending
+      (Cloudflare's DNS-write scope is not available to any CLI credential currently
+      held -- see standards note under Cloudflare in harithkavish-admin-console memory).
 
 # ---------------------------------------------------------------------------
 # Pending review
