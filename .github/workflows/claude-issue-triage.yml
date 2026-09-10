@@ -68,15 +68,6 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           allowed_bots: 'jarvis-harithkavish'
-          # TEMPORARY, diagnostic only -- remove after the run this is added for.
-          # 2026-09-10: the fourth live test (issue #57) committed and pushed
-          # correctly (Edit/Write/git all worked) but never created a pull request,
-          # with permission_denials_count: 3 and no visible reason why in the
-          # normal log, which redacts tool-call arguments. show_full_output exposes
-          # the actual denied commands. WARNING (from the action's own docs): this
-          # exposes all tool execution results, and this is a PUBLIC repository --
-          # those logs are publicly visible. Left on for exactly one diagnostic run.
-          show_full_output: true
           # --allowedTools REPLACES the default toolset, it does not extend it --
           # found 2026-09-10 on the second live test (issue #48), which cost real
           # tokens (9 turns, 3 permission denials) and produced nothing: the model had
@@ -85,7 +76,21 @@ jobs:
           # comparing this workflow's own SDK-options dump in the Actions log against
           # claude-review.yml's, which explicitly lists Glob/Grep/LS/Read alongside its
           # Bash entries for the same reason.
-          claude_args: '--allowedTools "Glob,Grep,LS,Read,Edit,Write,Bash(git add:*),Bash(git commit:*),Bash(git push:*),Bash(gh pr create:*),Bash(gh pr view:*),Bash(gh pr edit:*),Bash(gh issue comment:*)"'
+          # Read-only verification commands added 2026-09-10, found via a diagnostic
+          # run with show_full_output enabled: the fifth live test succeeded (opened
+          # a real PR) but only after 8 permission denials and 22 turns finding a way
+          # around them. The exact denied commands, verbatim from that run:
+          #   gh pr list --state all --head feature/claude --json number,title,state,url
+          #   gh issue view 61 --json title,body,...
+          #   git ls-remote --heads origin ... | head -20; echo ---; git fetch origin
+          # All were the model doing exactly what standards/AGENT_METHOD.md asks --
+          # checking whether a PR already exists, verifying remote state before
+          # acting -- using read-only commands that were never allowlisted because
+          # the original list only covered write operations. Compound/piped Bash
+          # commands additionally require every sub-command to be individually
+          # allowed, which is why gh pr list chained with gh issue view failed as
+          # one denial rather than two.
+          claude_args: '--allowedTools "Glob,Grep,LS,Read,Edit,Write,Bash(git add:*),Bash(git commit:*),Bash(git push:*),Bash(git fetch:*),Bash(git ls-remote:*),Bash(git log:*),Bash(git status:*),Bash(git diff:*),Bash(head:*),Bash(echo:*),Bash(gh pr create:*),Bash(gh pr view:*),Bash(gh pr edit:*),Bash(gh pr list:*),Bash(gh issue view:*),Bash(gh issue comment:*)"'
           prompt: |
             An issue was opened by the repository owner. Implement it.
 
