@@ -51,11 +51,23 @@ jobs:
             git checkout -B feature/claude origin/development
           fi
 
+      # track_progress is deliberately OMITTED here. Its own documentation says it
+      # forces "tag mode" for issue events -- the action manages its own branch
+      # (named from branch_name_template, defaulting to claude/issue-N-<timestamp>)
+      # and leaves PR creation as a manual link, regardless of what the prompt below
+      # asks for. Found 2026-09-10 on the first live test: the fix landed correctly
+      # on a claude/issue-44-... branch the action created itself, feature/claude was
+      # never touched, and no pull request existed -- only a link for a human to
+      # click. Without this flag, the action runs in ordinary agentic mode and the
+      # model follows the branch/PR instructions in the prompt via normal tool calls,
+      # which is what this workflow actually needs. claude-review.yml keeps
+      # track_progress: true correctly -- it only tracks a checklist in a PR comment
+      # there, it does not manage branches, because pull_request events already have
+      # a branch.
       - uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           allowed_bots: 'jarvis-harithkavish'
-          track_progress: true
           claude_args: '--allowedTools "Bash(git add:*),Bash(git commit:*),Bash(git push:*),Bash(gh pr create:*),Bash(gh pr view:*),Bash(gh pr edit:*),Bash(gh issue comment:*)"'
           prompt: |
             An issue was opened by the repository owner. Implement it.
