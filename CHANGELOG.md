@@ -33,6 +33,20 @@ Format, newest first:
 
 ---
 
+## 2026-09-11T18:15:32Z -- Register forge-gateway in the ecosystem registry
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** schemas/ecosystem.yaml gains an entry for the new `forge-gateway`
+  repository (role: service, adoption: integrated, no surface yet — not deployed).
+  Registered during its onboarding per protocols/REPOSITORY_ONBOARDING.md.
+- **Why:** forge-gateway was just created and onboarded (GOVERNANCE.md/AGENTS.md/
+  README.md added, main/development/feature/claude branches created) as the presence
+  backend for forge's Worldview page — registering it completes onboarding step 8 and
+  keeps the registry's account-wide completeness property intact. claude-review.yml was
+  not added during onboarding (writing it was refused by a local permission classifier),
+  so this entry records that as outstanding rather than leaving the repository silently
+  non-compliant with standards/DEVELOPMENT.md's automated-review requirement.
+
 ## 2026-09-10T05:21:37Z -- Register diary in the ecosystem registry
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)
