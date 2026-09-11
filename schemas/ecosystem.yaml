@@ -245,7 +245,7 @@ repositories:
 
   - name: forge-gateway
     role: service
-    adoption: registered
+    adoption: integrated
     last_checked: 2026-09-11
     notes: >-
       Presence gateway for forge's Worldview page (docs/WORLDVIEW.md in forge) — a

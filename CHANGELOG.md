@@ -37,7 +37,7 @@ Format, newest first:
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)
 - **Change:** schemas/ecosystem.yaml gains an entry for the new `forge-gateway`
-  repository (role: service, adoption: registered, no surface yet — not deployed).
+  repository (role: service, adoption: integrated, no surface yet — not deployed).
   Registered during its onboarding per protocols/REPOSITORY_ONBOARDING.md.
 - **Why:** forge-gateway was just created and onboarded (GOVERNANCE.md/AGENTS.md/
   README.md added, main/development/feature/claude branches created) as the presence
