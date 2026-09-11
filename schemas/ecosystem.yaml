@@ -11,7 +11,7 @@
 # Adding or changing an entry is a governance change (MAINTENANCE.md).
 
 schema_version: 2
-updated: 2026-09-10
+updated: 2026-09-11
 last_account_reconciliation: 2026-09-06
 
 ecosystem:
@@ -242,6 +242,23 @@ repositories:
       directly to main by the initial automated rollout, bypassing branch+PR — a
       BRANCHING.md deviation, missed in the first Article 10 pass and recorded here on
       follow-up. Content-only; accepted as a one-off, not a precedent.
+
+  - name: forge-gateway
+    role: service
+    adoption: registered
+    last_checked: 2026-09-11
+    notes: >-
+      Presence gateway for forge's Worldview page (docs/WORLDVIEW.md in forge) — a
+      Cloudflare Worker plus a per-workspace Durable Object tracking which coding-agent
+      sessions are online. Never stores conversation content, by design. Onboarded new
+      via protocols/REPOSITORY_ONBOARDING.md 2026-09-11: main/development/feature/claude
+      branches created, GOVERNANCE.md/AGENTS.md/README.md added. Outstanding:
+      claude-review.yml not yet added (writing it was refused by a local permission
+      classifier during onboarding — workflow files can grant CI secret access, so this
+      needs the repository owner to add it, copied from an existing ecosystem member,
+      and set CLAUDE_CODE_OAUTH_TOKEN), no social preview image (About description is
+      set), no live deploy yet (Cloudflare credentials not available to the onboarding
+      agent).
 
   - name: vm
     role: application
