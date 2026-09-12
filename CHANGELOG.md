@@ -33,6 +33,33 @@ Format, newest first:
 
 ---
 
+## 2026-09-12T07:31:23Z -- Structural compliance comes first; decide shared vs. local before building
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** Two method changes and one stale-doc fix:
+  1. `AGENT_BOOTSTRAP.md` § 7 now requires verifying and, if missing, *creating* required
+     branch topology (`development`/`runway`/`main`) and branch protection in every
+     repository a task touches, before planning the task further — with an explicit,
+     narrow carve-out from "do not remediate what you were not asked to remediate" for
+     this specific case (structural workflow, not repository content).
+  2. `standards/AGENT_METHOD.md` gains a new step 4, "Decide where new capability
+     belongs, before building it": before writing a feature, decide whether it is
+     repository-specific or generalizable, and build generalizable capability in the
+     shared, authoritative location first rather than duplicating it locally with a plan
+     to generalize later. Steps 4-7 renumbered to 5-8 accordingly.
+  3. `standards/BRANCHING.md`'s enforcement-rung note was stale — it said branch
+     protection was "not yet configured," which stopped being true on 2026-09-08. Fixed
+     to point at `GOVERNANCE_HIERARCHY.md` § The first rule to reach rung 4.
+- **Why:** Requested directly after watching an in-progress task build the same
+  OAuth-client/session pattern separately for two repositories (diary, realmora) and
+  start on a third and fourth (converse, ai-lab) before anyone asked whether it should
+  have been one shared module instead — exactly the failure step 4 now exists to catch
+  earlier. The branch-compliance change generalizes a separate, standing expectation
+  (every repository should already have the standard branch topology and protection) into
+  something checked and fixed automatically as part of normal task discovery, rather than
+  depending on it being separately remembered.
+
 ## 2026-09-11T18:15:32Z -- Register forge-gateway in the ecosystem registry
 - **Actor:** Claude (agent)
 - **Initiated by:** @HarithKavish (requested)

@@ -117,6 +117,22 @@ Identify the current branch and whether working on it is permitted for this task
 are on the production branch and the task is implementation work, you are on the wrong
 branch — resolve that before writing anything.
 
+**Verify structural compliance now, and correct it now if it is missing** — before
+planning the task further, not after it, and not as a follow-up someone else does later.
+If [standards/BRANCHING.md](standards/BRANCHING.md) requires `development`/`runway`/`main`
+here and they do not exist, create them. If governance requires branch protection here
+and it is not configured, configure it. This holds for every repository the task touches,
+not only the one named in the request — a task that lands work in two repositories is
+underspecified if only one of them was checked.
+
+This is not the remediation that [Rules That Override Convenience](#rules-that-override-convenience)
+below tells you to leave alone. The distinction is what the gap blocks: a missing branch
+or a missing protection rule is not a finding about the repository's *content* — it is a
+missing precondition for doing *this* task correctly, the same way missing access or a
+missing tool is (`standards/AGENT_METHOD.md` § 1). Establish it, report that you did, and
+continue. Everything else non-compliant that you notice along the way — the repository's
+actual features, code, or quality — still follows the rule below untouched.
+
 ### 8. Check whether shared systems are involved
 
 If the task touches the design system, shared identity, or shared infrastructure,
@@ -136,6 +152,8 @@ Run the checklist below.
 ## Pre-Completion Checklist
 
 - [ ] Work happened on a permitted branch, not directly on the production branch.
+- [ ] Required branch topology and branch protection were verified (and created if
+      missing) in every repository this task touched, before implementation began.
 - [ ] No shared concern was duplicated locally instead of referenced.
 - [ ] Design changes used shared foundations, or the deviation is declared.
 - [ ] No secret, token, or credential entered the repository.
@@ -154,6 +172,11 @@ governance, you are not following it, regardless of whether the result looks rig
 **Do not remediate what you were not asked to remediate.** You will find
 non-compliance — repositories predate this system. Report it. Fixing it is a separate,
 scoped task (Article 9).
+
+**Except the structural workflow itself** — branch topology and branch protection
+required by [standards/BRANCHING.md](standards/BRANCHING.md) are a precondition for the
+task in front of you, not remediation of something unrelated (step 7, above). Establish
+those, then apply this rule as written to everything else you find.
 
 **But do not discard it either.** If what you found would hold elsewhere — another
 repository, another person, next month — it is a candidate for governance rather than a

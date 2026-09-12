@@ -2,9 +2,14 @@
 
 Implements Articles 6 (Protected Production) and 7 (Isolated Development).
 
-**Enforcement rung: 2 (guidance).** Branch protection and required pull requests are the
-intended rung 3–4 mechanisms and are not yet configured. Until they are, this standard
-holds because it is followed, not because it is prevented from being broken.
+**Enforcement rung: 4 (mechanically enforced) for `main`, `runway`, and `development` in
+every repository — see [GOVERNANCE_HIERARCHY.md](../GOVERNANCE_HIERARCHY.md) § The first
+rule to reach rung 4.** Branch protection (pull request required, force-push and deletion
+refused) was applied ecosystem-wide on 2026-09-08. `enforce_admins` is deliberately off,
+so owner/App credentials can still bypass it in a genuine incident — see that section for
+why, and for the corresponding gap this creates. Everything else this standard describes
+(the flow itself, contributor-branch conventions) remains rung 2: followed because it is
+correct, not because anything prevents it from being broken.
 
 ---
 
