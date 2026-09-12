@@ -11,7 +11,7 @@
 # Adding or changing an entry is a governance change (MAINTENANCE.md).
 
 schema_version: 2
-updated: 2026-09-11
+updated: 2026-09-12
 last_account_reconciliation: 2026-09-06
 
 ecosystem:
@@ -360,12 +360,15 @@ repositories:
   - name: realmora
     role: application
     adoption: registered
-    last_checked: 2026-09-05
+    last_checked: 2026-09-12
+    surface: https://realmora.harithkavish.com
     notes: >-
-      Chat-shell app consuming the design system's shared tokens directly. Not yet
-      deployed (no GitHub Pages site configured as of onboarding); no surface URL to
-      record until it is live. Added 2026-09-04 at explicit user request after being
-      found missing from this file during an ecosystem audit.
+      Chat-shell app consuming the design system's shared tokens directly. Added
+      2026-09-04 at explicit user request after being found missing from this file
+      during an ecosystem audit; at that time not yet deployed. Confirmed live
+      2026-09-11 (direct request, 200) -- the "not yet deployed" note above was stale
+      by then and is corrected here. Real ecosystem-linked OAuth client of
+      account.harithkavish.com (client_id `realmora`), not the cosmetic hk.user display.
 
   - name: admin
     role: application
@@ -376,6 +379,18 @@ repositories:
       Owner-only admin console. Live and deployed (GitHub Pages, custom domain
       verified) but had no AGENTS.md and no entry here — added 2026-09-04 at explicit
       user request after being found missing from this file during an ecosystem audit.
+
+  - name: secrets-vault
+    role: infrastructure
+    adoption: registered
+    last_checked: 2026-09-12
+    notes: >-
+      Local blind secret broker for AI agents (`secretctl`): generate, store, and push
+      secrets to GitHub/Vercel/a file without the calling agent ever seeing plaintext.
+      Not a web surface -- a local CLI tool, installed per-machine. Registered because
+      standards/SECURITY.md now requires agents with authenticated CLI access to use it
+      rather than handling a secret's plaintext directly. Added 2026-09-12 at explicit
+      user request, read and verified working end-to-end before this entry was written.
 
   - name: HarithKavish
     role: website
