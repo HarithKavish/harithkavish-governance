@@ -33,6 +33,31 @@ Format, newest first:
 
 ---
 
+## 2026-09-12T11:20:21Z -- Agents use a blind secret broker, never plaintext, for secrets they can generate or fetch themselves
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:**
+  1. `standards/SECURITY.md` gains a new requirement: an agent with authenticated CLI
+     access that needs to generate, capture, or install a secret uses `secretctl`
+     (`HarithKavish/secrets-vault`) rather than handling the plaintext itself or asking
+     the person to do it by hand. `secretctl generate`/`capture`/`push` never expose the
+     value to the calling agent; `set`/`reveal` are reserved for a human, by the tool's
+     own design (both fail closed for a non-interactive caller).
+  2. `schemas/ecosystem.yaml` gains an entry for `secrets-vault` itself (role:
+     infrastructure) -- read and verified working end-to-end (generate, list, delete)
+     before this entry was written.
+  3. While in the registry, corrected a stale note on the existing `realmora` entry: it
+     said "not yet deployed," which stopped being true before 2026-09-11, when it was
+     directly confirmed live (200) during an unrelated audit this same day.
+- **Why:** Any text a tool call returns enters the calling agent's own context and is
+  sent to the model provider -- a secret that appears in a tool result has already
+  leaked at that point regardless of what the agent does with it afterward. The existing
+  "credentials are used, never moved" rule named the right behavior but not a mechanism
+  for actually achieving it when an agent itself has the access to create or fetch a
+  credential; `secretctl` is that mechanism, verified to exist and work before being
+  made a requirement.
+
 ## 2026-09-12T07:31:23Z -- Structural compliance comes first; decide shared vs. local before building
 
 - **Actor:** Claude (agent)
