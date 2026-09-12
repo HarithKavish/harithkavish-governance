@@ -180,7 +180,7 @@ only the diff.
 **If the issue is unclear or underspecified, the triage run comments on the issue
 asking for clarification and stops.** It does not guess and implement its best
 interpretation -- that is exactly the "use your judgment" failure mode
-([standards/AGENT_METHOD.md](AGENT_METHOD.md) § 5): broad discretion from an
+([standards/AGENT_METHOD.md](AGENT_METHOD.md) § 6): broad discretion from an
 underspecified instruction is not license to act broadly without checking first, and
 an unattended pipeline has nobody to notice the scope crept until the diff already
 exists.

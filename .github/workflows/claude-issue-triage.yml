@@ -105,7 +105,7 @@ jobs:
 
             If the issue is clear enough to implement:
               - Make the change. Minimal and complete
-                (standards/AGENT_METHOD.md § 5) -- do this issue, not also whatever
+                (standards/AGENT_METHOD.md § 6) -- do this issue, not also whatever
                 else you notice along the way. A separate finding is a separate issue
                 (standards/AGENT_METHOD.md § Findings About A Different Repository),
                 not scope added here.
