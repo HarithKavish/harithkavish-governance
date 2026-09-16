@@ -26,9 +26,10 @@ recurring failure:
 | 1 · Acquire the means to look | Confident guessing dressed as diagnosis |
 | 2 · Understand what exists | A correct fix to the wrong problem |
 | 3 · Map what depends on what | A fix that breaks something unrelated |
-| 4 · Use the known technique | Reinventing a method badly, slowly |
-| 5 · Build minimal and complete | Either a fragment, or a cathedral |
-| 6 · Verify by observation | "It should work" reported as "it works" |
+| 4 · Decide where it belongs | Several near-identical copies, each drifting on its own |
+| 5 · Use the known technique | Reinventing a method badly, slowly |
+| 6 · Build minimal and complete | Either a fragment, or a cathedral |
+| 7 · Verify by observation | "It should work" reported as "it works" |
 
 Steps run in order because each depends on the last. They do **not** each need to be slow.
 
@@ -99,7 +100,35 @@ for your own environment. See
 `standards/AGENT_ENVIRONMENT.md` § What The Agent Has Learned for what a lesson must
 capture, and why.
 
-## 4 · Use the technique that already exists for this class of problem
+## 4 · Decide where new capability belongs, before building it
+
+Step 3 locates what an *existing* thing depends on. This step asks the same kind of
+question in the other direction, before something *new* gets written: **is this genuinely
+specific to the repository in front of you, or general enough that another surface has
+the same need now, or predictably will?**
+
+A capability that is genuinely local belongs where you are — building it does not need
+this step to slow it down. A capability that generalizes — a UI pattern, a piece of
+client logic, anything about sessions, accounts, or identity — belongs in the shared,
+authoritative location for that concern *first*: the design system for UI, a shared
+library for logic, the identity/auth platform for anything about sessions or accounts.
+The repository in front of you then consumes it. It does not reimplement it locally with
+a plan to "generalize later."
+
+Local-first, generalize-later produces several near-identical implementations to
+reconcile instead of one correct one to extend — and every copy drifts independently
+from the moment it is written, since nothing keeps them in sync afterward. The second and
+third copy are rarely cheaper than the shared version would have been; they are usually
+the same work, done worse, repeated.
+
+This is a judgment call, not a formula, and getting it wrong in either direction has a
+cost: over-generalizing turns a two-line local fix into a new shared dependency nobody
+else asked for, and under-generalizing is the duplication this step exists to prevent.
+When it is genuinely unclear which side a feature falls on, that uncertainty is itself
+worth surfacing — see [AGENT_ENVIRONMENT.md](AGENT_ENVIRONMENT.md) on reporting what you
+are unsure of rather than silently defaulting to whichever path looks faster right now.
+
+## 5 · Use the technique that already exists for this class of problem
 
 Most problems have a known diagnostic method. Use it rather than improvising:
 
@@ -116,7 +145,7 @@ Most problems have a known diagnostic method. Use it rather than improvising:
 you have. Where the evidence is unavailable, say the conclusion is probable rather than
 known, and name what would confirm it.
 
-## 5 · Build minimal *and* complete
+## 6 · Build minimal *and* complete
 
 These pull against each other and both are required.
 
@@ -145,7 +174,7 @@ infrastructure like a CI workflow — the scope intended is stated *before* the 
 done, not discovered by the person reading the diff afterward. Silence is not
 agreement; it is an unread proposal.
 
-## 6 · Verify by observation, never by absence of error
+## 7 · Verify by observation, never by absence of error
 
 **A thing is not done because nothing complained.** It is done when something observed says
 so.
@@ -163,7 +192,7 @@ is reported as fixed.
 Where verification is impossible, say so plainly and name what would be needed. That is a
 complete answer. A confident one that was never checked is not.
 
-## 7 · Work in parallel where the work is independent
+## 8 · Work in parallel where the work is independent
 
 The person is spending real time watching. Latency is a cost borne by them, and it is
 legitimate to optimise it — but not by skipping the steps above.
@@ -233,6 +262,8 @@ crossed by accident.
 - [ ] The means to inspect the system were obtained before a cause was proposed
 - [ ] What the change touches was read; what it does not touch was not
 - [ ] Dependents of anything shared were identified before it changed
+- [ ] New capability was placed shared vs. local by whether it generalizes, not by
+      which was faster to write
 - [ ] The known diagnostic method for this class of problem was used
 - [ ] The change is the smallest one that *fully* solves the problem
 - [ ] The outcome was verified by observing it, and the claim states what was observed

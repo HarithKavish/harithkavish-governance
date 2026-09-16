@@ -153,6 +153,39 @@ transmit a credential — including into a file it is writing, a commit message,
 message to a service. If a task appears to require exposing one, that is the wrong
 approach; stop and say so.
 
+**Where an agent can generate or fetch a secret itself, it does so through a blind
+broker, never through its own context.** Any text a tool call returns becomes part of
+that agent's context and is sent to the model provider — a secret that appears in a tool
+result has already leaked at that point, even if the agent never repeats it. "Be careful
+with this value" does not fix a leak that already happened; the only fix is architectural,
+not behavioural.
+
+An agent with authenticated CLI access that needs to create, store, or install a secret —
+an API key, an OAuth client secret, a signing key — uses
+[`secretctl`](https://github.com/HarithKavish/secrets-vault) to do it, rather than asking
+the person to do it by hand, and rather than handling the plaintext itself:
+
+- `secretctl generate` produces a new secret with a CSPRNG, never by asking a language
+  model to invent one.
+- `secretctl capture -- <command>` stores another CLI's output (a token, a generated key)
+  straight from that command's stdout, never through the agent's own output.
+- `secretctl push -Target github:owner/repo|vercel:project|file:path` sends the stored
+  value directly to its destination — a repository secret, a platform's environment
+  variable, a file — without printing it.
+
+Every subcommand available to an agent this way emits only a masked preview
+(`********ab12`) or a success/failure line — never the value. `secretctl set` and
+`secretctl reveal` are the deliberate exception: both are designed to fail closed the
+moment they detect a non-interactive caller, which an agent always is. An agent does not
+call either, and does not ask a human to paste a secret into a chat or a tool call on its
+behalf — where a task genuinely needs a human to look at or type a value, the agent tells
+them to run `set` or `reveal` themselves, in their own terminal.
+
+This is how the rule above — a credential is used, never moved — is actually kept once an
+agent has the access to generate or fetch one on its own. If `secretctl` is not installed
+where an agent is working, that is a gap to report, not a reason to fall back to handling
+plaintext directly (install it per that repository's own README first).
+
 Further:
 
 - Never disable a security control to make something work. Report the obstacle.
