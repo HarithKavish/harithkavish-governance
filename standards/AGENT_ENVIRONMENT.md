@@ -269,3 +269,5 @@ vulnerability this section exists to prevent.
       was relied on
 - [ ] Compliance is structural where the runtime allows it, and reported honestly where
       it is not
+- [ ] Anything named "not within reach" was checked first, not assumed
+      ([AGENT_METHOD.md](AGENT_METHOD.md) § 1)
