@@ -51,6 +51,16 @@ The honest form of not having the capability is saying so — see
 [AGENT_ENVIRONMENT.md](AGENT_ENVIRONMENT.md), which requires an agent to report what it
 cannot do rather than route around it silently.
 
+**This applies to acting, not only observing.** An agent that assumes it lacks the
+credentials or tooling to perform an action — provision infrastructure, set a secret,
+push a change — without checking is making the same substitution this step exists to
+prevent, aimed at capability instead of evidence. Before concluding an action is out of
+reach, and before asking the person to do it instead, check what is actually installed
+and authenticated: `which`, `whoami`, a list command, a dry run. Check this for every
+tool that might be relevant, not just the first one tried — two tools already on the
+machine, used together, sometimes do what looks like it needs a third that isn't there.
+Report the result of that check, not an assumption about what it would probably say.
+
 ## 2 · Understand what exists — proportionately
 
 Read what the task touches. **Not everything, and not nothing.**
@@ -260,6 +270,9 @@ crossed by accident.
 ## Compliance Check
 
 - [ ] The means to inspect the system were obtained before a cause was proposed
+- [ ] Ability to act (installed tools, authenticated CLIs, what they combine to do) was
+      checked, not assumed, before something was declared out of reach or handed to the
+      person
 - [ ] What the change touches was read; what it does not touch was not
 - [ ] Dependents of anything shared were identified before it changed
 - [ ] New capability was placed shared vs. local by whether it generalizes, not by
