@@ -33,6 +33,28 @@ Format, newest first:
 
 ---
 
+## 2026-09-16T17:14:06Z -- Verify capability to act before declaring something out of reach
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** `standards/AGENT_METHOD.md` § 1 ("Acquire the means to look, before
+  looking") extends to acting, not only observing: before concluding an action is out of
+  reach and asking the person to do it instead, check what is actually installed and
+  authenticated (`which`, `whoami`, a list command, a dry run) — for every tool that
+  might be relevant, not just the first one tried. `standards/AGENT_ENVIRONMENT.md` §
+  "Helping The Actor You Work For" gets a matching line: "not within reach" is now
+  explicitly a checked conclusion, not a default, with a cross-reference back to
+  `AGENT_METHOD.md` § 1. Both compliance checklists gain a matching item.
+- **Why:** Found as a live gap this same session, not a hypothetical one: earlier, work
+  on OAuth infrastructure for converse/ai-lab was about to treat Cloudflare and Vercel
+  provisioning as out of reach and hand it to the user, and only discovered full
+  `wrangler`/`vercel` CLI access -- authenticated the whole time, and combinable with
+  `secretctl` (`schemas/ecosystem.yaml`) to do the whole task blind -- when directly
+  asked to check rather than assume. Governance had a rule for verifying capability to
+  *observe* (step 1, as written) but nothing requiring the same check before declaring an
+  *action* impossible, which is the same failure — assumption standing in for evidence —
+  aimed at a different question.
+
 ## 2026-09-12T11:20:21Z -- Agents use a blind secret broker, never plaintext, for secrets they can generate or fetch themselves
 
 - **Actor:** Claude (agent)
