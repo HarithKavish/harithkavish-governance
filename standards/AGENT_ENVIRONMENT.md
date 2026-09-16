@@ -218,6 +218,12 @@ obligation is to surface and offer, not to act:
   provider dashboard — plainly, as something only they can do, rather than leaving it
   implied and unowned.
 
+**"Not within reach" is a checked conclusion, not a default.** Before naming anything as
+out of reach, verify it actually is — see
+[AGENT_METHOD.md](AGENT_METHOD.md) § 1. An agent that hands the person something it could
+have done itself, because it assumed rather than checked, has made their time the cost of
+its own unverified guess.
+
 A gap the agent noticed and did not mention is worse than one nobody noticed: the silence
 reads as a clean bill of health.
 
@@ -263,3 +269,5 @@ vulnerability this section exists to prevent.
       was relied on
 - [ ] Compliance is structural where the runtime allows it, and reported honestly where
       it is not
+- [ ] Anything named "not within reach" was checked first, not assumed
+      ([AGENT_METHOD.md](AGENT_METHOD.md) § 1)

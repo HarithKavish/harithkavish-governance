@@ -11,7 +11,7 @@
 # Adding or changing an entry is a governance change (MAINTENANCE.md).
 
 schema_version: 2
-updated: 2026-09-12
+updated: 2026-09-16
 last_account_reconciliation: 2026-09-06
 
 ecosystem:
@@ -419,6 +419,32 @@ repositories:
       yet set on this repo, and the DNS CNAME for diary.harithkavish.com is pending
       (Cloudflare's DNS-write scope is not available to any CLI credential currently
       held -- see standards note under Cloudflare in harithkavish-admin-console memory).
+
+  - name: memory-diary
+    role: application
+    adoption: integrated
+    last_checked: 2026-09-16
+    surface: none
+    notes: >-
+      Android app + Cloudflare Worker: the owner types free-form facts about themself,
+      an LLM extracts/corrects structured entries, written to MongoDB Atlas. Shares
+      my_chatgpt's `talk.memories` collection and `vector_index_user` search index
+      rather than getting its own -- Atlas M0 caps a cluster at 3 search indexes and
+      all three already belong to my_chatgpt (see the TENANT_FIELD/DEFAULT_AGENT_ID
+      comments in hermes-agent/tools/atlas_memory.py on the Jarvis VM). Uses tenant
+      `userId: "harith"`,
+      distinct from Jarvis's `$~jarvis` tenant, as the human-authored canonical
+      profile section other ecosystem systems can read directly. Onboarded new via
+      protocols/REPOSITORY_ONBOARDING.md 2026-09-16: main/development/runway/
+      feature/claude branches created and protected, GOVERNANCE.md/AGENTS.md added,
+      claude-review.yml carried over from store/account, build-apk.yml (APK +
+      tagged Release) and deploy-worker.yml (wrangler deploy) added. Outstanding:
+      social preview image; CLAUDE_CODE_OAUTH_TOKEN, CLOUDFLARE_API_TOKEN/
+      CLOUDFLARE_ACCOUNT_ID, and the Worker's JWT/passphrase secrets not yet set
+      (several require a human action -- see PR #1 in the repository); the
+      `vector_index_user`/`embedding` field names in worker/src/db.ts are unverified
+      against the live Atlas index (Atlas MCP access is disabled for both of the
+      account's orgs).
 
 # ---------------------------------------------------------------------------
 # Pending review
