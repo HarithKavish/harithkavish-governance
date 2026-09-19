@@ -32,9 +32,15 @@ feature/<name>  →  development  →  runway  →  main
 ```
 
 Nothing skips a step. `development` merges into `runway` once reviewed work accumulates;
-`runway` merges into `main` only after verification is complete and a go-live date/time
-has been scheduled — promotion to `main` is a deliberate release act, not an automatic
-merge.
+`runway` merges into `main` only after that branch's release gate passes — see
+[The Release Gate](#the-release-gate).
+
+Promotion to `main` is a deliberate release act. **The deliberate part is the gate, not
+the click.** Where every condition in a gate is mechanically evaluated, the act of
+promoting may be performed by automation; where any condition is a human judgment, it
+may not. A promotion that passed no configured gate is not deliberate, however carefully
+the person performing it thought about it — and a promotion that passed a complete one
+is not made less deliberate by nobody watching it happen.
 
 ## Contributor Branches
 
@@ -70,6 +76,62 @@ accumulated. `runway` is never edited directly — it exists to be tested, not w
 If verification on `runway` finds a problem, fix it on `development` (or the originating
 `feature/<name>` branch) and re-promote; do not patch `runway` in place.
 
+## The Release Gate
+
+A **gate** is the set of conditions that must hold before a promotion into a branch.
+
+**The gate is the required status checks configured on the target branch.** It is not a
+document, a checklist, or an intention. This is deliberate: required checks are already
+a platform mechanism that cannot be bypassed by forgetting, which is the only kind of
+gate worth having
+([GOVERNANCE_HIERARCHY.md](../GOVERNANCE_HIERARCHY.md) — only rungs 3–4 are enforcement).
+
+**An empty gate is a closed gate.** A branch with no required checks configured has not
+declared what it verifies, and **nothing may be promoted into it automatically**. It
+falls back to a human performing the promotion deliberately. Absence of a gate must
+never read as absence of risk — that inversion is how an unverified change reaches
+production while everyone believes a process ran.
+
+### What each gate contains
+
+Repositories differ, so governance sets the **minimum**; each repository adds what its
+own surface needs.
+
+Promotion into `runway` requires, at least:
+
+- every check required on `development` still passing on the merge result
+- a secret scan over the change, with no unresolved finding
+- a dependency scan, with no unresolved finding of high severity or above
+
+Promotion into `main` requires all of the above, and additionally:
+
+- the repository's own verification suite passing **on `runway`** — its tests, its
+  build, whatever it declares. A repository with no suite declares that fact rather
+  than leaving the question open.
+- for a repository with a live surface, evidence that the surface **actually serves**
+  after deployment — a fetch of the real URL, not a green deploy job. A deployment step
+  reporting success is not a working site
+  ([AGENT_METHOD.md](AGENT_METHOD.md) § 7).
+- a recorded rollback path — the previous release must be re-deployable without
+  reconstructing it.
+
+### Automated promotion
+
+Automation may perform a promotion **only** when every condition in that branch's gate
+is mechanically evaluated. It may never perform one on the strength of its own
+assessment that the change looks correct, and it may never promote into a branch whose
+gate is empty.
+
+An agent that finds a gate unsatisfiable reports that and stops. Stopping is a complete
+outcome; a promotion that skipped its gate is not recoverable by noticing afterwards.
+
+> **Enforcement rung: 4 where a gate is configured, 2 where it is not.** The checks
+> themselves are platform-enforced; *whether a repository has configured any* is
+> currently nobody's automated responsibility. Reconciling configured gates against
+> this minimum is a rung-4 mechanism that does not exist yet, and until it does, a
+> repository can be silently gateless. That gap is why the empty-gate rule above fails
+> closed rather than open.
+
 ## Hotfix — the Exception Path
 
 For urgent production defects only: something is broken in production and waiting for
@@ -101,6 +163,10 @@ improvements noticed along the way go through the normal flow.
   ([GOVERNANCE_HIERARCHY.md](../GOVERNANCE_HIERARCHY.md)).
 - Never force-push a shared branch, and never rewrite history on `main`, `runway`, or
   `development`.
+- You may perform a promotion only when the target branch's gate is fully mechanical and
+  passing ([The Release Gate](#the-release-gate)). A branch with no required checks has
+  an empty gate, and an empty gate is closed — hand that promotion to a human and say
+  why. Your own judgment that the change looks correct is not a gate.
 
 ## Known Gap
 
@@ -109,8 +175,11 @@ every repository in [schemas/ecosystem.yaml](../schemas/ecosystem.yaml) on 2026-
 explicit request rather than through the usual gradual, per-repository alignment path
 (contrast [MAINTENANCE.md](../MAINTENANCE.md), "Changing Governance Safely") — recorded
 here as a declared exception, not a new default process. `runway`'s verification checks
-(hosting, security, code quality, etc.) are not yet defined or automated in any
-repository; until they are, promotion to `runway` is a manual gate. Most repositories
+are now **defined** — see [The Release Gate](#the-release-gate) — but as of 2026-09-19
+**no repository has configured them**, so every gate in the ecosystem is empty and every
+promotion is therefore manual by the fail-closed rule. Defining the minimum was the
+prerequisite; configuring it per repository, and reconciling that configuration
+automatically, are both still outstanding. Most repositories
 still lack `AGENTS.md`/`GOVERNANCE.md` (`adoption: registered`, not yet `integrated`) —
 the branches exist ahead of onboarding, which is itself worth closing per
 [protocols/REPOSITORY_ALIGNMENT.md](../protocols/REPOSITORY_ALIGNMENT.md).

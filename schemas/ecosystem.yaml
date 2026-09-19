@@ -11,7 +11,7 @@
 # Adding or changing an entry is a governance change (MAINTENANCE.md).
 
 schema_version: 2
-updated: 2026-09-16
+updated: 2026-09-18
 last_account_reconciliation: 2026-09-06
 
 ecosystem:
@@ -445,6 +445,27 @@ repositories:
       `vector_index_user`/`embedding` field names in worker/src/db.ts are unverified
       against the live Atlas index (Atlas MCP access is disabled for both of the
       account's orgs).
+
+  - name: agent-toolkit
+    role: infrastructure
+    adoption: registered
+    last_checked: 2026-09-18
+    notes: >-
+      Orchestration toolkit for AI agents: a capability registry, a runner for
+      deterministic pipelines, and specialist agent definitions. Exists so a primary
+      agent routes work rather than performing all of it -- anything a program can do
+      becomes a pipeline, and the model is left with the judgment that needs a model.
+      Consumed from a checkout by agents on the Windows box and the Jarvis VM; no live
+      surface. Its skills/ and agents/ directories hold instructions obeyed by every
+      later agent session, so changes there land by pull request and are never
+      self-applied by the agent that wrote them -- a self-editing skill turns one bad
+      session into permanent behaviour and any fetched page into a persistent injection
+      vector. Onboarded new via protocols/REPOSITORY_ONBOARDING.md 2026-09-18:
+      main/development/feature/claude branches created, GOVERNANCE.md/AGENTS.md/
+      README.md added, claude-review.yml carried over from this repository. Outstanding:
+      social preview image not created (needs the design-system mark, and GitHub exposes
+      no API for the upload); CLAUDE_CODE_OAUTH_TOKEN not set, so automated review does
+      not run yet; branch protection not configured.
 
 # ---------------------------------------------------------------------------
 # Pending review
