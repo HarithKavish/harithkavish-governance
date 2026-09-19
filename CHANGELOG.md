@@ -33,6 +33,26 @@ Format, newest first:
 
 ---
 
+## 2026-09-18T17:18:08Z -- Register agent-toolkit in the ecosystem registry
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** schemas/ecosystem.yaml gains an entry for the new `agent-toolkit`
+  repository (role: infrastructure, adoption: registered, no surface). Registered
+  during its onboarding per protocols/REPOSITORY_ONBOARDING.md step 8.
+- **Why:** agent-toolkit was created and onboarded 2026-09-18 as the home for agent
+  orchestration tooling — a capability registry, a pipeline runner, and specialist
+  agent definitions — so that a primary agent routes work instead of performing all of
+  it. Registering it completes onboarding step 8 and keeps the registry's account-wide
+  completeness property intact. The entry records three outstanding items rather than
+  leaving the repository silently non-compliant: no social preview image (it needs the
+  design-system mark, and GitHub exposes no API for the upload), CLAUDE_CODE_OAUTH_TOKEN
+  unset so standards/DEVELOPMENT.md's automated review does not yet run, and no branch
+  protection. The entry also records that the repository's skills/ and agents/
+  directories hold instructions rather than data, and that changes to them land by pull
+  request — that property is the reason the repository is governed rather than treated
+  as scratch tooling.
+
 ## 2026-09-16T17:14:06Z -- Verify capability to act before declaring something out of reach
 
 - **Actor:** Claude (agent)
