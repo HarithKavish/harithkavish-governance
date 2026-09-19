@@ -33,6 +33,38 @@ Format, newest first:
 
 ---
 
+## 2026-09-19T08:58:48Z -- Define the release gate; the deliberate part of a promotion is the gate, not the click
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** `standards/BRANCHING.md` gains a **The Release Gate** section and two
+  amendments around it.
+  1. A gate is defined as **the required status checks configured on the target
+     branch** — not a document or a checklist — and **an empty gate is a closed gate**:
+     a branch with no required checks may not be promoted into automatically.
+  2. The minimum contents of each gate are stated: for `runway`, the development checks
+     plus secret and dependency scans; for `main`, additionally the repository's own
+     verification suite run on `runway`, evidence that a live surface actually serves
+     (a fetch of the real URL, not a green deploy job), and a recorded rollback path.
+  3. § The Flow's "promotion to `main` is a deliberate release act, not an automatic
+     merge" is sharpened rather than removed: promotion remains a deliberate act, and
+     **the deliberate part is the gate, not the click**. Automation may promote only
+     where every condition is mechanically evaluated.
+  4. § For Agents gains the corresponding rule, and § Known Gap is corrected — the
+     checks are now defined but configured nowhere, so every gate in the ecosystem is
+     currently empty and every promotion is manual by the fail-closed rule.
+- **Why:** Requested while designing an autonomous issue-to-production system. The
+  existing wording made autonomous promotion impossible to reconcile with governance,
+  but the right fix was not to relax the rule — it was to notice that "deliberate" had
+  been attached to the wrong thing. A human clicking merge on an unverified change is
+  not deliberate; a promotion that passed a complete, configured, mechanically-evaluated
+  gate is, whether or not anyone watched it. That reframing preserves the safety
+  property (nothing unverified reaches production) while allowing the act to be
+  automated, and it converts the rule from rung 2 to rung 4 wherever a gate exists.
+  The fail-closed default is the load-bearing part: `runway`'s checks were previously
+  recorded as "not yet defined", which left every repository's gate undefined AND
+  unenforced with nothing stating which way that should resolve.
+
 ## 2026-09-18T17:18:08Z -- Register agent-toolkit in the ecosystem registry
 
 - **Actor:** Claude (agent)
