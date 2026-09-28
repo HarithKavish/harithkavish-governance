@@ -33,6 +33,22 @@ Format, newest first:
 
 ---
 
+## 2026-09-28T18:56:31Z -- Register the keyboard repository
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** `schemas/ecosystem.yaml` gains a `keyboard` entry (role `application`,
+  adoption `integrated`), and `updated` moves to 2026-09-29.
+- **Why:** HarithKavish/keyboard was created and onboarded today via
+  protocols/REPOSITORY_ONBOARDING.md, and step 8 of that protocol is registration.
+  A repository that is not listed here is not discoverable as a member, so the
+  registry entry is part of onboarding rather than a follow-up. The entry records
+  the one declared exception -- the shared design system does not apply to an
+  Android app with no web surface -- and the four items still outstanding, so the
+  gaps are visible in the registry instead of only in the repository.
+
+---
+
 ## 2026-09-19T08:58:48Z -- Define the release gate; the deliberate part of a promotion is the gate, not the click
 
 - **Actor:** Claude (agent)
