@@ -32,9 +32,11 @@ branches:
 # never to hold a standing exemption. standards/BRANCHING.md § Bypass.
 bypass: []
 
-# One ruleset per repository, named below, applied with an empty bypass list.
+# One ruleset per protected branch, named <prefix>-<branch>, each with an empty bypass
+# list. One per branch because a ruleset's required checks apply to every branch it
+# targets, and each branch's gate is different.
 ruleset:
-  name: governance-branches
+  prefix: governance
   target: [development, runway, main]
   rules:
     deletion: true              # the three branches cannot be deleted
@@ -44,14 +46,17 @@ ruleset:
       required_approving_review_count: 0      # review is the verdict checks below
       dismiss_stale_reviews_on_push: true
       required_review_thread_resolution: false
-    # required status checks are per branch: see stages
+    # required status checks are per branch: see stages. A check becomes required in a
+    # repository only once something in that repository produces it -- requiring a check
+    # nothing will ever report would freeze every merge. The engine reports each check
+    # that is policy but not yet required, and why.
 
 # Where each branch's changes may come from, how they merge, and what must pass first.
 # A check listed here is required on that branch. `verifiers` are added per repository
 # from what it declares and what is detected (see verifiers below).
 stages:
   development:
-    accepts_from: ["feature/*", "hotfix/*", "dependabot/*", "promote/back-merge"]
+    accepts_from: ["feature/*", "hotfix/*", "dependabot/*", "policy/*"]   # policy/*: the engine's adoption PRs
     merge_method: squash
     required_checks: [gate, policy, ci]
     auto_merge: on_pass          # the reviewer enables it on PASS
@@ -68,6 +73,19 @@ stages:
     verifiers_required: true     # every applicable verifier, plus live-surface evidence
     open_promotion: automatic    # the engine opens runway -> main
     auto_merge: on_pass
+
+# How the engine brings a repository into policy and keeps promotions moving. New pull
+# requests are rationed: each one triggers a code review on the owner's subscription, and
+# 58 repositories had promotions waiting on day one.
+rollout:
+  branch: policy/adopt                 # head branch of the adoption pull request
+  max_new_prs_per_pass: 3
+  repo_settings:
+    allow_auto_merge: true
+    allow_squash_merge: true
+    allow_merge_commit: true
+    allow_rebase_merge: false
+    delete_branch_on_merge: false      # contributor branches are persistent
 
 # Verifiers. Each one posts a check named verify/<name> with a verdict -- PASS, FAIL or
 # HOLD, exactly like the code reviewer -- and the `release` check on main passes only

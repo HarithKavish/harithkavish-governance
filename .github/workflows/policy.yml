@@ -1,0 +1,66 @@
+name: Policy
+
+# Runs the policy engine (tools/policy/engine.py) over every repository the account owns,
+# as the policy GitHub App -- the identity that holds Administration on them and is in
+# NO ruleset's bypass list. Scheduled, so a repository created since the last pass, or
+# a ruleset someone changed, is brought back to policy within the interval.
+#
+# Dry run until the repository variable POLICY_APPLY is 'true' -- the report is in the
+# run summary either way. Runs from the default branch (main), so a change to the policy
+# or the engine takes effect only once promoted, through its own gate.
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: 'Limit to one repository (blank = all)'
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: policy-engine
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    if: ${{ vars.POLICY_APP_ID != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install pyyaml
+
+      - id: app
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.POLICY_APP_ID }}
+          private-key: ${{ secrets.POLICY_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      - name: Reconcile
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          APPLY: ${{ vars.POLICY_APPLY }}
+          REPO: ${{ inputs.repo }}
+        run: |
+          set -euo pipefail
+          args=(--json report.json)
+          [ "${APPLY:-}" = "true" ] && args+=(--apply)
+          [ -n "${REPO:-}" ] && args+=(--repo "$REPO")
+          python tools/policy/engine.py "${args[@]}" | tee report.txt
+          { echo '```'; cat report.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: policy-report
+          path: report.*
+          retention-days: 14

@@ -4,61 +4,137 @@
   "title": "Project manifest (.project/project.yaml)",
   "description": "What a repository is, what it covers, what it runs on. The rule is standards/PROJECT.md.",
   "type": "object",
-  "required": ["schema_version", "project", "scope", "infra", "verify"],
+  "required": [
+    "schema_version",
+    "project",
+    "scope",
+    "infra",
+    "verify"
+  ],
   "additionalProperties": false,
   "properties": {
-    "schema_version": { "const": 1 },
-
+    "schema_version": {
+      "const": 1
+    },
     "project": {
       "type": "object",
-      "required": ["name", "purpose", "status"],
+      "required": [
+        "name",
+        "purpose",
+        "status"
+      ],
       "additionalProperties": false,
       "properties": {
-        "name": { "type": "string" },
-        "purpose": { "type": "string", "description": "One sentence: what it is for." },
-        "status": { "enum": ["active", "maintenance", "frozen", "archived", "exercise"] },
-        "owner": { "type": "string", "default": "HarithKavish" },
-        "role": { "enum": ["governance", "shared-library", "website", "application", "service", "infrastructure", "exercise"] }
+        "name": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "One sentence: what it is for."
+        },
+        "status": {
+          "enum": [
+            "active",
+            "maintenance",
+            "frozen",
+            "archived",
+            "exercise"
+          ]
+        },
+        "owner": {
+          "type": "string",
+          "default": "HarithKavish"
+        },
+        "role": {
+          "enum": [
+            "governance",
+            "shared-library",
+            "website",
+            "application",
+            "service",
+            "infrastructure",
+            "exercise"
+          ]
+        }
       }
     },
-
     "scope": {
       "type": "object",
-      "required": ["covers", "excludes"],
+      "required": [
+        "covers",
+        "excludes"
+      ],
       "additionalProperties": false,
       "properties": {
-        "covers": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
-        "excludes": { "type": "array", "items": { "type": "string" }, "description": "What this project deliberately does not do. An empty list is a statement." }
+        "covers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "excludes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "What this project deliberately does not do. An empty list is a statement."
+        }
       }
     },
-
     "surface": {
       "type": "object",
       "description": "Live addresses per stage. Omit for a project with no live surface.",
       "additionalProperties": false,
       "properties": {
-        "development": { "type": "string", "format": "uri" },
-        "runway": { "type": "string", "format": "uri" },
-        "main": { "type": "string", "format": "uri" },
-        "health": { "type": "string", "description": "Path that proves the deployment serves, e.g. /health" }
+        "development": {
+          "type": "string",
+          "format": "uri"
+        },
+        "runway": {
+          "type": "string",
+          "format": "uri"
+        },
+        "main": {
+          "type": "string",
+          "format": "uri"
+        },
+        "health": {
+          "type": "string",
+          "description": "Path that proves the deployment serves, e.g. /health"
+        }
       }
     },
-
     "components": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name", "responsibility", "paths"],
+        "required": [
+          "name",
+          "responsibility",
+          "paths"
+        ],
         "additionalProperties": false,
         "properties": {
-          "name": { "type": "string" },
-          "responsibility": { "type": "string" },
-          "paths": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
-          "language": { "type": "string" }
+          "name": {
+            "type": "string"
+          },
+          "responsibility": {
+            "type": "string"
+          },
+          "paths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "language": {
+            "type": "string"
+          }
         }
       }
     },
-
     "infra": {
       "type": "object",
       "description": "Every platform the project runs on or depends on. An empty object is a statement: it runs nowhere.",
@@ -68,113 +144,255 @@
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "workers": { "type": "array", "items": { "type": "string" } },
-            "pages": { "type": "array", "items": { "type": "string" } },
-            "routes": { "type": "array", "items": { "type": "string" } },
-            "d1": { "type": "array", "items": { "type": "string" } },
-            "kv": { "type": "array", "items": { "type": "string" } },
-            "r2": { "type": "array", "items": { "type": "string" } },
-            "tunnels": { "type": "array", "items": { "type": "string" } }
+            "workers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "pages": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "routes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "d1": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "kv": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "r2": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "tunnels": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         },
         "vercel": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "projects": { "type": "array", "items": { "type": "string" } },
-            "domains": { "type": "array", "items": { "type": "string" } }
+            "projects": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "domains": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         },
         "github_pages": {
           "type": "object",
           "additionalProperties": false,
-          "properties": { "domain": { "type": "string" } }
+          "properties": {
+            "domain": {
+              "type": "string"
+            }
+          }
         },
         "mongodb_atlas": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "project": { "type": "string" },
-            "clusters": { "type": "array", "items": { "type": "string" } },
-            "databases": { "type": "array", "items": { "type": "string" } }
+            "project": {
+              "type": "string"
+            },
+            "clusters": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "databases": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         },
         "render": {
           "type": "object",
           "additionalProperties": false,
-          "properties": { "services": { "type": "array", "items": { "type": "string" } } }
+          "properties": {
+            "services": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
         },
         "android": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "application_id": { "type": "string" },
-            "permissions": { "type": "array", "items": { "type": "string" } }
+            "application_id": {
+              "type": "string"
+            },
+            "permissions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         },
         "oracle_vm": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
-            "services": { "type": "array", "items": { "type": "string" } },
-            "paths": { "type": "array", "items": { "type": "string" } }
+            "services": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "paths": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
           }
         }
       }
     },
-
     "data": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["what", "classification"],
+        "required": [
+          "what",
+          "classification"
+        ],
         "additionalProperties": false,
         "properties": {
-          "what": { "type": "string" },
-          "where": { "type": "string" },
-          "classification": { "enum": ["public", "internal", "personal", "sensitive", "secret"] },
-          "retention": { "type": "string" }
+          "what": {
+            "type": "string"
+          },
+          "where": {
+            "type": "string"
+          },
+          "classification": {
+            "enum": [
+              "public",
+              "internal",
+              "personal",
+              "sensitive",
+              "secret"
+            ]
+          },
+          "retention": {
+            "type": "string"
+          }
         }
       }
     },
-
     "secrets": {
       "type": "array",
       "description": "Every secret by NAME and where it is held. Never a value.",
       "items": {
         "type": "object",
-        "required": ["name", "held_in"],
+        "required": [
+          "name",
+          "held_in"
+        ],
         "additionalProperties": false,
         "properties": {
-          "name": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]*$" },
-          "held_in": { "type": "string", "description": "e.g. GitHub Actions secret, Cloudflare secret, VM .env via secretctl" },
-          "purpose": { "type": "string" }
+          "name": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+          },
+          "held_in": {
+            "type": "string",
+            "description": "e.g. GitHub Actions secret, Cloudflare secret, VM .env via secretctl"
+          },
+          "purpose": {
+            "type": "string"
+          }
         }
       }
     },
-
     "depends_on": {
       "type": "array",
-      "items": { "type": "string", "description": "owner/repo, or an external service name" }
-    },
-
-    "verify": {
-      "type": "object",
-      "required": ["build", "test"],
-      "additionalProperties": false,
-      "properties": {
-        "build": { "type": ["string", "null"], "description": "Command, or null with a reason in `none_reason`." },
-        "test": { "type": ["string", "null"] },
-        "none_reason": { "type": "string" },
-        "smoke": { "type": "array", "items": { "type": "string" }, "description": "URLs or commands that prove a deployment works." },
-        "rollback": { "type": "string", "description": "How the previous release is re-deployed." }
+      "items": {
+        "type": "string",
+        "description": "owner/repo, or an external service name"
       }
     },
-
+    "verify": {
+      "type": "object",
+      "required": [
+        "build",
+        "test"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "build": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Command, or null with a reason in `none_reason`."
+        },
+        "test": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "none_reason": {
+          "type": "string"
+        },
+        "smoke": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "URLs or commands that prove a deployment works."
+        },
+        "rollback": {
+          "type": "string",
+          "description": "How the previous release is re-deployed."
+        }
+      }
+    },
     "risks": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "Specific things a reviewer must check in this project."
+    },
+    "draft": {
+      "type": "boolean",
+      "description": "True while the manifest is the policy engine's draft. A draft may reach development and runway, never main (standards/PROJECT.md)."
     }
   }
 }
