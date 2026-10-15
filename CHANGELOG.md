@@ -33,6 +33,24 @@ Format, newest first:
 
 ---
 
+## 2026-10-15T11:01:19Z -- Add the policy engine; one ruleset per protected branch
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** new `tools/policy/` (engine, governed workflow templates, README) and
+  `.github/workflows/policy.yml`, which runs it every 15 minutes as a dedicated policy
+  GitHub App, dry-run until `POLICY_APPLY` is set; `schemas/policy.yaml` now asks for one
+  ruleset per protected branch (`governance-<branch>`) and makes a check required only
+  once the repository produces it.
+- **Why:** the rules in BRANCHING.md need something that applies them to every repository,
+  including ones created later, and puts them back when they drift. One ruleset per branch
+  because each branch's gate differs; checks only once produced, because requiring a check
+  nothing reports would freeze every merge. The first dry run (2026-10-15): 0 of 66
+  repositories compliant -- 198 rulesets to create, 190 classic protections to retire,
+  66 manifests to write, 22 governed workflows missing or drifted, 4 repositories with
+  missing branches or the wrong default, and 12 workflows in 9 repositories that push
+  commits and must move to pull requests before enforcement.
+
 ## 2026-10-15T10:13:17Z -- Enforce the branch flow everywhere, with no bypass; add the project manifest
 
 - **Actor:** Claude (agent)
