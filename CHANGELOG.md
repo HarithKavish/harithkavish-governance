@@ -33,6 +33,24 @@ Format, newest first:
 
 ---
 
+## 2026-10-15T10:13:17Z -- Enforce the branch flow everywhere, with no bypass; add the project manifest
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** `standards/BRANCHING.md` gains Bypass (none, for anyone), Every Repository
+  Without Exception (declared exception, Article 10), engine-opened promotion pull
+  requests with source-branch rules, and the per-stage checks with verdict-giving
+  verifiers; `standards/DEVELOPMENT.md` reviewer rules aligned with it; new
+  `standards/PROJECT.md` and `schemas/project.schema.json` (the `.project/` manifest);
+  new `schemas/policy.yaml`, the data the policy engine applies; routing rows in
+  `AGENT_BOOTSTRAP.md` and `README.md`.
+- **Why:** the owner wants the flow enforced by the platform in every repository from the
+  moment it exists, nobody able to write to `development`, `runway` or `main` directly,
+  promotions that merge themselves only when every applicable check and platform verifier
+  says PASS, and one place per project that agents and bots read to understand it. The
+  2026-10-15 scan found the gate required in 29 repositories, absent in 34, and `patched`
+  in hermes-agent unprotected -- enforcement that depends on remembering does not hold.
+
 ## 2026-09-28T18:56:31Z -- Register the keyboard repository
 
 - **Actor:** Claude (agent)
