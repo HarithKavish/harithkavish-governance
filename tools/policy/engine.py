@@ -38,7 +38,9 @@ import base64
 import fnmatch
 import json
 import os
+import re
 import subprocess
+from datetime import date
 import sys
 import urllib.error
 import urllib.parse
@@ -124,6 +126,9 @@ class Repo:
     detected: dict = field(default_factory=dict)        # verifier -> evidence
     ahead: dict = field(default_factory=dict)           # "development->runway" -> commits
     pushers: list = field(default_factory=list)         # workflows that push commits
+    secrets_used: set = field(default_factory=set)      # secrets.X referenced by workflows
+    open_prs: list = field(default_factory=list)        # (head, base, number)
+    raw: dict = field(default_factory=dict)
     actions: list = field(default_factory=list)
     notes: list = field(default_factory=list)
 
@@ -162,7 +167,8 @@ def detect(repo: Repo, gh: GitHub, owner: str) -> None:
 
 
 def read_file(gh: GitHub, owner: str, repo: Repo, path: str) -> str | None:
-    meta = gh.get(f"/repos/{owner}/{repo.name}/contents/{urllib.parse.quote(path)}?ref={repo.default}",
+    ref = "development" if "development" in repo.branches else repo.default
+    meta = gh.get(f"/repos/{owner}/{repo.name}/contents/{urllib.parse.quote(path)}?ref={ref}",
                   ok404=True)
     if not meta or meta.get("encoding") != "base64":
         return None
@@ -172,8 +178,9 @@ def read_file(gh: GitHub, owner: str, repo: Repo, path: str) -> str | None:
 def inspect(gh: GitHub, owner: str, raw: dict) -> Repo:
     r = Repo(name=raw["name"], private=raw["private"], archived=raw["archived"],
              empty=raw.get("size", 0) == 0 and not raw.get("pushed_at"),
-             default=raw["default_branch"])
+             default=raw["default_branch"], raw=dict(raw))
     base = f"/repos/{owner}/{r.name}"
+    r.raw.update(gh.get(base) or {})          # the listing omits the merge settings
     try:
         r.branches = {b["name"] for b in gh.paged(f"{base}/branches")}
     except RuntimeError as e:
@@ -191,7 +198,9 @@ def inspect(gh: GitHub, owner: str, raw: dict) -> Repo:
             p = gh.get(f"{base}/branches/{b}/protection", ok404=True)
             if p:
                 r.legacy[b] = p
-    tree = gh.get(f"{base}/git/trees/{urllib.parse.quote(r.default)}?recursive=1", ok404=True) or {}
+    # Read the integration branch: that is what pull requests are made against.
+    ref = "development" if "development" in r.branches else r.default
+    tree = gh.get(f"{base}/git/trees/{urllib.parse.quote(ref)}?recursive=1", ok404=True) or {}
     r.files = {t["path"] for t in tree.get("tree", []) if t["type"] == "blob"
                and "node_modules/" not in t["path"]}
     for t in tree.get("tree", []):
@@ -207,12 +216,15 @@ def inspect(gh: GitHub, owner: str, raw: dict) -> Repo:
     for f in sorted(x for x in r.files if x.startswith(".github/workflows/")
                     and x.split("/")[-1] not in GOVERNED_WORKFLOWS):
         body = read_file(gh, owner, r, f) or ""
+        r.secrets_used |= set(re.findall(r"secrets\.([A-Za-z_][A-Za-z0-9_]*)", body)) - {"GITHUB_TOKEN"}
         if "git push" in body or "add-and-commit" in body or "git-auto-commit" in body:
             r.pushers.append(f.split("/")[-1])
     for a, b in (("development", "runway"), ("runway", "main")):
         if a in r.branches and b in r.branches:
             cmp = gh.get(f"{base}/compare/{b}...{a}", ok404=True) or {}
             r.ahead[f"{a}->{b}"] = cmp.get("ahead_by", 0)
+    r.open_prs = [(p["head"]["ref"], p["base"]["ref"], p["number"])
+                  for p in gh.paged(f"{base}/pulls?state=open")]
     return r
 
 
@@ -325,6 +337,19 @@ def plan(r: Repo, canonical: dict) -> None:
             r.actions.append(("manifest", f"{v} detected ({', '.join(r.detected[v])}) but not declared"))
         for v in sorted(declared_verifiers - set(r.detected) - {"oracle-vm"}):
             r.notes.append(f"{v} declared but not detected -- stale manifest?")
+    want_settings = POLICY["rollout"]["repo_settings"]
+    wrong = {k: v for k, v in want_settings.items() if k in r.raw and r.raw[k] != v}
+    if wrong:
+        r.actions.append(("settings", ", ".join(f"{k}={v}" for k, v in wrong.items())))
+    adopt_branch = POLICY["rollout"]["branch"]
+    needs_adopt = any(k == "workflow" for k, _ in r.actions) or r.manifest is None
+    if needs_adopt and not any(h == adopt_branch for h, _, _ in r.open_prs):
+        r.actions.append(("adopt", f"open {adopt_branch} -> development: governed workflows"
+                          + (" + drafted manifest" if r.manifest is None else "")))
+    for pair, n in r.ahead.items():
+        a, b = pair.split("->")
+        if n and not any(h == a and bb == b for h, bb, _ in r.open_prs):
+            r.actions.append(("promote", f"open {a} -> {b} ({n} commits) with auto-merge"))
     for wf in r.pushers:
         r.notes.append(f"workflow {wf} pushes commits: if it targets development/runway/main it "
                        "will be refused once the rulesets are active -- change it to open a PR")
@@ -335,7 +360,7 @@ def plan(r: Repo, canonical: dict) -> None:
 
 # --- applying -------------------------------------------------------------------------
 
-def apply(gh: GitHub, owner: str, r: Repo) -> list[str]:
+def apply(gh: GitHub, owner: str, r: Repo, budget: dict) -> list[str]:
     done = []
     base = f"/repos/{owner}/{r.name}"
     kinds = {k for k, _ in r.actions}
@@ -368,7 +393,97 @@ def apply(gh: GitHub, owner: str, r: Repo) -> list[str]:
         if b in active:
             gh.call("DELETE", f"{base}/branches/{b}/protection")
             done.append(f"retired classic protection on {b}")
+    if "settings" in kinds:
+        gh.call("PATCH", base, POLICY["rollout"]["repo_settings"])
+        done.append("repository merge settings set")
+    for kind, what in r.actions:
+        if kind not in ("adopt", "promote"):
+            continue
+        if budget["left"] <= 0:
+            done.append(f"deferred ({what}): new-PR budget for this pass is spent")
+            continue
+        number = open_adoption(gh, owner, r) if kind == "adopt" else open_promotion(gh, owner, r, what)
+        budget["left"] -= 1
+        done.append(f"opened #{number}: {what}")
     return done
+
+
+def draft_manifest(r: Repo) -> str:
+    """What the engine can say about a repository without understanding it. `draft: true`
+    keeps it out of main until a person or agent describes the project properly."""
+    infra_key = {"cloudflare": "cloudflare", "vercel": "vercel", "github-pages": "github_pages",
+                 "mongodb-atlas": "mongodb_atlas", "render": "render", "android": "android"}
+    infra = {infra_key[v]: {} for v in r.detected if v in infra_key}
+    desc = (r.raw.get("description") or "").strip() or f"{r.name} (no description yet)"
+    m = {
+        "schema_version": 1,
+        "draft": True,
+        "project": {"name": r.name, "purpose": desc,
+                    "status": "archived" if r.archived else "active"},
+        "scope": {"covers": [desc], "excludes": []},
+        "infra": infra,
+        "secrets": [{"name": n, "held_in": "GitHub Actions secret"} for n in sorted(r.secrets_used)],
+        "verify": {"build": None, "test": None,
+                   "none_reason": f"Not yet declared -- drafted by the policy engine on {date.today()}. "
+                                  "The build and test commands belong here."},
+    }
+    if r.raw.get("homepage"):
+        m["surface"] = {"main": r.raw["homepage"]}
+    head = ("# Project manifest -- standards/PROJECT.md in harithkavish-governance.\n"
+            "# DRAFT written by the policy engine from what it could detect. Replace the purpose,\n"
+            "# scope, components, data, verify and risks with the truth, then remove `draft`.\n"
+            "# A draft may reach development and runway; it cannot be released to main.\n")
+    return head + yaml.safe_dump(m, sort_keys=False, allow_unicode=True)
+
+
+def open_adoption(gh: GitHub, owner: str, r: Repo) -> int:
+    """One commit on the rollout branch: the governed workflows, and a drafted manifest if
+    there is none. Opened against development."""
+    base = f"/repos/{owner}/{r.name}"
+    branch = POLICY["rollout"]["branch"]
+    dev = gh.get(f"{base}/git/ref/heads/development")["object"]["sha"]
+    dev_tree = gh.get(f"{base}/git/commits/{dev}")["tree"]["sha"]
+    entries = [{"path": f".github/workflows/{wf}", "mode": "100644", "type": "blob",
+                "content": (TEMPLATES / wf).read_text(encoding="utf-8").replace("\r\n", "\n")}
+               for wf in GOVERNED_WORKFLOWS]
+    if r.manifest is None:
+        entries.append({"path": ".project/project.yaml", "mode": "100644", "type": "blob",
+                        "content": draft_manifest(r)})
+    tree = gh.call("POST", f"{base}/git/trees", {"base_tree": dev_tree, "tree": entries})["sha"]
+    commit = gh.call("POST", f"{base}/git/commits", {
+        "message": "Adopt governance: governed workflows and project manifest\n\n"
+                   "Distributed by the policy engine (harithkavish-governance tools/policy).",
+        "tree": tree, "parents": [dev]})["sha"]
+    ref = f"heads/{branch}"
+    if gh.get(f"{base}/git/ref/{ref}", ok404=True):
+        gh.call("PATCH", f"{base}/git/refs/{ref}", {"sha": commit, "force": True})
+    else:
+        gh.call("POST", f"{base}/git/refs", {"ref": f"refs/{ref}", "sha": commit})
+    body = ("This repository is being brought under the HarithKavish branch policy "
+            "(standards/BRANCHING.md and standards/PROJECT.md in harithkavish-governance).\n\n"
+            "- `claude-review.yml`, `pr-gate.yml` and `governance.yml` are **governed**: identical in "
+            "every repository and changed only in governance.\n"
+            + ("- `.project/project.yaml` is a **draft** from what the engine could detect. It lets work "
+               "flow to development and runway; it must be completed before anything is released to "
+               "main.\n" if r.manifest is None else "")
+            + "\nOpened by the policy engine.")
+    pr = gh.call("POST", f"{base}/pulls", {"title": "Adopt governance: governed workflows and project manifest",
+                                          "head": branch, "base": "development", "body": body})
+    return pr["number"]
+
+
+def open_promotion(gh: GitHub, owner: str, r: Repo, what: str) -> int:
+    a, b = what.split()[1], what.split()[3]
+    base = f"/repos/{owner}/{r.name}"
+    pr = gh.call("POST", f"{base}/pulls", {
+        "title": f"Promote {a} -> {b}", "head": a, "base": b,
+        "body": f"Kept open by the policy engine while `{a}` is ahead of `{b}`. It merges itself "
+                f"(merge commit) once `{b}`'s gate passes -- standards/BRANCHING.md."})
+    gh.call("POST", "https://api.github.com/graphql", {
+        "query": "mutation($id:ID!){enablePullRequestAutoMerge(input:{pullRequestId:$id,"
+                 "mergeMethod:MERGE}){clientMutationId}}",
+        "variables": {"id": pr["node_id"]}})
+    return pr["number"]
 
 
 # --- main -----------------------------------------------------------------------------
@@ -385,6 +500,7 @@ def main() -> int:
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--repo", action="append", help="limit to these repositories")
     ap.add_argument("--json", help="write the full report here")
+    ap.add_argument("--max-prs", type=int, help="new pull requests this pass (default: policy.yaml)")
     a = ap.parse_args()
 
     owner = POLICY["scope"]["owner"]
@@ -400,11 +516,12 @@ def main() -> int:
     canonical = canonical_workflows(gh)
 
     report, compliant = [], 0
+    budget = {"left": a.max_prs if a.max_prs is not None else POLICY["rollout"]["max_new_prs_per_pass"]}
     for x in sorted(raw, key=lambda x: x["name"].lower()):
         try:
             r = inspect(gh, owner, x)
             plan(r, canonical)
-            done = apply(gh, owner, r) if a.apply and r.actions else []
+            done = apply(gh, owner, r, budget) if a.apply and r.actions else []
         except Exception as e:  # one broken repository must not stop the pass
             print(f"!! {x['name']}: {e}", file=sys.stderr)
             report.append({"repo": x["name"], "error": str(e)})

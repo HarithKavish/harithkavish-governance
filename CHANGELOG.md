@@ -33,6 +33,21 @@ Format, newest first:
 
 ---
 
+## 2026-10-15T11:09:34Z -- Engine adopts repositories and keeps promotions open; draft manifests
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** the engine now sets repository merge settings, opens one adoption pull
+  request per repository (`policy/adopt` -> development: the governed workflows and a
+  drafted `.project/project.yaml`), and keeps `development -> runway` and `runway -> main`
+  promotion pull requests open with auto-merge -- at most `rollout.max_new_prs_per_pass`
+  new pull requests per pass. `standards/PROJECT.md` gains Drafts: a `draft: true`
+  manifest may reach development and runway but fails `policy` into main;
+  `schemas/project.schema.json` gains `draft`; development accepts `policy/*`.
+- **Why:** 66 manifests cannot be written by hand before anything can move, and a project
+  must not ship without being described -- the draft rule gives both. Promotions are
+  rationed because each one costs a code review on the owner's subscription.
+
 ## 2026-10-15T11:06:05Z -- Add the governed checks: policy, ci, security, sonar, release
 
 - **Actor:** Claude (agent)

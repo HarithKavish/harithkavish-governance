@@ -71,6 +71,14 @@ Detection rules are in [schemas/policy.yaml](../schemas/policy.yaml) under `veri
   membership; the manifest keeps everything else about the project. They do not repeat
   each other.
 
+## Drafts
+
+When the policy engine adopts a repository it drafts the manifest from what it can detect
+— the description, the platforms, the workflows — and marks it `draft: true`. A draft is
+enough to keep work flowing into `development` and `runway`; it is **not** enough to
+release: the `policy` check fails a pull request into `main` while the manifest is a
+draft. Describing the project properly is the price of shipping it.
+
 ## Changing It
 
 The manifest changes in the same pull request as the change that makes it untrue —

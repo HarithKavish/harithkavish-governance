@@ -64,6 +64,12 @@ def main() -> None:
                 passed.append("project.yaml is valid")
         except ImportError:
             findings.append("jsonschema is not installed in the check environment")
+        if m.get("draft"):
+            if base == "main":
+                findings.append("project.yaml is still the engine's draft (`draft: true`): describe the "
+                                "project properly before releasing it (standards/PROJECT.md § Drafts)")
+            else:
+                passed.append("project.yaml is a draft -- fine here, but it must be completed before main")
         det, dec = c.detected(), c.declared(m)
         for v in sorted(set(det) - dec):
             findings.append(f"`{v}` is used ({', '.join(det[v])}) but not declared in project.yaml infra -- "

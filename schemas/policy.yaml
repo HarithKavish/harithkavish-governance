@@ -56,7 +56,7 @@ ruleset:
 # from what it declares and what is detected (see verifiers below).
 stages:
   development:
-    accepts_from: ["feature/*", "hotfix/*", "dependabot/*", "promote/back-merge"]
+    accepts_from: ["feature/*", "hotfix/*", "dependabot/*", "policy/*"]   # policy/*: the engine's adoption PRs
     merge_method: squash
     required_checks: [gate, policy, ci]
     auto_merge: on_pass          # the reviewer enables it on PASS
@@ -73,6 +73,19 @@ stages:
     verifiers_required: true     # every applicable verifier, plus live-surface evidence
     open_promotion: automatic    # the engine opens runway -> main
     auto_merge: on_pass
+
+# How the engine brings a repository into policy and keeps promotions moving. New pull
+# requests are rationed: each one triggers a code review on the owner's subscription, and
+# 58 repositories had promotions waiting on day one.
+rollout:
+  branch: policy/adopt                 # head branch of the adoption pull request
+  max_new_prs_per_pass: 3
+  repo_settings:
+    allow_auto_merge: true
+    allow_squash_merge: true
+    allow_merge_commit: true
+    allow_rebase_merge: false
+    delete_branch_on_merge: false      # contributor branches are persistent
 
 # Verifiers. Each one posts a check named verify/<name> with a verdict -- PASS, FAIL or
 # HOLD, exactly like the code reviewer -- and the `release` check on main passes only
