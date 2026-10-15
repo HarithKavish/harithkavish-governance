@@ -33,6 +33,19 @@ Format, newest first:
 
 ---
 
+## 2026-10-15T11:06:05Z -- Add the governed checks: policy, ci, security, sonar, release
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** new `tools/checks/` (one script per check, each ending in a PASS/FAIL/HOLD
+  verdict, and the platform verifiers inside `release`) and the governed workflow
+  `tools/policy/templates/governance.yml` that runs them in every repository; the engine
+  now distributes it alongside `claude-review.yml` and `pr-gate.yml`.
+- **Why:** the gates in BRANCHING.md name checks nothing produced. Written once in
+  governance and read from its main branch at run time, so every repository runs the same
+  checks and a fix lands everywhere at once. Verifiers that cannot verify say HOLD, never
+  PASS.
+
 ## 2026-10-15T11:01:19Z -- Add the policy engine; one ruleset per protected branch
 
 - **Actor:** Claude (agent)

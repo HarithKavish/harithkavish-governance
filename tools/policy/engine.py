@@ -52,7 +52,7 @@ ROOT = Path(__file__).resolve().parents[2]
 POLICY = yaml.safe_load((ROOT / "schemas" / "policy.yaml").read_text(encoding="utf-8"))
 API = "https://api.github.com"
 ACTIONS_APP_ID = 15368          # GitHub Actions: the app every workflow check is reported by
-GOVERNED_WORKFLOWS = ["claude-review.yml", "pr-gate.yml"]
+GOVERNED_WORKFLOWS = ["claude-review.yml", "pr-gate.yml", "governance.yml"]
 # check name -> the workflow file in the repository that produces it
 PRODUCERS = {
     "gate": "pr-gate.yml",
