@@ -33,6 +33,86 @@ Format, newest first:
 
 ---
 
+## 2026-10-15T11:09:34Z -- Engine adopts repositories and keeps promotions open; draft manifests
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** the engine now sets repository merge settings, opens one adoption pull
+  request per repository (`policy/adopt` -> development: the governed workflows and a
+  drafted `.project/project.yaml`), and keeps `development -> runway` and `runway -> main`
+  promotion pull requests open with auto-merge -- at most `rollout.max_new_prs_per_pass`
+  new pull requests per pass. `standards/PROJECT.md` gains Drafts: a `draft: true`
+  manifest may reach development and runway but fails `policy` into main;
+  `schemas/project.schema.json` gains `draft`; development accepts `policy/*`.
+- **Why:** 66 manifests cannot be written by hand before anything can move, and a project
+  must not ship without being described -- the draft rule gives both. Promotions are
+  rationed because each one costs a code review on the owner's subscription.
+
+## 2026-10-15T11:06:05Z -- Add the governed checks: policy, ci, security, sonar, release
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** new `tools/checks/` (one script per check, each ending in a PASS/FAIL/HOLD
+  verdict, and the platform verifiers inside `release`) and the governed workflow
+  `tools/policy/templates/governance.yml` that runs them in every repository; the engine
+  now distributes it alongside `claude-review.yml` and `pr-gate.yml`.
+- **Why:** the gates in BRANCHING.md name checks nothing produced. Written once in
+  governance and read from its main branch at run time, so every repository runs the same
+  checks and a fix lands everywhere at once. Verifiers that cannot verify say HOLD, never
+  PASS.
+
+## 2026-10-15T11:01:19Z -- Add the policy engine; one ruleset per protected branch
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** new `tools/policy/` (engine, governed workflow templates, README) and
+  `.github/workflows/policy.yml`, which runs it every 15 minutes as a dedicated policy
+  GitHub App, dry-run until `POLICY_APPLY` is set; `schemas/policy.yaml` now asks for one
+  ruleset per protected branch (`governance-<branch>`) and makes a check required only
+  once the repository produces it.
+- **Why:** the rules in BRANCHING.md need something that applies them to every repository,
+  including ones created later, and puts them back when they drift. One ruleset per branch
+  because each branch's gate differs; checks only once produced, because requiring a check
+  nothing reports would freeze every merge. The first dry run (2026-10-15): 0 of 66
+  repositories compliant -- 198 rulesets to create, 190 classic protections to retire,
+  66 manifests to write, 22 governed workflows missing or drifted, 4 repositories with
+  missing branches or the wrong default, and 12 workflows in 9 repositories that push
+  commits and must move to pull requests before enforcement.
+
+## 2026-10-15T10:13:17Z -- Enforce the branch flow everywhere, with no bypass; add the project manifest
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** `standards/BRANCHING.md` gains Bypass (none, for anyone), Every Repository
+  Without Exception (declared exception, Article 10), engine-opened promotion pull
+  requests with source-branch rules, and the per-stage checks with verdict-giving
+  verifiers; `standards/DEVELOPMENT.md` reviewer rules aligned with it; new
+  `standards/PROJECT.md` and `schemas/project.schema.json` (the `.project/` manifest);
+  new `schemas/policy.yaml`, the data the policy engine applies; routing rows in
+  `AGENT_BOOTSTRAP.md` and `README.md`.
+- **Why:** the owner wants the flow enforced by the platform in every repository from the
+  moment it exists, nobody able to write to `development`, `runway` or `main` directly,
+  promotions that merge themselves only when every applicable check and platform verifier
+  says PASS, and one place per project that agents and bots read to understand it. The
+  2026-10-15 scan found the gate required in 29 repositories, absent in 34, and `patched`
+  in hermes-agent unprotected -- enforcement that depends on remembering does not hold.
+
+## 2026-09-28T18:56:31Z -- Register the keyboard repository
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** `schemas/ecosystem.yaml` gains a `keyboard` entry (role `application`,
+  adoption `integrated`), and `updated` moves to 2026-09-29.
+- **Why:** HarithKavish/keyboard was created and onboarded today via
+  protocols/REPOSITORY_ONBOARDING.md, and step 8 of that protocol is registration.
+  A repository that is not listed here is not discoverable as a member, so the
+  registry entry is part of onboarding rather than a follow-up. The entry records
+  the one declared exception -- the shared design system does not apply to an
+  Android app with no web surface -- and the four items still outstanding, so the
+  gaps are visible in the registry instead of only in the repository.
+
+---
+
 ## 2026-09-19T08:58:48Z -- Define the release gate; the deliberate part of a promotion is the gate, not the click
 
 - **Actor:** Claude (agent)

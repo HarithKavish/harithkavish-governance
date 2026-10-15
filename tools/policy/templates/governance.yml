@@ -1,0 +1,103 @@
+name: Governance
+
+# The checks every repository's protected branches require (standards/BRANCHING.md):
+#
+#   policy    the change comes from an allowed branch, governed workflows are unmodified,
+#             and .project/project.yaml is valid and matches what the repository uses
+#   ci        the repository's own build and tests, as project.yaml declares them
+#   security  secret scan of the new commits, dependency scan, undeclared secrets
+#   sonar     SonarCloud's quality gate (public repositories)
+#   release   on a pull request into main: every platform verifier says PASS
+#
+# Each ends in a verdict -- PASS, FAIL or HOLD -- in the job summary. The logic lives in
+# governance (tools/checks/), read from its main branch at run time, so it is written once
+# and changed in one place.
+#
+# This file is GOVERNED: it is distributed by the policy engine and must stay identical
+# to tools/policy/templates/governance.yml in harithkavish-governance. The `policy` check
+# fails while it differs. Change it there, not here.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    branches: [development, runway, main]
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  contents: read
+  pull-requests: read
+  checks: read
+  statuses: read
+  deployments: read
+
+concurrency:
+  group: governance-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GOVERNANCE_DIR: .governance
+  REPO_PRIVATE: ${{ github.event.repository.private }}
+
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with: { repository: HarithKavish/harithkavish-governance, ref: main, path: .governance }
+      - run: pip install -q pyyaml jsonschema
+      - run: python .governance/tools/checks/policy_check.py
+
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with: { repository: HarithKavish/harithkavish-governance, ref: main, path: .governance }
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install -q pyyaml
+      - run: python .governance/tools/checks/ci_check.py
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/checkout@v4
+        with: { repository: HarithKavish/harithkavish-governance, ref: main, path: .governance }
+      - name: Install gitleaks and osv-scanner
+        run: |
+          set -euo pipefail
+          curl -sSL https://github.com/gitleaks/gitleaks/releases/download/v8.21.2/gitleaks_8.21.2_linux_x64.tar.gz | tar -xz -C /tmp gitleaks
+          sudo install -m 0755 /tmp/gitleaks /usr/local/bin/gitleaks
+          curl -sSL -o /tmp/osv-scanner https://github.com/google/osv-scanner/releases/download/v2.0.2/osv-scanner_linux_amd64
+          sudo install -m 0755 /tmp/osv-scanner /usr/local/bin/osv-scanner
+      - run: pip install -q pyyaml
+      - run: python .governance/tools/checks/security_check.py
+
+  sonar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { repository: HarithKavish/harithkavish-governance, ref: main, path: .governance }
+      - run: pip install -q pyyaml
+      - run: python .governance/tools/checks/sonar_check.py
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with: { repository: HarithKavish/harithkavish-governance, ref: main, path: .governance }
+      - run: pip install -q pyyaml
+      - run: python .governance/tools/checks/release_check.py
+        env:
+          ATLAS_PUBLIC_KEY: ${{ secrets.ATLAS_PUBLIC_KEY }}
+          ATLAS_PRIVATE_KEY: ${{ secrets.ATLAS_PRIVATE_KEY }}

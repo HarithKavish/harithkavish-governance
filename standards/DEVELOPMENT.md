@@ -111,11 +111,16 @@ which matters because a review is roughly a dollar and several minutes. It revie
 code change may be merged on that basis, which is what the review is for. It is not limited
 to documentation.
 
-**It never merges into `runway` or `main`**, and never merges a change
-touching credentials, authentication, or secrets. Promotion to runway is a release-candidate
-gate and promotion to main is a deliberate release act
-([BRANCHING.md](BRANCHING.md)); a passing review is not authorisation to perform either.
+**It never performs a promotion into `runway` or `main`**, and never merges a change
+touching credentials, authentication, or secrets — those get `VERDICT: HOLD`. Promotion
+pull requests are opened by the policy engine with auto-merge already set, and they merge
+only when the target branch's whole gate passes ([BRANCHING.md](BRANCHING.md)); on a
+promotion the review's verdict is one check in that gate, not authorisation by itself.
 Credentials are excluded because a mistake there is not recoverable by reverting.
+
+The review reads the repository's project manifest (`.project/`,
+[PROJECT.md](PROJECT.md)) and judges the change against its scope, risks, data and
+secrets, not only against the diff.
 
 Anything else stays open with the reason stated. Reviewing well and declining to merge is a
 complete outcome, not an unfinished one.

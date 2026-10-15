@@ -11,7 +11,7 @@
 # Adding or changing an entry is a governance change (MAINTENANCE.md).
 
 schema_version: 2
-updated: 2026-09-18
+updated: 2026-09-29
 last_account_reconciliation: 2026-09-06
 
 ecosystem:
@@ -466,6 +466,26 @@ repositories:
       social preview image not created (needs the design-system mark, and GitHub exposes
       no API for the upload); CLAUDE_CODE_OAUTH_TOKEN not set, so automated review does
       not run yet; branch protection not configured.
+
+  - name: keyboard
+    role: application
+    adoption: integrated
+    last_checked: 2026-09-29
+    notes: >-
+      Glass Keyboard: an Android input method whose window is fully transparent and
+      whose keys are drawn as translucent glass, so the app behind shows through. Four
+      Java classes, no dependencies at all -- no AndroidX, no Kotlin, no support library
+      -- and a release APK of roughly 36 KB. No web surface, and distribution is through
+      store.harithkavish.com rather than an address of its own. Onboarded new via
+      protocols/REPOSITORY_ONBOARDING.md 2026-09-29: main/development/feature/claude
+      created, GOVERNANCE.md/AGENTS.md/README.md added, claude-review.yml carried over
+      from this repository, About/homepage/topics set. Declares one exception in its
+      GOVERNANCE.md: the shared design system does not apply, being a set of web
+      foundations with no Android distribution to consume. Outstanding: social preview
+      committed at .github/social-preview.png but not uploaded (GitHub exposes no API
+      for it); CLAUDE_CODE_OAUTH_TOKEN not set, so automated review does not run;
+      release signing secrets not set, so publish-store.yml refuses to run and no build
+      has reached the store; branch protection not configured.
 
 # ---------------------------------------------------------------------------
 # Pending review

@@ -1,0 +1,30 @@
+# This repository IS the rules. Every path in it changes what binds every other
+# repository and every agent in the ecosystem, so ownership is broad on purpose
+# rather than surgical.
+#
+# Only enforcement while "Require review from Code Owners" is enabled in branch
+# protection AND required_approving_review_count is at least 1 -- with 0, code
+# owner review is inert. Verified empirically on agent-toolkit, where a pull
+# request touching six owned paths still reported `unstable` rather than
+# `blocked` until the count was raised.
+
+# Tier 1. The one document every agent reads on every task.
+/MASTER_DOCTRINE.md        @HarithKavish
+
+# Tiers 2-4.
+/standards/                @HarithKavish
+/protocols/                @HarithKavish
+/schemas/                  @HarithKavish
+
+# How governance itself changes, and how its enforcement is measured.
+/MAINTENANCE.md            @HarithKavish
+/GOVERNANCE_HIERARCHY.md   @HarithKavish
+/GOVERNANCE_MAP.md         @HarithKavish
+/AGENT_BOOTSTRAP.md        @HarithKavish
+
+# The append-only decision record. An edit here rewrites history rather than
+# adding to it.
+/CHANGELOG.md              @HarithKavish
+
+# The gate.
+/.github/                  @HarithKavish

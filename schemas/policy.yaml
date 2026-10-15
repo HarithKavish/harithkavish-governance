@@ -1,0 +1,137 @@
+# HarithKavish Repository Policy
+#
+# The machine-readable form of standards/BRANCHING.md (branches, gates, promotion) and
+# standards/PROJECT.md (which verifiers a repository needs). The policy engine
+# (tools/policy/) reads this file and makes every repository under the account match it:
+# on creation, and again on every reconciliation pass, so drift is corrected rather than
+# merely noticed.
+#
+# This file holds the data those standards operate on. The rules themselves, and why
+# they exist, are in the standards; do not add rules here that are not stated there.
+#
+# Changing this file is a governance change (MAINTENANCE.md), and it changes every
+# repository on the next reconciliation pass.
+
+schema_version: 1
+
+# Every repository the account owns, public and private, archived or not. No exclusions:
+# owner decision, 2026-10-15 (CHANGELOG.md). A repository that receives no ongoing work
+# still carries the three branches and the rules; it simply has fewer verifiers.
+scope:
+  owner: HarithKavish
+  exclude: []
+
+branches:
+  default: development
+  protected: [development, runway, main]
+  contributor: "feature/*"
+  hotfix: "hotfix/*"
+
+# Nobody bypasses: not the owner, not any App, not the policy engine itself. The way to
+# act in a genuine emergency is to change the ruleset, which is visible and audited --
+# never to hold a standing exemption. standards/BRANCHING.md § Bypass.
+bypass: []
+
+# One ruleset per protected branch, named <prefix>-<branch>, each with an empty bypass
+# list. One per branch because a ruleset's required checks apply to every branch it
+# targets, and each branch's gate is different.
+ruleset:
+  prefix: governance
+  target: [development, runway, main]
+  rules:
+    deletion: true              # the three branches cannot be deleted
+    non_fast_forward: true      # nor force-pushed
+    creation: true              # nor re-created by anyone once they exist
+    pull_request:
+      required_approving_review_count: 0      # review is the verdict checks below
+      dismiss_stale_reviews_on_push: true
+      required_review_thread_resolution: false
+    # required status checks are per branch: see stages. A check becomes required in a
+    # repository only once something in that repository produces it -- requiring a check
+    # nothing will ever report would freeze every merge. The engine reports each check
+    # that is policy but not yet required, and why.
+
+# Where each branch's changes may come from, how they merge, and what must pass first.
+# A check listed here is required on that branch. `verifiers` are added per repository
+# from what it declares and what is detected (see verifiers below).
+stages:
+  development:
+    accepts_from: ["feature/*", "hotfix/*", "dependabot/*", "policy/*"]   # policy/*: the engine's adoption PRs
+    merge_method: squash
+    required_checks: [gate, policy, ci]
+    auto_merge: on_pass          # the reviewer enables it on PASS
+  runway:
+    accepts_from: [development]
+    merge_method: merge          # promotions keep every commit: one history
+    required_checks: [gate, policy, ci, security, sonar]
+    open_promotion: automatic    # the engine opens development -> runway
+    auto_merge: on_pass
+  main:
+    accepts_from: [runway, "hotfix/*"]
+    merge_method: merge
+    required_checks: [gate, policy, ci, security, sonar, release]
+    verifiers_required: true     # every applicable verifier, plus live-surface evidence
+    open_promotion: automatic    # the engine opens runway -> main
+    auto_merge: on_pass
+
+# How the engine brings a repository into policy and keeps promotions moving. New pull
+# requests are rationed: each one triggers a code review on the owner's subscription, and
+# 58 repositories had promotions waiting on day one.
+rollout:
+  branch: policy/adopt                 # head branch of the adoption pull request
+  max_new_prs_per_pass: 3
+  repo_settings:
+    allow_auto_merge: true
+    allow_squash_merge: true
+    allow_merge_commit: true
+    allow_rebase_merge: false
+    delete_branch_on_merge: false      # contributor branches are persistent
+
+# Verifiers. Each one posts a check named verify/<name> with a verdict -- PASS, FAIL or
+# HOLD, exactly like the code reviewer -- and the `release` check on main passes only
+# when every verifier that applies to the repository says PASS (HOLD: once the owner
+# approves). A verifier applies when the repository's .project/project.yaml declares the
+# infrastructure OR the engine detects it; declared-but-absent and present-but-undeclared
+# are both `policy` failures (standards/PROJECT.md § Declared Matches Detected).
+verifiers:
+  cloudflare:
+    declares: infra.cloudflare
+    detect: ["wrangler.toml", "wrangler.json", "wrangler.jsonc", "**/wrangler.toml", "functions/**", "_worker.js"]
+    checks: [the Workers Builds / Pages deployment for the commit succeeded, bindings and routes match the manifest, no secret in vars, the preview actually serves]
+  vercel:
+    declares: infra.vercel
+    detect: ["vercel.json", "**/vercel.json", ".vercel/project.json"]
+    checks: [the Vercel deployment for the commit is READY, project and domains match the manifest, the preview actually serves]
+  github-pages:
+    declares: infra.github_pages
+    detect: [".github/workflows/deploy-pages.yml", "CNAME"]
+    checks: [the Pages build for the commit succeeded, the custom domain matches the manifest, the site actually serves]
+  mongodb-atlas:
+    declares: infra.mongodb_atlas
+    detect: ["mongodb+srv://", "\"mongodb\":", "pymongo", "motor", "mongoose"]
+    checks: [the project and cluster named in the manifest exist, network access is not open to 0.0.0.0/0, database users hold least privilege, no connection string committed]
+  render:
+    declares: infra.render
+    detect: ["render.yaml"]
+    checks: [the service deploy for the commit is live, health endpoint serves]
+  android:
+    declares: infra.android
+    detect: ["**/AndroidManifest.xml", "**/build.gradle.kts", "**/build.gradle"]
+    checks: [the release build succeeds and is signed, permissions match the manifest]
+  oracle-vm:
+    declares: infra.oracle_vm
+    detect: []
+    checks: [the deploy target and services named in the manifest are healthy after deploy]
+  live-surface:
+    declares: surface.url
+    detect: []
+    checks: [the declared URL serves the new commit after deployment -- a fetch of the real address, not a green deploy job]
+
+# Checks every repository runs, whatever it contains.
+common_checks:
+  gate:      Claude's verdict on the change (claude-review.yml + pr-gate.yml)
+  policy:    the change comes from an allowed branch for its target, the governed workflows are unmodified, and .project/project.yaml is valid and matches what is detected
+  ci:        the repository's own build and tests, as declared in .project/project.yaml (a repository with none declares that)
+  security:  secret scan (gitleaks) and dependency scan (osv-scanner) over the change; no unresolved finding of high severity or above
+  sonar:     SonarCloud quality gate for public repositories; a private repository records `not available on the free plan` and passes on the security check instead
+  release:   every applicable verifier says PASS
