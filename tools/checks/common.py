@@ -103,15 +103,34 @@ def gh(path: str):
 
 
 def owner_approved() -> bool:
+    """Return True if the PR has an approving review from the repository owner.
+    Adopts the established pattern from pr-gate: the owner raising a change IS
+    the owner's say-so (GitHub forbids self-approval). Also checks commit_id
+    against the PR head SHA so stale approvals don't count. A failed API call
+    logs the reason and fails safe instead of silently returning False."""
     repo, number = os.environ.get("GITHUB_REPOSITORY", ""), pr().get("number")
     if not repo or not number:
         return False
     owner = repo.split("/")[0]
+    # The review's commit_id is the head SHA the review was submitted against;
+    # pull_request.head.sha is that same SHA in both trigger events. GITHUB_SHA
+    # is the merge commit on pull_request events and would never match.
+    head_sha = (pr().get("head") or {}).get("sha", "")
+    # The owner raising it is the owner's decision (pr-gate #93 pattern)
+    author = pr().get("user", {}).get("login", "")
+    if author == owner:
+        return True
     try:
         reviews = gh(f"/repos/{repo}/pulls/{number}/reviews?per_page=100") or []
-    except Exception:
+    except Exception as e:
+        print(f"::error::owner_approved: GitHub API error: {e}")
         return False
-    return any(r["state"] == "APPROVED" and r["user"]["login"] == owner for r in reviews)
+    return any(
+        r["state"] == "APPROVED"
+        and r["user"]["login"] == owner
+        and r.get("commit_id") == head_sha
+        for r in reviews
+    )
 
 
 def verdict(check: str, v: str, findings: list[str], passed: list[str] | None = None) -> None:
