@@ -1,0 +1,5 @@
+# Python bytecode — never committed. These run from governance main in every
+# repository's governance.yml job, and stale bytecode pinned to one CPython
+# version shadows the source it was compiled from.
+__pycache__/
+*.pyc
