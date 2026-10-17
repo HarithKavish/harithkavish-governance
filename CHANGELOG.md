@@ -33,6 +33,23 @@ Format, newest first:
 
 ---
 
+## 2026-10-17T02:10:05Z -- Governed checks: the owner's latest review decides
+
+- **Actor:** Jarvis (agent)
+- **Initiated by:** autonomous (follow-up to the #97 review finding)
+- **Change:** `tools/checks/common.py` `owner_approved()` now takes the owner's
+  LATEST non-COMMENTED review rather than any past approval: a later
+  `CHANGES_REQUESTED` or `DISMISSED` at the head SHA withdraws an earlier
+  approval instead of being ignored, a bare comment is not a verdict, and the
+  latest review must still be `APPROVED` at the head SHA. The review fetch is
+  paginated, so the owner's latest review is found even beyond the first 100
+  reviews. No other behaviour changes.
+- **Why:** the #97 review found that an approval followed by
+  `CHANGES_REQUESTED` on the same head still cleared HOLD -- the same family
+  of staleness defect this pull request exists to fix; and an unpaged fetch
+  could miss the deciding review on a long-running pull request. A HOLD the
+  owner has withdrawn must not pass fleet-wide once this reaches main.
+
 ## 2026-10-16T03:41:49Z -- Governed checks: owner-approval fix, bytecode removal
 
 - **Actor:** Jarvis (agent)
