@@ -467,6 +467,23 @@ repositories:
       no API for the upload); CLAUDE_CODE_OAUTH_TOKEN not set, so automated review does
       not run yet; branch protection not configured.
 
+  - name: jarvis-labs
+    role: infrastructure
+    adoption: registered
+    last_checked: 2026-10-27
+    visibility: private
+    notes: >-
+      Jarvis's workbench, so the 45 GB VM keeps only active work. Holds parked work
+      from other repositories (one park/<repo>/<date>-<topic> branch each: a git bundle
+      of unpushed commits plus a patch of uncommitted changes, never another
+      repository's full history) and projects with no home repository. park/* branches
+      are archival and never merged -- declared as an exception in its GOVERNANCE.md.
+      Created at the owner's direction 2026-10-27 (jarvis docs/COMPACT.md). Onboarded
+      new via protocols/REPOSITORY_ONBOARDING.md: main/development/feature/claude
+      created, GOVERNANCE.md/AGENTS.md/README.md added, claude-review.yml carried over
+      from jarvis. Outstanding: social preview image not created (no upload API);
+      branch protection not configured.
+
   - name: keyboard
     role: application
     adoption: integrated
