@@ -1,0 +1,128 @@
+name: Gates
+
+# Required status checks for the governance repository.
+#
+# This repository defines the ecosystem's rules and is PUBLIC. Two consequences
+# shape what is checked here: a secret committed is a secret disclosed to
+# everyone immediately, and a schema that does not parse breaks the bootstrap
+# every agent runs before it does anything.
+#
+# The third check is the interesting one. MAINTENANCE.md already requires that
+# every governance change appends to CHANGELOG.md "in the same change, alongside
+# the schemas/governance.yaml timestamp". That rule was rung 2 -- followed
+# because it was written down. This makes it rung 4.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+  push:
+    branches: [development, runway, main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gates-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secrets:
+    name: secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install gitleaks
+        run: |
+          set -euo pipefail
+          VERSION=$(curl -sL https://api.github.com/repos/gitleaks/gitleaks/releases/latest | jq -r .tag_name)
+          curl -sL -o /tmp/g.tar.gz \
+            "https://github.com/gitleaks/gitleaks/releases/download/${VERSION}/gitleaks_${VERSION#v}_linux_x64.tar.gz"
+          tar -xzf /tmp/g.tar.gz -C /tmp gitleaks
+          sudo install -m 0755 /tmp/gitleaks /usr/local/bin/gitleaks
+      - run: gitleaks detect --no-banner --redact --verbose
+
+  schemas:
+    name: schemas parse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+
+      - name: Every schema parses, and the registry holds its shape
+        run: |
+          python - <<'PY'
+          import glob, sys
+          import yaml
+
+          bad = 0
+          for f in sorted(glob.glob("schemas/*.yaml")):
+              try:
+                  yaml.safe_load(open(f, encoding="utf-8"))
+              except yaml.YAMLError as e:
+                  print(f"::error file={f}::{e}"); bad = 1
+
+          # AGENT_BOOTSTRAP step 3 reads this file on every task. A repository
+          # entry missing `name` breaks discovery for everyone, silently.
+          eco = yaml.safe_load(open("schemas/ecosystem.yaml", encoding="utf-8")) or {}
+          for key in ("repositories", "excluded"):
+              for entry in eco.get(key) or []:
+                  if not isinstance(entry, dict) or "name" not in entry:
+                      print(f"::error::{key} contains an entry with no 'name': {entry!r}")
+                      bad = 1
+          sys.exit(bad)
+          PY
+
+  changelog:
+    name: changelog and timestamp agree
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+
+      # MAINTENANCE.md: "Every governance change appends here, in the same
+      # change, alongside the schemas/governance.yaml timestamp."
+      #
+      # Until now nothing checked it, so a change could move the standards and
+      # leave `last_updated` stale -- which would make every agent's staleness
+      # check report "current" against a repository that had moved. That is the
+      # one failure this file exists to prevent, and it was unenforced.
+      - name: Newest CHANGELOG entry matches last_updated
+        run: |
+          python - <<'PY'
+          import re, sys
+          import yaml
+
+          gov = yaml.safe_load(open("schemas/governance.yaml", encoding="utf-8")) or {}
+          stamp = gov.get("last_updated")
+          stamp = stamp.strftime("%Y-%m-%dT%H:%M:%SZ") if hasattr(stamp, "strftime") else str(stamp)
+
+          text = open("CHANGELOG.md", encoding="utf-8").read()
+          heads = re.findall(r"^##\s+(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z)", text, re.M)
+          if not heads:
+              print("::error file=CHANGELOG.md::no dated entry found")
+              sys.exit(1)
+
+          newest = heads[0]
+          if newest != stamp:
+              print(f"::error::CHANGELOG newest entry is {newest} but "
+                    f"schemas/governance.yaml last_updated is {stamp}. "
+                    "MAINTENANCE.md requires they change together.")
+              sys.exit(1)
+
+          # Append-only: entries must descend. A reordering usually means an
+          # entry was edited in place, which MAINTENANCE.md forbids.
+          if heads != sorted(heads, reverse=True):
+              print("::error file=CHANGELOG.md::entries are not in descending order; "
+                    "the log is append-only, newest first")
+              sys.exit(1)
+
+          print(f"changelog and timestamp agree: {stamp}, {len(heads)} entries in order")
+          PY
