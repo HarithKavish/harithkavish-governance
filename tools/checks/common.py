@@ -103,15 +103,47 @@ def gh(path: str):
 
 
 def owner_approved() -> bool:
+    """Return True if the owner has approved the pull request as it stands.
+    Adopts the established pattern from pr-gate: the owner raising a change IS
+    the owner's say-so (GitHub forbids self-approval). Otherwise the owner's
+    LATEST non-COMMENTED review decides -- a later CHANGES_REQUESTED or
+    DISMISSED on the same head withdraws an earlier approval, and a bare
+    comment is not a verdict. The latest review must be APPROVED at the PR
+    head SHA, so stale approvals don't count either. A failed API call logs
+    the reason and fails safe instead of silently returning False."""
     repo, number = os.environ.get("GITHUB_REPOSITORY", ""), pr().get("number")
     if not repo or not number:
         return False
     owner = repo.split("/")[0]
+    # The review's commit_id is the head SHA the review was submitted against;
+    # pull_request.head.sha is that same SHA in both trigger events. GITHUB_SHA
+    # is the merge commit on pull_request events and would never match.
+    head_sha = (pr().get("head") or {}).get("sha", "")
+    # The owner raising it is the owner's decision (pr-gate #93 pattern)
+    author = pr().get("user", {}).get("login", "")
+    if author == owner:
+        return True
     try:
-        reviews = gh(f"/repos/{repo}/pulls/{number}/reviews?per_page=100") or []
-    except Exception:
+        # The API returns reviews oldest-first, so the last owner review in
+        # the list is the latest. Fetch every page: the latest one can sit
+        # beyond the first 100 on a long-running pull request.
+        reviews: list = []
+        page = 1
+        while True:
+            batch = gh(f"/repos/{repo}/pulls/{number}/reviews?per_page=100&page={page}") or []
+            reviews += batch
+            if len(batch) < 100:
+                break
+            page += 1
+    except Exception as e:
+        print(f"::error::owner_approved: GitHub API error: {e}")
         return False
-    return any(r["state"] == "APPROVED" and r["user"]["login"] == owner for r in reviews)
+    mine = [r for r in reviews
+            if r["user"]["login"] == owner and r["state"] != "COMMENTED"]
+    if not mine:
+        return False
+    latest = mine[-1]
+    return latest["state"] == "APPROVED" and latest.get("commit_id") == head_sha
 
 
 def verdict(check: str, v: str, findings: list[str], passed: list[str] | None = None) -> None:
