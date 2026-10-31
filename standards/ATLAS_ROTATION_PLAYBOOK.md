@@ -32,8 +32,8 @@ Boolean-only comparison, no secret values printed. Template (replace the leaked 
 ```bash
 python3 -c "
 import re, urllib.parse
-leaked = 'mongodb+srv://user:***@cluster0.wmcojpw.mongodb.net/'  # replace with actual leaked URI from gh api git/blobs/<sha>
-live = open('/opt/hermes/state/.env').read()
+leaked = 'mongodb+srv://user:***@host.mongodb.net/'  # replace with actual leaked URI from gh api git/blobs/<sha>
+live = open('/path/to/.env').read()
 m = re.search(r'HERMES_ATLAS_URI=mongodb\\+srv://[^:]+:([^@\r\n]+)@', live)
 if m:
     live_pw = urllib.parse.unquote(m.group(1))
