@@ -42,8 +42,21 @@ The memory-diary Android app holds no credential by design (public, decompilable
 
 Boolean-only comparison, no secret values printed:
 
-```python
-# leaked blob (via gh api git/blobs/<sha>) vs live .env, URL-decoded, exact match
+```bash
+# Leaked blob (via gh api git/blobs/<sha>) vs live .env, URL-decoded, exact match
+# Example (prints only true/false, never the value):
+# python3 -c "
+# import os, re, urllib.parse
+# leaked = 'mongodb+srv://user:PASSWORD@cluster0.wmcojpw.mongodb.net/'
+# live = open('/opt/hermes/state/.env').read()
+# m = re.search(r'HERMES_ATLAS_URI=mongodb\\+srv://[^:]+:([^@\r\n]+)@', live)
+# if m:
+#     live_pw = urllib.parse.unquote(m.group(1))
+#     leaked_pw = urllib.parse.unquote(re.search(r':([^@]+)@', leaked).group(1))
+#     print(live_pw == leaked_pw)
+# else:
+#     print(False)
+# "
 ```
 
-See `scripts/aws-key-liveness-probe.py` for the AWS equivalent of this check.
+See `scripts/aws-key-liveness-probe.py` in the jarvis repo for the AWS equivalent of this check.
