@@ -30,23 +30,19 @@ The memory-diary Android app holds no credential by design (public, decompilable
 
 ## Liveness re-check method
 
-Boolean-only comparison, no secret values printed:
+Boolean-only comparison, no secret values printed. Template (replace the leaked URI with the actual blob value before running):
 
 ```bash
-# Leaked blob (via gh api git/blobs/<sha>) vs live .env, URL-decoded, exact match
-# Example (prints only true/false, never the value):
-# python3 -c "
-# import os, re, urllib.parse
-# leaked = 'mongodb+srv://user:***@cluster0.wmcojpw.mongodb.net/'
-# live = open('/opt/hermes/state/.env').read()
-# m = re.search(r'HERMES_ATLAS_URI=mongodb\\+srv://[^:]+:([^@\r\n]+)@', live)
-# if m:
-#     live_pw = urllib.parse.unquote(m.group(1))
-#     leaked_pw = urllib.parse.unquote(re.search(r':([^@]+)@', leaked).group(1))
-#     print(live_pw == leaked_pw)
-# else:
-#     print(False)
-# "
+python3 -c "
+import os, re, urllib.parse
+leaked = 'mongodb+srv://user:***@cluster0.wmcojpw.mongodb.net/'  # replace with actual leaked URI from gh api git/blobs/<sha>
+live = open('/opt/hermes/state/.env').read()
+m = re.search(r'HERMES_ATLAS_URI=mongodb\\+srv://[^:]+:([^@\r\n]+)@', live)
+if m:
+    live_pw = urllib.parse.unquote(m.group(1))
+    leaked_pw = urllib.parse.unquote(re.search(r':([^@]+)@', leaked).group(1))
+    print(live_pw == leaked_pw)
+else:
+    print(False)
+"
 ```
-
-See `scripts/aws-key-liveness-probe.py` in the jarvis repo for the AWS equivalent of this check.
