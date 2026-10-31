@@ -40,7 +40,8 @@ live = open('/opt/hermes/state/.env').read()
 m = re.search(r'HERMES_ATLAS_URI=mongodb\\+srv://[^:]+:([^@\r\n]+)@', live)
 if m:
     live_pw = urllib.parse.unquote(m.group(1))
-    leaked_pw = urllib.parse.unquote(re.search(r':([^@]+)@', leaked).group(1))
+    # leaked URI: mongodb+srv://user:PASSWORD@host — password is between last : and @
+    leaked_pw = urllib.parse.unquote(re.search(r'://[^:]+:([^@]+)@', leaked).group(1))
     print(live_pw == leaked_pw)
 else:
     print(False)
