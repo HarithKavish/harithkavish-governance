@@ -1,9 +1,9 @@
 # Atlas Credential Rotation Playbook (cluster0.wmcojpw, DB `talk`)
 
-**Status at time of writing (2026-10-28):** leaked password in harithkavish.github.io
-public git history CONFIRMED still the live one (exact match with `HERMES_ATLAS_URI`
-in `/opt/hermes/state/.env`). Never rotate from inside a session — every value is a
-placeholder for Harith to fill at rotation time.
+**Status at time of writing (2026-10-28):** a leaked password in harithkavish.github.io
+public git history was confirmed to match the live `HERMES_ATLAS_URI`
+in `/opt/hermes/state/.env`. This playbook was written before rotation.
+**Never rotate from inside a session — every value is a placeholder for Harith to fill at rotation time.**
 
 ## Consumers (every place the password lives)
 
@@ -25,18 +25,8 @@ The memory-diary Android app holds no credential by design (public, decompilable
 3. **memory-diary Worker**: `wrangler secret put MONGODB_ATLAS_URI`. Verify with a
    worker health/login curl.
 4. **my_chatgpt backend** (if still running anywhere): update `MONGO_URI`, restart.
-5. **After verification**: resolve the 12 harithkavish.github.io secret-scanning alerts
-   as "revoked". History scrubbing optional — the old password is burnt.
-
-## Evidence (2026-10-28)
-
-- 12 open secret-scanning alerts on harithkavish.github.io, `publicly_leaked=true`
-  (re-verified; unchanged since Oct 7). Of these, only those matching user
-  `harithkavish40` + cluster0.wmcojpw are real; the rest are doc placeholders.
-- Blob f272ee9… (public history) password == live `HERMES_ATLAS_URI` password.
-- AgroCloud-Finance-Pro AWS keys (alerts 1–2): DEAD via STS GetCallerIdentity
-  (`InvalidClientTokenId`) — the Oct 23 "LIVE" report was wrong. Cleanup-only: dead key
-  still at HEAD on `development` in 3 Uploader.jsx copies; resolve alerts as revoked.
+5. **After verification**: resolve the harithkavish.github.io secret-scanning alerts
+   for this cluster as "revoked". History scrubbing optional — the old password is burnt.
 
 ## Liveness re-check method
 
@@ -47,7 +37,7 @@ Boolean-only comparison, no secret values printed:
 # Example (prints only true/false, never the value):
 # python3 -c "
 # import os, re, urllib.parse
-# leaked = 'mongodb+srv://user:PASSWORD@cluster0.wmcojpw.mongodb.net/'
+# leaked = 'mongodb+srv://user:***@cluster0.wmcojpw.mongodb.net/'
 # live = open('/opt/hermes/state/.env').read()
 # m = re.search(r'HERMES_ATLAS_URI=mongodb\\+srv://[^:]+:([^@\r\n]+)@', live)
 # if m:
