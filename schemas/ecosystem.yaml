@@ -11,7 +11,7 @@
 # Adding or changing an entry is a governance change (MAINTENANCE.md).
 
 schema_version: 2
-updated: 2026-09-29
+updated: 2026-11-01
 last_account_reconciliation: 2026-09-06
 
 ecosystem:
@@ -503,6 +503,32 @@ repositories:
       for it); CLAUDE_CODE_OAUTH_TOKEN not set, so automated review does not run;
       release signing secrets not set, so publish-store.yml refuses to run and no build
       has reached the store; branch protection not configured.
+
+  - name: continuum
+    role: application
+    adoption: integrated
+    last_checked: 2026-11-01
+    visibility: public
+    surface: https://continuum.harithkavish.com
+    notes: >-
+      Browser-only 3D Earth built from public data (terrain, imagery, bathymetry,
+      buildings, natural events), with gamepad navigation; no backend, accounts or API
+      keys. Created 2026-11-01 at the owner's request and onboarded new via
+      protocols/REPOSITORY_ONBOARDING.md: main/runway/development created with branch
+      protection matching blog (PR + gate required, admins enforced), feature/claude
+      for work, GOVERNANCE.md/AGENTS.md/README.md, claude-review.yml and pr-gate.yml
+      carried over from blog, deploy-pages.yml publishing main by workflow. Created
+      private, made public the same day on the owner's instruction after a clean
+      full-history gitleaks scan. GOVERNANCE.md declares four design-system exceptions
+      (dark default theme, footer opt-out, data-encoding colours, brand mark). v0.1.0
+      went live 2026-11-01 through #1 -> #2 -> #3, each with a PASS review. #1's first
+      review was FAIL (ice-surface correction scope) and was fixed before merge; 23/23
+      end-to-end tests passed on runway. Pages build type is workflow with the custom
+      domain verified, and the github-pages environment admits main only, as in blog.
+      The DNS record was created by the owner (Cloudflare, proxied).
+      CLAUDE_CODE_OAUTH_TOKEN was pushed from the secretctl vault. Outstanding: social
+      preview committed but not uploaded (no API; deferred by the owner); agent commits
+      unsigned (no signing key provisioned).
 
 # ---------------------------------------------------------------------------
 # Pending review
