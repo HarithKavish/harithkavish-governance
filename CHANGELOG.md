@@ -33,6 +33,13 @@ Format, newest first:
 
 ---
 
+## 2026-11-14T14:46:29Z -- Governed checks: fix v_cloudflare false-fail regex
+
+- **Actor:** Jarvis (agent)
+- **Initiated by:** autonomous (follow-up to the #100 review finding)
+- **Change:** `tools/checks/release_check.py` `v_cloudflare()` now correctly limits secret detection to the `[vars]` section only. The previous regex `[\s\S]*?` ran past the `[vars]` block end into later sections (e.g., `[env.production.vars]`), causing false FAIL verdicts when secrets appeared in environment-specific sections. The fix extracts the `[vars]` section content with `(?ims)^\s*\[vars\]\s*$(.*?)(?=^\s*\[|\Z)` and searches only within that block. No other behaviour changes.
+- **Why:** the #100 Claude review identified this false-fail pattern on line 50. A wrangler.toml with secrets in `[env.production.vars]` (which is valid and secure) was incorrectly flagged as putting secrets in `[vars]`, blocking legitimate promotions to main fleet-wide.
+
 ## 2026-10-17T02:10:05Z -- Governed checks: the owner's latest review decides
 
 - **Actor:** Jarvis (agent)
