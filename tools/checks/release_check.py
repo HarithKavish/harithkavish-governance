@@ -39,7 +39,6 @@ def statuses(prefix: str) -> list[dict]:
 # --- verifiers: each returns (verdict, [findings or evidence]) -------------------------
 
 def v_cloudflare(m):
-    c = m
     runs = c.gh(f"/repos/{c.event()['repository']['full_name']}/actions/runs?branch={c.head_ref()}&per_page=20") or []
     bad = any(r.get("conclusion") == "failure" for r in runs)
     out = [f"{r['name']}: {r.get('conclusion') or r.get('status')}" for r in runs]
