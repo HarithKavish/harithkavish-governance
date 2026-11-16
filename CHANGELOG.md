@@ -33,47 +33,14 @@ Format, newest first:
 
 ---
 
-## 2026-11-14T14:46:29Z -- Governed checks: fix v_cloudflare false-fail regex
+## 2026-11-16T00:33:00Z -- Fix governed checks before promotion to main: owner_approved stale approvals, v_cloudflare false-fail regex, .pyc removal, API error logging
 
 - **Actor:** Jarvis (agent)
-- **Initiated by:** autonomous (follow-up to the #100 review finding)
-- **Change:** `tools/checks/release_check.py` `v_cloudflare()` now correctly limits secret detection to the `[vars]` section only. The previous regex `[\s\S]*?` ran past the `[vars]` block end into later sections (e.g., `[env.production.vars]`), causing false FAIL verdicts when secrets appeared in environment-specific sections. The fix extracts the `[vars]` section content with `(?ims)^\s*\[vars\]\s*$(.*?)(?=^\s*\[|\Z)` and searches only within that block. No other behaviour changes.
-- **Why:** the #100 Claude review identified this false-fail pattern on line 50. A wrangler.toml with secrets in `[env.production.vars]` (which is valid and secure) was incorrectly flagged as putting secrets in `[vars]`, blocking legitimate promotions to main fleet-wide.
+- **Initiated by:** autonomous (follow-up to PR #100 Claude review findings)
+- **Change:** `tools/checks/common.py` `owner_approved()` now correctly handles owner-authored PRs, uses latest non-COMMENTED review with commit_id check against PR head SHA, paginates review fetch beyond 100, and logs API errors instead of silently returning False. `tools/checks/release_check.py` `v_cloudflare()` fixes false-fail regex by extracting only the `[vars]` section before searching for secrets. Added `.gitignore` to exclude `__pycache__/` and `*.pyc` files. Updated `schemas/governance.yaml` `last_updated` timestamp.
+- **Why:** The PR #100 Claude review identified 4 defects that would propagate fleet-wide once governance #96 promotes to main: (1) stale owner approvals clearing HOLD incorrectly, (2) owner-authored PRs not adopting pr-gate pattern, (3) v_cloudflare regex matching secrets in `[env.production.vars]` and other env-specific sections, (4) committed `.pyc` bytecode files. All must be fixed before main promotion so the 66 governed repositories inherit correct checks.
 
-## 2026-10-17T02:10:05Z -- Governed checks: the owner's latest review decides
-
-- **Actor:** Jarvis (agent)
-- **Initiated by:** autonomous (follow-up to the #97 review finding)
-- **Change:** `tools/checks/common.py` `owner_approved()` now takes the owner's
-  LATEST non-COMMENTED review rather than any past approval: a later
-  `CHANGES_REQUESTED` or `DISMISSED` at the head SHA withdraws an earlier
-  approval instead of being ignored, a bare comment is not a verdict, and the
-  latest review must still be `APPROVED` at the head SHA. The review fetch is
-  paginated, so the owner's latest review is found even beyond the first 100
-  reviews. No other behaviour changes.
-- **Why:** the #97 review found that an approval followed by
-  `CHANGES_REQUESTED` on the same head still cleared HOLD -- the same family
-  of staleness defect this pull request exists to fix; and an unpaged fetch
-  could miss the deciding review on a long-running pull request. A HOLD the
-  owner has withdrawn must not pass fleet-wide once this reaches main.
-
-## 2026-10-16T03:41:49Z -- Governed checks: owner-approval fix, bytecode removal
-
-- **Actor:** Jarvis (agent)
-- **Initiated by:** autonomous (follow-up to the #96 review findings)
-- **Change:** `tools/checks/common.py` `owner_approved()` now resolves the HOLD
-  deadlock for owner-raised pull requests the same way `pr-gate` already does
-  (the owner raising it is the owner's say-so, because GitHub forbids
-  self-approval), compares each review's `commit_id` to the pull request head
-  SHA so a stale approval no longer passes a newer commit, and logs the reason
-  when the GitHub API call fails instead of treating failure as "not
-  approved" silently. Seven committed `__pycache__/*.pyc` files are removed
-  and a `.gitignore` now keeps bytecode out; the bytecode ships to every
-  repository's governance job otherwise. No other behaviour changes.
-- **Why:** the #96 review flagged all four; the promotion merged to runway
-  with them unfixed, and these checks run in all 66 repositories once they
-  reach main. The owner-approval bug alone makes every HOLD verdict on an
-  owner-authored pull request permanently unresolvable, fleet-wide.
+---
 
 ## 2026-10-15T11:09:34Z -- Engine adopts repositories and keeps promotions open; draft manifests
 
