@@ -39,16 +39,16 @@ def statuses(prefix: str) -> list[dict]:
 # --- verifiers: each returns (verdict, [findings or evidence]) -------------------------
 
 def v_cloudflare(m):
-    runs = c.gh(f"/repos/{c.event()['repository']['full_name']}/actions/runs?branch={c.head_ref()}&per_page=20") or []
-    bad = any(r.get("conclusion") == "failure" for r in runs)
+    runs = check_runs("cloudflare-workers-and-pages")
+    if not runs:
+        return "FAIL", ["no Cloudflare Workers/Pages build was reported for this commit -- "
+                        "connect the repository in Cloudflare (Workers Builds) so runway builds"]
+    bad = [r for r in runs if r.get("conclusion") not in ("success", "neutral", "skipped")]
     out = [f"{r['name']}: {r.get('conclusion') or r.get('status')}" for r in runs]
     for f in [x for x in c.repo_files() if x.split("/")[-1].startswith("wrangler.")]:
         body = (c.REPO / f).read_text(encoding="utf-8", errors="replace")
-        vars_section = re.search(r"(?ims)^\s*\[vars\](.*?)(?=^\s*\[|\Z)", body)
-        if vars_section:
-            vars_content = vars_section.group(1)
-            if re.search(r"(?i)(secret|token|password|api_key)\s*=", vars_content):
-                return "FAIL", [f"`{f}` puts a secret-looking value in [vars] -- use `wrangler secret`"]
+        if re.search(r"(?im)^\s*\[vars\][\s\S]*?(secret|token|password|api_key)\s*=", body):
+            return "FAIL", [f"`{f}` puts a secret-looking value in [vars] -- use `wrangler secret`"]
     return ("FAIL" if bad else "PASS"), out
 
 
