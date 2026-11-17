@@ -120,7 +120,7 @@ def owner_approved() -> bool:
     # is the merge commit on pull_request events and would never match.
     head_sha = (pr().get("head") or {}).get("sha", "")
     # The owner raising it is the owner's decision (pr-gate #93 pattern)
-    author = pr().get("user", {}).get("login", "")
+    author = (pr().get("user") or {}).get("login", "")
     if author == owner:
         return True
     try:
