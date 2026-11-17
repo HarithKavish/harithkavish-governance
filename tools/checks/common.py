@@ -139,7 +139,7 @@ def owner_approved() -> bool:
         print(f"::error::owner_approved: GitHub API error: {e}")
         return False
     mine = [r for r in reviews
-            if r["user"]["login"] == owner and r["state"] != "COMMENTED"]
+            if (r.get("user") or {}).get("login") == owner and r["state"] != "COMMENTED"]
     if not mine:
         return False
     latest = mine[-1]
