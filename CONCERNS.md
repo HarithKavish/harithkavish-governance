@@ -98,7 +98,11 @@ exactly as they do in a participating one.
 question about how something goes live is usually a DEPLOYMENT question wearing a
 BRANCHING costume.
 
-**Rung warning:** none of this is enforced. Zero repositories have branch protection.
+**Rung note:** the pull-request requirement on `development`, `runway` and `main` is
+platform-enforced (rung 4) wherever protection is configured; the release gates are
+enforced only where a repository has configured them. Current figures, measured rather
+than assumed: [GOVERNANCE_HIERARCHY.md](GOVERNANCE_HIERARCHY.md) § What Is Actually
+Enforced.
 
 **Related:** deployment · changing governance
 
