@@ -2,13 +2,16 @@
 
 Implements Articles 6 (Protected Production) and 7 (Isolated Development).
 
-**Enforcement rung: 4 (mechanically enforced) for `main`, `runway`, and `development` in
-every repository — see [GOVERNANCE_HIERARCHY.md](../GOVERNANCE_HIERARCHY.md) § The first
-rule to reach rung 4.** Branch protection (pull request required, force-push and deletion
-refused) was applied ecosystem-wide on 2026-09-08. From 2026-10-15 it is replaced by one
-repository ruleset per repository, applied and kept in place by the policy engine
+**Enforcement rung: 4 (mechanically enforced) for `main`, `runway`, and `development`
+wherever protection is configured — which this standard requires of every repository, and
+which is not yet true of every repository. Measured figures and the exceptions:
+[GOVERNANCE_HIERARCHY.md](../GOVERNANCE_HIERARCHY.md) § What Is Actually Enforced.** Branch protection (pull request required, force-push and deletion
+refused) was applied ecosystem-wide on 2026-09-08. From 2026-10-15 it is to be replaced by
+one repository ruleset per repository, applied and kept in place by the policy engine
 (`tools/policy/`, configured by [schemas/policy.yaml](../schemas/policy.yaml)), with **no
-bypass for anyone** — see [Bypass](#bypass). The flow, the gates and the source-branch
+bypass for anyone** — see [Bypass](#bypass). **Not yet in effect** (measured 2026-11-18):
+the engine has not run, so no repository has a ruleset; classic protection, with
+administrators enforced, carries the rule meanwhile. The flow, the gates and the source-branch
 rules below become rung 4 as the engine takes each one over; until a part is enforced, it
 is rung 2 for that part and the engine's report says so.
 
@@ -35,8 +38,9 @@ live to verify still has the three branches and the gate; it simply has fewer ve
 > [REPOSITORY.md](REPOSITORY.md) records two repositories to be left alone. Both are
 > overridden at the owner's explicit instruction, on the grounds that a rule with
 > exceptions is a rule that has to be remembered, and enforcement exists so nothing has
-> to be. New repositories are covered on creation by the engine; nothing has to be set
-> up by hand.
+> to be. New repositories are covered on creation by the engine once it runs. Until it
+> does, a new repository is unprotected until someone sets it up — four of the account's
+> personal repositories were, on 2026-11-18.
 
 ---
 
