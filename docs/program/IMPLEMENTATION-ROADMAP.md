@@ -45,7 +45,7 @@ documents in the repository: they are obeyed.
 
 | ID | Item | Destination | Closes | Waits for | Status |
 |---|---|---|---|---|---|
-| RM-09 | Re-measure and correct "What Is Actually Enforced"; fix the `enforce_admins` statement; fix CONCERNS' "zero repositories have branch protection" | `GOVERNANCE_HIERARCHY.md`, `CONCERNS.md` | GAP-M12 | DEC-P13 (for intent only; the measurement can be corrected now) | todo |
+| RM-09 | Re-measure and correct "What Is Actually Enforced"; fix the `enforce_admins` statement; fix CONCERNS' "zero repositories have branch protection"; correct BRANCHING's claim that rulesets already replaced classic protection | `GOVERNANCE_HIERARCHY.md`, `CONCERNS.md`, `standards/BRANCHING.md` | GAP-M12 | — | doing |
 | RM-10 | Onboarding verification includes the security baseline (secret scanning + push protection on, for public repositories) | `protocols/REPOSITORY_ONBOARDING.md` step 9 | GAP-M14 | — | todo |
 
 ## Wave 3 — Phase 1 normative changes
@@ -74,7 +74,7 @@ template.
 | ID | Item | Closes | Waits for | Status |
 |---|---|---|---|---|
 | RM-24 | Repository baseline decided per class — which of `SECURITY.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SUPPORT.md`, `CHANGELOG.md`, `CITATION.cff`, `CODEOWNERS` apply to a content site, an app, a service, a library. **No boilerplate in repositories it does not fit** | Phase 2 | RM-11, RM-15 | todo |
-| RM-25 | Rulesets via the policy engine, public repositories first | CAP-02 | RM-01, DEC-P13 | blocked (RM-01) |
+| RM-25 | Rulesets via the policy engine, public repositories first | CAP-02 | RM-01 | blocked (RM-01) |
 | RM-26 | Dependabot configuration (`groups:`, `target-branch: development`) one repository at a time | CAP-08 | DEC-P09 | blocked (DEC-P09) |
 | RM-27 | Wikis off where empty | CAP-15 | Check each is empty | todo |
 | RM-28 | Social previews | CAP-01, GAP-M09 | Owner (no API) | blocked (owner) |

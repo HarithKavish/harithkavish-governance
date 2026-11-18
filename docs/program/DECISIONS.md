@@ -86,7 +86,7 @@ The brief asks for GitHub features to be configured. A setting is changed by the
 without a further question only when all three hold: it reduces risk, it can be switched
 back, and it brings a repository in line with what the rest of the ecosystem already has.
 Anything that opens a new channel to outsiders, creates pull-request volume, costs money or
-Actions minutes, or changes who can do what is an owner decision (DEC-P07, P08, P09, P13).
+Actions minutes, or changes who can do what is an owner decision (DEC-P07, P08, P09).
 First use: LOG-005.
 
 ### DEC-007 — Vulnerability detail is not published in this repository
@@ -119,4 +119,4 @@ Each states the recommendation and why. None is acted on until answered.
 | DEC-P10 | Excluded repositories that are public, vulnerable and in one case live | Bring `SkinNet-Analyzer` into scope, or take it private / offline; archive coursework that is not meant to run | GAP-M17 |
 | DEC-P11 | The governance backlog: promotion PR #100 (`runway`→`main`, open since 2026-10-28) and PRs #97, #98, #101, #103, #104; creating the policy App and its credentials | Review and merge #100 first: it carries the policy engine to `main`, the only branch scheduled workflows run from | GAP-M04, GAP-M15 |
 | DEC-P12 | Grant the agent token the scopes the audit lacks: `admin:org`, `read:project`, `read:packages`, `user` (`gh auth refresh -h github.com -s admin:org,read:project,read:packages,user`) | Read scopes only; `admin:org` only if DEC-P02 is yes | CAP-05, CAP-13, CAP-16, CAP-18 |
-| DEC-P13 | `enforce_admins` is **on** in every protected repository (65 of 65); governance says it is **off** and explains why off is deliberate (hotfix speed). Which is intended? | Keep it on and correct the document — the deadlock it causes on owner-authored HOLD pull requests is now handled by opening those as Jarvis's App | GAP-M12 |
+| DEC-P13 | ~~Is `enforce_admins` meant to be on?~~ **Withdrawn the same day — already decided.** [standards/BRANCHING.md](../../standards/BRANCHING.md) § Bypass records the owner's decision of 2026-10-15: no bypass for anyone, the owner included. Measured state (on, 65 of 65 protected repositories) matches it; only GOVERNANCE_HIERARCHY and CONCERNS are stale | Correct the stale documents (RM-09) | — |

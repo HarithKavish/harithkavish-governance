@@ -25,7 +25,7 @@ stay proportionate — ask for the same.
 |---|---|
 | [REPOSITORY-INVENTORY.md](REPOSITORY-INVENTORY.md) | All 72 reachable repositories, measured 2026-11-18 |
 | [GAP-REGISTER.md](GAP-REGISTER.md) | Every requested area judged against existing governance; measured gaps |
-| [DECISIONS.md](DECISIONS.md) | Decisions made, and the 13 waiting on the owner |
+| [DECISIONS.md](DECISIONS.md) | Decisions made, and the 12 waiting on the owner |
 | [IMPLEMENTATION-ROADMAP.md](IMPLEMENTATION-ROADMAP.md) | Ordered work, waves 0–6 |
 | [STANDARDS-REGISTER.md](STANDARDS-REGISTER.md) | External references, their status on 2026-11-18, and proposed use |
 | [GITHUB-CAPABILITY-MATRIX.md](GITHUB-CAPABILITY-MATRIX.md) | 22 GitHub capabilities: available, used, recommended |
@@ -39,16 +39,16 @@ stay proportionate — ask for the same.
 | 0 — Discovery | **Done** 2026-11-18 | Inventory complete for what the token can see; Projects, Packages and organisation properties need scopes (DEC-P12) |
 | 1 — Governance repository | **Analysis done; normative changes not started** | Gap register, decisions, standards register written. Rule changes are RM-09 to RM-23, one pull request each |
 | 2 — Repository baseline | Not started | RM-24, after RM-11 and RM-15 define what the baseline must say |
-| 3 — GitHub capabilities | **Assessed**; one setting changed (LOG-005) | Remaining configuration waits on DEC-P07, P08, P09, P11, P13 |
+| 3 — GitHub capabilities | **Assessed**; one setting changed (LOG-005) | Remaining configuration waits on DEC-P07, P08, P09, P11 |
 | 4 — Per-repository adoption | Not started | Wave 5; starts with RM-04 (vulnerability triage), which needs no decision |
 | 5 — Traceability | Not started | RM-29 needs manifests adopted first |
 | 6 — Verification and maturity | Not started | RM-30 to RM-32 |
 
 ## Blockers
 
-1. **Thirteen owner decisions** ([DECISIONS.md](DECISIONS.md) § Pending). The five that
+1. **Twelve owner decisions** ([DECISIONS.md](DECISIONS.md) § Pending). The four that
    unblock most: DEC-P11 (merge the policy-engine promotion), DEC-P01/P02 (membership),
-   DEC-P07 (private vulnerability reporting), DEC-P13 (admin enforcement intent).
+   DEC-P07 (private vulnerability reporting).
 2. **Merging is the owner's.** Agents may open pull requests but merges of unreviewed or
    held pull requests are refused to them, and HOLD verdicts need the owner's approval.
 3. **Registry and changelog edits** have previously been refused to agents as a safety
@@ -62,8 +62,8 @@ For the next session — human or agent. Each is independent of owner decisions 
 1. Check [PR #105](https://github.com/HarithKavish/harithkavish-governance/pull/105), which
    added this folder: its review verdict, and whether it merged.
 2. **RM-09** — correct the enforcement facts in `GOVERNANCE_HIERARCHY.md` § What Is
-   Actually Enforced and `CONCERNS.md` from a fresh measurement; leave the `enforce_admins`
-   *intent* to DEC-P13 and say so in the text.
+   Actually Enforced, `CONCERNS.md`, and the rung statement in `standards/BRANCHING.md`,
+   from a fresh measurement. The `enforce_admins` intent is already decided (BRANCHING § Bypass).
 3. **RM-10** — add the security baseline to onboarding step 9.
 4. **RM-04** — begin vulnerability triage in the identity services, one repository per
    pull request, tests run, results reported honestly.
