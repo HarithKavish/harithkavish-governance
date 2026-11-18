@@ -39,7 +39,7 @@ stay proportionate — ask for the same.
 | 0 — Discovery | **Done** 2026-11-18 | Inventory complete for what the token can see; Projects, Packages and organisation properties need scopes (DEC-P12) |
 | 1 — Governance repository | **Analysis done; normative changes not started** | Gap register, decisions, standards register written. Rule changes are RM-09 to RM-23, one pull request each |
 | 2 — Repository baseline | Not started | RM-24, after RM-11 and RM-15 define what the baseline must say |
-| 3 — GitHub capabilities | **Assessed**; one setting changed (LOG-005) | Remaining configuration waits on DEC-P07, P08, P09, P11 |
+| 3 — GitHub capabilities | **Assessed**; baseline security settings switched on where missing (LOG-005, LOG-008) | Remaining configuration waits on DEC-P07, P08, P09, P11 |
 | 4 — Per-repository adoption | Not started | Wave 5; starts with RM-04 (vulnerability triage), which needs no decision |
 | 5 — Traceability | Not started | RM-29 needs manifests adopted first |
 | 6 — Verification and maturity | Not started | RM-30 to RM-32 |
@@ -61,9 +61,9 @@ For the next session — human or agent. Each is independent of owner decisions 
 
 1. Check [PR #105](https://github.com/HarithKavish/harithkavish-governance/pull/105), which
    added this folder: its review verdict, and whether it merged.
-2. **RM-09** — correct the enforcement facts in `GOVERNANCE_HIERARCHY.md` § What Is
-   Actually Enforced, `CONCERNS.md`, and the rung statement in `standards/BRANCHING.md`,
-   from a fresh measurement. The `enforce_admins` intent is already decided (BRANCHING § Bypass).
+2. **RM-09** — open as [PR #106](https://github.com/HarithKavish/harithkavish-governance/pull/106).
+   Both it and #105 change the top of `CHANGELOG.md` and the timestamp; rebase whichever
+   merges second.
 3. **RM-10** — add the security baseline to onboarding step 9.
 4. **RM-04** — begin vulnerability triage in the identity services, one repository per
    pull request, tests run, results reported honestly.

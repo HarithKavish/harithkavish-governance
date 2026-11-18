@@ -45,8 +45,8 @@ documents in the repository: they are obeyed.
 
 | ID | Item | Destination | Closes | Waits for | Status |
 |---|---|---|---|---|---|
-| RM-09 | Re-measure and correct "What Is Actually Enforced"; fix the `enforce_admins` statement; fix CONCERNS' "zero repositories have branch protection"; correct BRANCHING's claim that rulesets already replaced classic protection | `GOVERNANCE_HIERARCHY.md`, `CONCERNS.md`, `standards/BRANCHING.md` | GAP-M12 | — | doing |
-| RM-10 | Onboarding verification includes the security baseline (secret scanning + push protection on, for public repositories) | `protocols/REPOSITORY_ONBOARDING.md` step 9 | GAP-M14 | — | todo |
+| RM-09 | Re-measure and correct "What Is Actually Enforced"; fix the `enforce_admins` statement; fix CONCERNS' "zero repositories have branch protection"; correct BRANCHING's claim that rulesets already replaced classic protection | `GOVERNANCE_HIERARCHY.md`, `CONCERNS.md`, `standards/BRANCHING.md` | GAP-M12 | — | doing — [PR #106](https://github.com/HarithKavish/harithkavish-governance/pull/106) |
+| RM-10 | Onboarding verification includes the security baseline: Dependabot alerts on; secret scanning and push protection on (public repositories) | `protocols/REPOSITORY_ONBOARDING.md` step 9 | GAP-M14 | — | todo |
 
 ## Wave 3 — Phase 1 normative changes
 

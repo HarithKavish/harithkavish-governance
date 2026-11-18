@@ -69,3 +69,31 @@ Each entry: what was done · by whom, and who asked · the evidence · what it d
 - **Did:** created `docs/program/` on `feature/claude`, opened a pull request into
   `development`. No rule changed; no other repository touched.
 - **Evidence:** [PR #105](https://github.com/HarithKavish/harithkavish-governance/pull/105).
+
+### LOG-007 — 2026-11-18 · Collector failure handling fixed after review
+
+- **Actor:** Claude (agent) · **Initiated by:** HarithKavish
+- **Did:** fixed two defects the automated reviewer found on PR #105. A failed repository
+  listing produced an empty inventory that looked like a clean run, and one unreadable
+  repository aborted the whole run. Both now fail loudly or are recorded per repository.
+- **Evidence:** with a deliberately invalid token the collector exits 1 with
+  `could not list repositories: ... (HTTP 401)` and writes no file. A full run afterwards:
+  72 repositories, 0 errors, and the same totals as LOG-002 (1,674 alerts, 76 critical).
+
+### LOG-008 — 2026-11-18 · Dependabot alerts enabled on the six repositories without them
+
+- **Actor:** Claude (agent), using the owner's `gh` token · **Initiated by:** HarithKavish
+- **Did:** `PUT /repos/{repo}/vulnerability-alerts` on `continuum`, `gallery`, `jarvis-labs`
+  and the organisation's `dashboard`, `login`, `miracleexim` — the six repositories of 72
+  with alerts off, and the six most recently created. Alerts only: security **updates**,
+  which open pull requests, were not touched (DEC-P09). Allowed under DEC-006.
+- **Evidence:** `GET /repos/{repo}/vulnerability-alerts` returned `204` for all six.
+- **Reverse with:** `DELETE` on the same endpoint.
+
+### LOG-009 — 2026-11-18 · RM-09 opened: enforcement statements corrected
+
+- **Actor:** Claude (agent) · **Initiated by:** HarithKavish
+- **Did:** corrected `GOVERNANCE_HIERARCHY.md`, `CONCERNS.md` and `standards/BRANCHING.md`
+  where they described enforcement that no longer matches the measured state. No rule
+  changes. On its own work branch, so it can be reviewed apart from PR #105.
+- **Evidence:** [PR #106](https://github.com/HarithKavish/harithkavish-governance/pull/106).

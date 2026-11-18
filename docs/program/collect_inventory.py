@@ -1,6 +1,6 @@
 """Phase 0 collector: read-only inventory of every repository the gh token can reach.
 
-Usage:  py -3 collect_inventory.py <output.json>
+Usage:  python3 collect_inventory.py <output.json>     (Windows: py -3 ...)
 
 Write the output OUTSIDE any repository: it contains per-repository security data (open
 Dependabot alert counts) that must not be committed to a public repository (DEC-007).
@@ -63,9 +63,10 @@ def collect(full):
     owner, name = full.split("/")
     rec = {"full_name": full, "errors": []}
     data, err = gh(["api", "graphql", "-f", "query=" + gql_for(owner, name, "HEAD")])
-    if err:
-        rec["errors"].append("graphql:" + err); return rec
-    r = data["data"]["repository"]
+    r = (data.get("data") or {}).get("repository") if isinstance(data, dict) else None
+    if err or not r:
+        # Record and move on: one unreadable repository must not abort the whole run.
+        rec["errors"].append("graphql: " + (err or "no repository in response")); return rec
     present = [p for p in FILES if r.get(alias(p))]
     for p in FILES: r.pop(alias(p), None)
     r["files_default"] = present
@@ -73,8 +74,10 @@ def collect(full):
     branches = [n["name"] for n in r["branches"]["nodes"]]
     if "development" in branches:
         d, err = gh(["api", "graphql", "-f", "query=" + gql_for(owner, name, "development")])
-        if not err:
-            dr = d["data"]["repository"]
+        dr = (d.get("data") or {}).get("repository") if isinstance(d, dict) else None
+        if err or not dr:
+            rec["errors"].append("graphql development: " + (err or "no repository in response"))
+        else:
             rec["files_development"] = [p for p in FILES if dr.get(alias(p))]
             rec["workflows_development"] = [e["name"] for e in ((dr.get("workflows") or {}).get("entries") or [])]
     # REST: security settings (admin only), rulesets, pages, PVR, code scanning default setup
@@ -107,7 +110,10 @@ def main():
     out = sys.argv[1]
     names, err = gh(["api", "--paginate", "user/repos?per_page=100&affiliation=owner,collaborator,organization_member",
                      "--jq", ".[].full_name"])
-    names = sorted(set(names.split())) if isinstance(names, str) else []
+    # A failed or empty listing is an error, never an empty inventory that looks like a clean run.
+    if err or not isinstance(names, str) or not names.split():
+        sys.exit(f"could not list repositories: {err or 'empty result'}")
+    names = sorted(set(names.split()))
     print(f"{len(names)} repositories", file=sys.stderr)
     with ThreadPoolExecutor(max_workers=8) as ex:
         recs = list(ex.map(collect, names))
