@@ -33,6 +33,15 @@ Format, newest first:
 
 ---
 
+## 2026-11-16T00:33:00Z -- Fix governed checks before promotion to main: owner_approved stale approvals, v_cloudflare false-fail regex, .pyc removal, API error logging
+
+- **Actor:** Jarvis (agent)
+- **Initiated by:** autonomous (follow-up to PR #100 Claude review findings)
+- **Change:** `tools/checks/common.py` `owner_approved()` now correctly handles owner-authored PRs, uses latest non-COMMENTED review with commit_id check against PR head SHA, paginates review fetch beyond 100, and logs API errors instead of silently returning False. `tools/checks/release_check.py` `v_cloudflare()` fixes false-fail regex by extracting only the `[vars]` section before searching for secrets. Added `.gitignore` to exclude `__pycache__/` and `*.pyc` files. Updated `schemas/governance.yaml` `last_updated` timestamp.
+- **Why:** The PR #100 Claude review identified 4 defects that would propagate fleet-wide once governance #96 promotes to main: (1) stale owner approvals clearing HOLD incorrectly, (2) owner-authored PRs not adopting pr-gate pattern, (3) v_cloudflare regex matching secrets in `[env.production.vars]` and other env-specific sections, (4) committed `.pyc` bytecode files. All must be fixed before main promotion so the 66 governed repositories inherit correct checks.
+
+---
+
 ## 2026-10-15T11:09:34Z -- Engine adopts repositories and keeps promotions open; draft manifests
 
 - **Actor:** Claude (agent)
