@@ -33,6 +33,22 @@ Format, newest first:
 
 ---
 
+## 2026-11-18T14:11:23Z -- Add the governance programme's records; no rule changes
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** new `docs/program/` — execution state, a measured inventory of all 72
+  repositories the account can reach, a gap register judging every area of the owner's
+  governance brief against existing governance, decisions made and pending, a roadmap,
+  a standards register with statuses checked on 2026-11-18, a GitHub capability matrix,
+  an implementation log, and the read-only collector behind the inventory. No doctrine,
+  standard, protocol or schema rule changes.
+- **Why:** the owner asked for governance to be established across the whole account. Most
+  of it already exists here, so the work is to extend it through MAINTENANCE, one rule per
+  pull request — which needs a durable place to record what was measured, what is missing,
+  and what waits on the owner. The records sit in `docs/` and carry no authority, so they
+  cannot become a parallel rulebook.
+
 ## 2026-10-15T11:09:34Z -- Engine adopts repositories and keeps promotions open; draft manifests
 
 - **Actor:** Claude (agent)
