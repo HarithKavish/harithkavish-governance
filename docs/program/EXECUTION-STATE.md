@@ -59,7 +59,8 @@ stay proportionate — ask for the same.
 
 For the next session — human or agent. Each is independent of owner decisions unless marked.
 
-1. Check the pull request that added this folder; if merged, update LOG-006 with its number.
+1. Check [PR #105](https://github.com/HarithKavish/harithkavish-governance/pull/105), which
+   added this folder: its review verdict, and whether it merged.
 2. **RM-09** — correct the enforcement facts in `GOVERNANCE_HIERARCHY.md` § What Is
    Actually Enforced and `CONCERNS.md` from a fresh measurement; leave the `enforce_admins`
    *intent* to DEC-P13 and say so in the text.

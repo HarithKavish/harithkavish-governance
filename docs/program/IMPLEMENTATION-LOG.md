@@ -68,4 +68,4 @@ Each entry: what was done · by whom, and who asked · the evidence · what it d
 - **Actor:** Claude (agent) · **Initiated by:** HarithKavish
 - **Did:** created `docs/program/` on `feature/claude`, opened a pull request into
   `development`. No rule changed; no other repository touched.
-- **Evidence:** the pull request linked from [EXECUTION-STATE.md](EXECUTION-STATE.md).
+- **Evidence:** [PR #105](https://github.com/HarithKavish/harithkavish-governance/pull/105).
