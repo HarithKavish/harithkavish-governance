@@ -43,7 +43,8 @@ Format, newest first:
   repositories have branch protection (65 of 69 personal repositories do), and points at the
   measurement instead of restating it. `standards/BRANCHING.md` no longer states that rulesets
   replaced classic protection on 2026-10-15: that is the plan, not yet in effect, because the
-  policy engine has not run.
+  policy engine has not run; and its rung statement says rung 4 wherever protection is
+  configured, rather than in every repository, since four personal repositories have none.
 - **Why:** these are the documents an agent reads to learn what is enforced. Each statement was
   true when written and is now false, and a false enforcement claim is obeyed — in either
   direction. No rule changes: the no-bypass intent was already decided (BRANCHING § Bypass).

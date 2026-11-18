@@ -2,9 +2,10 @@
 
 Implements Articles 6 (Protected Production) and 7 (Isolated Development).
 
-**Enforcement rung: 4 (mechanically enforced) for `main`, `runway`, and `development` in
-every repository — see [GOVERNANCE_HIERARCHY.md](../GOVERNANCE_HIERARCHY.md) § The first
-rule to reach rung 4.** Branch protection (pull request required, force-push and deletion
+**Enforcement rung: 4 (mechanically enforced) for `main`, `runway`, and `development`
+wherever protection is configured — which this standard requires of every repository, and
+which is not yet true of every repository. Measured figures and the exceptions:
+[GOVERNANCE_HIERARCHY.md](../GOVERNANCE_HIERARCHY.md) § What Is Actually Enforced.** Branch protection (pull request required, force-push and deletion
 refused) was applied ecosystem-wide on 2026-09-08. From 2026-10-15 it is to be replaced by
 one repository ruleset per repository, applied and kept in place by the policy engine
 (`tools/policy/`, configured by [schemas/policy.yaml](../schemas/policy.yaml)), with **no
