@@ -5,7 +5,7 @@
 > and `schemas/`, and change only through [MAINTENANCE.md](../../MAINTENANCE.md) (DEC-001).
 > Read [AGENT_BOOTSTRAP.md](../../AGENT_BOOTSTRAP.md) before acting on anything here.
 
-**Last updated:** 2026-11-18 · Claude (agent) · initiated by HarithKavish
+**Last updated:** 2026-11-24 · Claude (agent) · initiated by HarithKavish
 
 ## The programme
 
@@ -37,10 +37,10 @@ stay proportionate — ask for the same.
 | Phase | Status | Evidence / what remains |
 |---|---|---|
 | 0 — Discovery | **Done** 2026-11-18 | Inventory complete for what the token can see; Projects, Packages and organisation properties need scopes (DEC-P12) |
-| 1 — Governance repository | **Analysis done; normative changes not started** | Gap register, decisions, standards register written. Rule changes are RM-09 to RM-23, one pull request each |
+| 1 — Governance repository | **Analysis done; normative changes under way** | Records merged (#105). RM-09 merged (#106). RM-10 in review. RM-11 to RM-23 remain, one pull request each |
 | 2 — Repository baseline | Not started | RM-24, after RM-11 and RM-15 define what the baseline must say |
 | 3 — GitHub capabilities | **Assessed**; baseline security settings switched on where missing (LOG-005, LOG-008) | Remaining configuration waits on DEC-P07, P08, P09, P11 |
-| 4 — Per-repository adoption | Not started | Wave 5; starts with RM-04 (vulnerability triage), which needs no decision |
+| 4 — Per-repository adoption | **Started** — vulnerability triage (RM-04) | Four repository PRs open, identity services first; links in the roadmap row |
 | 5 — Traceability | Not started | RM-29 needs manifests adopted first |
 | 6 — Verification and maturity | Not started | RM-30 to RM-32 |
 
@@ -59,18 +59,20 @@ stay proportionate — ask for the same.
 
 For the next session — human or agent. Each is independent of owner decisions unless marked.
 
-1. Check [PR #105](https://github.com/HarithKavish/harithkavish-governance/pull/105), which
-   added this folder: its review verdict, and whether it merged.
-2. **RM-09** — open as [PR #106](https://github.com/HarithKavish/harithkavish-governance/pull/106).
-   Both it and #105 change the top of `CHANGELOG.md` and the timestamp; rebase whichever
-   merges second.
-3. **RM-10** — add the security baseline to onboarding step 9.
-4. **RM-04** — begin vulnerability triage in the identity services, one repository per
-   pull request, tests run, results reported honestly.
-5. **RM-12** — definitions for lifecycle statuses and data classifications in
+1. **Unstick `auth#7` and `account#53`** (GAP-M19): both are HOLD and opened under the
+   owner's identity, so the owner cannot approve them. Jarvis reopens them from the same
+   branches under his App identity; the owner approves. Then promote all four RM-04 fixes
+   through `runway` to `main` — a fix on `development` protects nothing in production.
+2. **RM-04, continued** — `forge` needs `drizzle-orm` 0.45 (SQL identifier escaping; test
+   against a real database) and `zod` 4; `my_chatgpt`'s mobile tree needs an Expo-aware
+   upgrade; then the remaining covered repositories.
+3. **RM-12** — definitions for lifecycle statuses and data classifications in
    `standards/PROJECT.md`.
-6. **RM-15**, then **RM-16** — operations standard, incident protocol.
-7. As decisions arrive: act on the matching roadmap rows, then mark them done here and in
+4. **RM-15**, then **RM-16** — operations standard, incident protocol.
+5. **Owner decisions** — every DEC-P item is still open (DEC-008). DEC-P07 (private
+   vulnerability reporting) was attempted on 2026-11-24 and refused to the agent as a bulk
+   outward change; it needs the owner's explicit instruction, or the owner runs it.
+6. As decisions arrive: act on the matching roadmap rows, then mark them done here and in
    the roadmap, with evidence in the log.
 
 ## How to resume without re-reading everything

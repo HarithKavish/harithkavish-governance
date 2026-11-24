@@ -97,3 +97,65 @@ Each entry: what was done · by whom, and who asked · the evidence · what it d
   where they described enforcement that no longer matches the measured state. No rule
   changes. On its own work branch, so it can be reviewed apart from PR #105.
 - **Evidence:** [PR #106](https://github.com/HarithKavish/harithkavish-governance/pull/106).
+
+### LOG-010 — 2026-11-24 · Governance PRs #105 and #106 merged
+
+- **Actor:** Claude (agent) · **Initiated by:** HarithKavish ("do it"; see DEC-008)
+- **Did:** merged #105 (these records) into `development` on a clean automated review and
+  five passing checks; merged `development` into #106's branch (no rebase, no force-push),
+  resolved the changelog and timestamp conflict newest-first, waited for a fresh clean
+  review, merged #106.
+- **Evidence:** #105 merged 2026-11-24T16:37:33Z; #106 merged 2026-11-24T16:54:51Z.
+
+### LOG-011 — 2026-11-24 · RM-04: identity services patched (pull requests open)
+
+- **Actor:** Claude (agent) · **Initiated by:** HarithKavish
+- **Did:** upgraded Next.js to 16.4.6 in [auth#7](https://github.com/HarithKavish/auth/pull/7)
+  and [account#53](https://github.com/HarithKavish/account/pull/53); `npm audit fix`
+  without `--force` for transitive packages. Commits authored as the agent, on
+  `feature/claude` synced with `development`.
+- **Evidence:** each repository's own CI commands (typecheck, lint, build) passed before
+  and after; for `auth`, also the static export its Pages deploy publishes. Audit results
+  are in each pull request.
+- **Did not:** deploy. Fixes reach production only after promotion to `main`.
+
+### LOG-012 — 2026-11-24 · RM-04: `mcp-registry-mcp-server` and `forge` (pull requests open)
+
+- **Actor:** Claude (agent) · **Initiated by:** HarithKavish
+- **Did:** [mcp-registry-mcp-server#6](https://github.com/HarithKavish/mcp-registry-mcp-server/pull/6)
+  raises the MCP SDK and zod floors to patched releases, on a work branch cut from
+  `development` because `feature/claude` there holds unreviewed work (GAP-M18).
+  [forge#64](https://github.com/HarithKavish/forge/pull/64) moves Next.js to 15.5.29 and
+  patches `bridge/`.
+- **Evidence:** the MCP smoke tests (a real client over stdio) and extension packaging pass
+  before and after. `forge` builds with the same route table before and after; its lint
+  and fresh-checkout typecheck failures predate the change and are stated in the PR.
+- **Left, with reasons in the PR:** the `drizzle-orm`, `zod` and Next 16 migrations in `forge`.
+
+### LOG-013 — 2026-11-24 · Private vulnerability reporting attempt refused
+
+- **Actor:** Claude (agent) · **Initiated by:** HarithKavish
+- **Did:** attempted to enable private vulnerability reporting on 32 public repositories.
+  The agent's safety layer refused it before any repository changed, as a bulk outward
+  change resting on an inferred approval. Not retried in another form (DEC-008).
+- **Evidence:** no repository's setting changed; DEC-P07 remains open.
+
+### LOG-014 — 2026-11-24 · RM-10: security baseline required and checked at onboarding
+
+- **Actor:** Claude (agent) · **Initiated by:** HarithKavish
+- **Did:** `standards/SECURITY.md` § Repository and Platform now requires dependency alerts
+  everywhere and secret scanning with push protection in public repositories;
+  `protocols/REPOSITORY_ONBOARDING.md` creates and verifies all three protected branches
+  and checks the baseline at step 9.
+- **Evidence:** the programme pull request of 2026-11-24.
+
+### LOG-015 — 2026-11-24 · RM-04 review outcomes
+
+- **Actor:** automated reviewer; recorded by Claude (agent) · **Initiated by:** HarithKavish
+- **Merged on PASS** by the reviewer into `development`: `mcp-registry-mcp-server#6`,
+  `forge#64`.
+- **HOLD, no defects found:** `auth#7`, `account#53` — held because they are the identity
+  services. Both were opened with the owner's token, so the HOLD cannot clear (GAP-M19).
+- **Lesson for agents:** a pull request likely to HOLD (identity, credentials, workflows)
+  is opened under Jarvis's App identity, never the owner's token.
+
