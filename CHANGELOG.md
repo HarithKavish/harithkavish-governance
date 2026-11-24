@@ -33,6 +33,22 @@ Format, newest first:
 
 ---
 
+## 2026-11-18T14:15:52Z -- Correct enforcement statements that no longer match the measured state
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** `GOVERNANCE_HIERARCHY.md` § What Is Actually Enforced gains figures re-measured
+  2026-11-18 beside the 2026-09 ones, and its `enforce_admins` paragraph is marked superseded
+  by the 2026-10-15 no-bypass decision rather than deleted. `CONCERNS.md` no longer says zero
+  repositories have branch protection (65 of 69 personal repositories do), and points at the
+  measurement instead of restating it. `standards/BRANCHING.md` no longer states that rulesets
+  replaced classic protection on 2026-10-15: that is the plan, not yet in effect, because the
+  policy engine has not run; and its rung statement says rung 4 wherever protection is
+  configured, rather than in every repository, since four personal repositories have none.
+- **Why:** these are the documents an agent reads to learn what is enforced. Each statement was
+  true when written and is now false, and a false enforcement claim is obeyed — in either
+  direction. No rule changes: the no-bypass intent was already decided (BRANCHING § Bypass).
+
 ## 2026-11-18T14:11:23Z -- Add the governance programme's records; no rule changes
 
 - **Actor:** Claude (agent)

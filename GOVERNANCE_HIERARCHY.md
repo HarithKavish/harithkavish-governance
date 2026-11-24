@@ -166,18 +166,20 @@ rather than as instructions to a particular tool.
 
 Governance is about doing and enforcing, not about having written something down. This
 section records the gap between the two, measured rather than assumed, so it cannot be
-quietly assumed away. **Measured 2026-09-05 across 26 covered repositories.**
+quietly assumed away. **Measured 2026-09-05 across 26 covered repositories.** Figures marked
+**2026-11-18** were re-measured that day across 33; the older figure is kept beside them,
+because the change between the two is itself the information.
 
 | Rule | Written in | Rung | Reality |
 |---|---|---|---|
-| Production branch protected | BRANCHING | **4** | **78/78 protected** as of 2026-09-08 — `main`, `runway` and `development` across all 26 repositories. Pull request required, force-push and deletion blocked |
+| Production branch protected | BRANCHING | **4** | **78/78 protected** as of 2026-09-08 — `main`, `runway` and `development` across all 26 repositories. Pull request required, force-push and deletion blocked. **2026-11-18:** 32/33 covered repositories protected on all three branches (`jarvis-labs` has none); 65 of the account's 69 personal repositories. Administrators enforced in all 65. Still classic protection — no repository has a ruleset, because the policy engine that replaces it has not run |
 | Changes reach `main` via pull request | BRANCHING, DEVELOPMENT | **4** | Enforced by the same protection. Direct pushes to the three branches are refused |
-| Automated review on every PR | DEVELOPMENT | 3, degraded | **Failing in 15/26.** See below — the one automated mechanism, broken and unnoticed |
-| Repository metadata complete | REPOSITORY | 2 | **0/26 carry `.github/social-preview.png`**, which the standard requires |
-| Changelog append-only, owner-restricted | MAINTENANCE, CHANGELOG | 2 | **0/26 have CODEOWNERS.** Anyone with write access can edit or delete history |
+| Automated review on every PR | DEVELOPMENT | 3, degraded | **Failing in 15/26.** See below — the one automated mechanism, broken and unnoticed. **2026-11-18:** not re-measured. The workflow is present in 32/33, but presence is not the fact that matters: a green run can be a review that was skipped |
+| Repository metadata complete | REPOSITORY | 2 | **0/26 carry `.github/social-preview.png`**, which the standard requires. **2026-11-18:** 0/33 use a custom social preview |
+| Changelog append-only, owner-restricted | MAINTENANCE, CHANGELOG | 2 | **0/26 have CODEOWNERS.** Anyone with write access can edit or delete history. **2026-11-18:** this repository and one other have CODEOWNERS (2/33), but code-owner review is not required on any branch, so it routes review without restricting anything — still rung 2 |
 | Classify before writing governance | MAINTENANCE, GOVERNANCE_MAP | 2 → 3 | Was self-attested; a pull request template now requires the classification to be stated |
 | Doctrine stays approximately its size | MAINTENANCE | 2 → 4 | Grew 860 → 1017 words in one day *with the rule in place*. Now checked in CI |
-| Deployment declared in a workflow | DEPLOYMENT | 2 | 11 of 13 migrated; nothing prevents reverting a repository to a branch source |
+| Deployment declared in a workflow | DEPLOYMENT | 2 | 11 of 13 migrated; nothing prevents reverting a repository to a branch source. **2026-11-18:** all 18 covered GitHub Pages sites publish by workflow; other platforms not measured |
 | Design foundations not redefined locally | DESIGN_SYSTEM | 2 | No token or component validation exists |
 | Actor identity and provenance | SECURITY, DEVELOPMENT | 2 | Nothing validates a commit author or an `Initiated-By` trailer |
 
@@ -247,6 +249,12 @@ considered position rather than an oversight: the hotfix path in
 [standards/BRANCHING.md](standards/BRANCHING.md) assumes someone can act quickly during an
 incident, and a protection that cannot be lifted turns a bad hour into a worse one. It can
 be turned on when the hotfix path has been exercised at least once.
+
+> **Superseded 2026-10-15.** The owner replaced this position with no bypass for anyone, the
+> owner included ([standards/BRANCHING.md](standards/BRANCHING.md) § Bypass): in an
+> emergency the protection is changed visibly rather than stepped around. Measured
+> 2026-11-18, `enforce_admins` is on in all 65 protected repositories. The paragraph above
+> is kept as the record of the earlier position and the reasoning behind it.
 
 **What this fixed is not hypothetical.** Before it, 20 of 26 repositories had
 `development` and `runway` diverged from `main`, some by
