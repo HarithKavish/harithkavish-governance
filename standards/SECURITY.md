@@ -68,6 +68,12 @@ Treat it as public within the ecosystem, because it is.
 - Workflows triggered by untrusted input do not run with write permissions.
 - Review a repository's visibility before making it public. Public is irreversible in
   practice — history, issues, and forks persist.
+- Dependency alerts are on in every repository, and secret scanning with push protection
+  in every public one, where GitHub provides them free. They are switched on when the
+  repository is created, not discovered missing later: on 2026-11-18 the six newest
+  repositories had alerts off and one public repository had no secret scanning. Once on,
+  they are rung-4 mechanisms; whether they are on is rung 3, checked at onboarding
+  ([protocols/REPOSITORY_ONBOARDING.md](../protocols/REPOSITORY_ONBOARDING.md) step 9).
 
 ## Agents
 

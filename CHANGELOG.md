@@ -33,6 +33,20 @@ Format, newest first:
 
 ---
 
+## 2026-11-24T17:11:19Z -- Require the security baseline at creation; onboarding creates all three branches
+
+- **Actor:** Claude (agent)
+- **Initiated by:** @HarithKavish (requested)
+- **Change:** `standards/SECURITY.md` § Repository and Platform now requires dependency alerts
+  in every repository, and secret scanning with push protection in every public one, switched
+  on when the repository is created. `protocols/REPOSITORY_ONBOARDING.md` step 9 checks it;
+  steps 2 and 9 now create and verify `runway` alongside `main` and `development`, with
+  protection, matching BRANCHING. Programme records updated for 2026-11-24.
+- **Why:** SECURITY named these features as the intended enforcement but never required them
+  to be on, and on 2026-11-18 the six newest repositories had dependency alerts off and one
+  public repository had no secret scanning. Onboarding still described the two-branch flow
+  that BRANCHING replaced on 2026-09-04.
+
 ## 2026-11-18T14:15:52Z -- Correct enforcement statements that no longer match the measured state
 
 - **Actor:** Claude (agent)

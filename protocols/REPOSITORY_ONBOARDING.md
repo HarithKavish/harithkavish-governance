@@ -45,7 +45,8 @@ named for the thing. Where it serves a subdomain, the name matches the subdomain
 
 ### 2. Create the branches
 
-Create `main`, then `development` from it ([standards/BRANCHING.md](../standards/BRANCHING.md)).
+Create `main`, then `development` and `runway` from it, and protect all three
+([standards/BRANCHING.md](../standards/BRANCHING.md)).
 Do this before any implementation work, so the first feature branch has somewhere to
 start from.
 
@@ -161,7 +162,9 @@ This is a change to the governance repository and follows its own branching rule
 
 ### 9. Verify
 
-- [ ] `main` and `development` exist
+- [ ] `main`, `runway` and `development` exist and are protected
+- [ ] Security baseline on: dependency alerts; secret scanning and push protection if public
+      ([standards/SECURITY.md](../standards/SECURITY.md) § Repository and Platform)
 - [ ] `AGENTS.md`, `GOVERNANCE.md`, `README.md` present at the root
 - [ ] About description set
 - [ ] Social preview committed, and the manual upload either done or explicitly flagged
