@@ -148,3 +148,14 @@ Each entry: what was done · by whom, and who asked · the evidence · what it d
   `protocols/REPOSITORY_ONBOARDING.md` creates and verifies all three protected branches
   and checks the baseline at step 9.
 - **Evidence:** the programme pull request of 2026-11-24.
+
+### LOG-015 — 2026-11-24 · RM-04 review outcomes
+
+- **Actor:** automated reviewer; recorded by Claude (agent) · **Initiated by:** HarithKavish
+- **Merged on PASS** by the reviewer into `development`: `mcp-registry-mcp-server#6`,
+  `forge#64`.
+- **HOLD, no defects found:** `auth#7`, `account#53` — held because they are the identity
+  services. Both were opened with the owner's token, so the HOLD cannot clear (GAP-M19).
+- **Lesson for agents:** a pull request likely to HOLD (identity, credentials, workflows)
+  is opened under Jarvis's App identity, never the owner's token.
+

@@ -59,9 +59,10 @@ stay proportionate — ask for the same.
 
 For the next session — human or agent. Each is independent of owner decisions unless marked.
 
-1. **Watch the four RM-04 pull requests** (links in the roadmap). Merge each on a clean
-   review, then promote through `runway` to `main` so the fixes actually deploy. A fix on
-   `development` protects nothing in production.
+1. **Unstick `auth#7` and `account#53`** (GAP-M19): both are HOLD and opened under the
+   owner's identity, so the owner cannot approve them. Jarvis reopens them from the same
+   branches under his App identity; the owner approves. Then promote all four RM-04 fixes
+   through `runway` to `main` — a fix on `development` protects nothing in production.
 2. **RM-04, continued** — `forge` needs `drizzle-orm` 0.45 (SQL identifier escaping; test
    against a real database) and `zod` 4; `my_chatgpt`'s mobile tree needs an Expo-aware
    upgrade; then the remaining covered repositories.
