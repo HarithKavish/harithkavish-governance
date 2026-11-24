@@ -64,6 +64,39 @@ jobs:
         run: |
           set -uo pipefail
 
+          # JavaScript/TypeScript syntax check - catch errors early
+          echo "Checking for changed JS/TS files..."
+          changed_js_files=$(gh api "repos/$REPO/pulls/$PR/files" --paginate \
+                        --jq '.[] | select(.filename | test("\\.(js|jsx|ts|tsx)$")) | .filename')
+          if [ -n "$changed_js_files" ]; then
+            echo "Found JS/TS files to check:"
+            echo "$changed_js_files"
+            syntax_ok=true
+            for js_file in $changed_js_files; do
+              echo "  Checking syntax of $js_file..."
+              # Get the file content at the PR head
+              file_content=$(gh api "repos/$REPO/contents/$js_file?ref=$SHA" --jq '.content' 2>/dev/null | base64 -d 2>/dev/null || true)
+              if [ -n "$file_content" ]; then
+                echo "$file_content" | node --check 2>&1
+                if [ $? -ne 0 ]; then
+                  echo "::error::Syntax error in $js_file"
+                  syntax_ok=false
+                else
+                  echo "  ✓ $js_file syntax OK"
+                fi
+              else
+                echo "  ⚠️  Could not retrieve $js_file content (may be deleted)"
+              fi
+            done
+            if [ "$syntax_ok" = false ]; then
+              echo "::error::JavaScript/TypeScript syntax check failed"
+              exit 1
+            fi
+          else
+            echo "No JS/TS files changed"
+          fi
+          echo "JS/TS syntax check complete"
+
           # A workflow change the reviewer will not judge needs the owner. But a workflow
           # file that is IDENTICAL to the default branch's was already accepted there --
           # a promotion carrying development's workflows to runway is the common case --
@@ -99,7 +132,7 @@ jobs:
             fi
             echo "::notice::Raised by $AUTHOR, not $OWNER, and it changes workflow files -- so it needs the owner's approving review."
             approvals=$(gh api "repos/$REPO/pulls/$PR/reviews" --paginate \
-                          --jq "[.[] | select(.state==\"APPROVED\") | .user.login] | unique | join(\",\")")
+                          --jq "[.[] | select(.state==\\\"APPROVED\\\") | .user.login] | unique | join(\\\",\\\")")
             echo "approvals: [${approvals:-none}]"
             case ",${approvals}," in
               *",$OWNER,"*)
@@ -134,7 +167,7 @@ jobs:
             # PASS passes. HOLD -- correct, but touching credentials or secrets -- passes on
             # the owner's approval. FAIL, or no verdict, does not.
             said=$(gh api "repos/$REPO/issues/$PR/comments?per_page=100" \
-                     --jq "[.[] | select(.user.login==\"claude[bot]\") | select(.created_at > \"$pushed_at\") | .body] | last // empty" 2>/dev/null || true)
+                     --jq "[.[] | select(.user.login==\\\"claude[bot]\\\") | select(.created_at > \\\"$pushed_at\\\") | .body] | last // empty" 2>/dev/null || true)
             # `|| true`: Actions runs this under bash -e whatever `set` says above, and grep
             # finding nothing -- no review posted yet -- would kill the gate silently. It
             # did, on diary#13, on the first pass of this loop.
@@ -150,7 +183,7 @@ jobs:
                     exit 0 ;;
                   HOLD)
                     approvals=$(gh api "repos/$REPO/pulls/$PR/reviews" --paginate \
-                                  --jq "[.[] | select(.state==\"APPROVED\") | .user.login] | unique | join(\",\")" || true)
+                                  --jq "[.[] | select(.state==\\\"APPROVED\\\") | .user.login] | unique | join(\\\",\\\")" || true)
                     case ",${approvals}," in
                       *",$OWNER,"*) echo "✓ held for $OWNER, and $OWNER approved it."; exit 0 ;;
                     esac
