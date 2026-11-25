@@ -504,6 +504,27 @@ repositories:
       release signing secrets not set, so publish-store.yml refuses to run and no build
       has reached the store; branch protection not configured.
 
+  - name: projects
+    role: application
+    adoption: integrated
+    last_checked: 2026-11-25
+    visibility: private
+    surface: https://harithkavish.com/projects/
+    notes: >-
+      Owner-only map of every repository under the account and the organisation:
+      ecosystem membership, visibility, where each one runs, and whether it still earns
+      its place. A Cloudflare Worker on the harithkavish.com/projects route serves a
+      static shell, and the data only after verifying a Google ID token for the owner.
+      Created at the owner's request 2026-11-25 and onboarded new via
+      protocols/REPOSITORY_ONBOARDING.md: main/development/runway/feature/claude created
+      and protected, GOVERNANCE.md/AGENTS.md/README.md added, claude-review.yml and
+      pr-gate.yml carried over from music, About/homepage/topics set. Declares four
+      exceptions in its GOVERNANCE.md, among them signing in with Google directly until
+      it becomes an OAuth client of account. Outstanding: social preview committed at
+      .github/social-preview.png but not uploaded (no API); CLAUDE_CODE_OAUTH_TOKEN and
+      CLOUDFLARE_API_TOKEN not set, so automated review and the deploy workflow do not
+      run yet.
+
 # ---------------------------------------------------------------------------
 # Pending review
 # ---------------------------------------------------------------------------
